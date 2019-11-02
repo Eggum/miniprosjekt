@@ -11,9 +11,10 @@ import {createHashHistory} from "history";
 import { Home } from './frontPage.js';
 import { NewArticle } from './newArticle.js';
 import { ViewArticle } from './viewArticle.js';
-import { Alert, Menu} from './widgets.js';
+import { Alert, Menu } from './widgets.js';
 import { Search } from './search.js';
-
+import { ArticleByCategory } from './viewByCategory';
+import { EditArticle } from './editArticle.js';
 
 
 
@@ -29,7 +30,7 @@ window.onscroll = function() {
         document.getElementById("navigationBar").style.top = "-50px";
     }
     prevScrollpos = currentScrollPos;
-}
+};
 
 
 
@@ -44,6 +45,8 @@ if (root)
                 <Route exact path="/search/:search" component={Search}/>
                 <Route exact path="/article/new" component={NewArticle} />
                 <Route exact path="/article/:id(\d+)" component={ViewArticle} />
+                <Route exact path="/article/:id(\d+)/edit" component={EditArticle} />
+                <Route exact path="/article/:category" component={ArticleByCategory} />
             </div>
         </HashRouter>,
         root

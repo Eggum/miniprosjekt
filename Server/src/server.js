@@ -53,7 +53,7 @@ app.get("/article", (req, res) => {
                         console.log(err);
                         res.json({ error: "error querying" });
                     } else {
-                        console.log(rows);
+                       // console.log(rows);
                         res.json(rows);
                     }
                 }
@@ -182,6 +182,30 @@ app.put("/article/:articleID", (req, res) => {
     });
 });
 
+app.get("/category", (req, res) => {
+    console.log("Request from client: Get categories");
+    pool.getConnection((err, connection) => {
+        console.log("Connected to database");
+        if (err) {
+            console.log("Feil ved kobling til databasen");
+            res.json({ error: "feil ved ved oppkobling" });
+        } else {
+            connection.query(
+                "select * from Category",
+                (err, rows) => {
+                    connection.release();
+                    if (err) {
+                        console.log(err);
+                        res.json({ error: "error querying" });
+                    } else {
+                        console.log(rows);
+                        res.json(rows);
+                    }
+                }
+            );
+        }
+    });
+});
 
 
 /*

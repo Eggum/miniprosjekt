@@ -4,10 +4,24 @@ import * as React from 'react';
 import {Component} from "react-simplified";
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import {createHashHistory} from "history";
+import {Article, articleService} from "./services.js";
+
 
 const history = createHashHistory();
 
 export class Menu extends Component {
+
+
+    categories : Category[] = [];
+
+    mounted(){
+        console.log("Meny mounted blir kjørt");
+        articleService.getCategories()
+            .then((categories)=>{
+                this.categories = categories})
+            .catch((error: Error) => Alert.danger(error.message));
+    }
+
     render() {
         return (
             <nav id="navigationBar" className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -24,11 +38,12 @@ export class Menu extends Component {
                     <div className="nav-item dropdown navbar-nav">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
+                            Categories
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
+                            {this.categories.map((c, index) => (
+                                <NavLink key={index} className="dropdown-item" to={"/article/" + c.category}>{c.category}</NavLink>
+                            ))}
                             <div className="dropdown-divider"></div>
                             <a className="dropdown-item" href="#">Something else here</a>
                         </div>
@@ -138,19 +153,44 @@ export class Carousel extends Component{
     }
 }
 
-
-export class Card extends Component<{ title: React.Node, image: React.Node, description: React.Node, id: React.Node, alt: React.Node}> {
+export class Card extends Component<{ title: React.Node, image: React.Node, id: React.Node, alt: React.Node}> {
     render() {
         return (
             <div className="card card-pretty">
                 <img src={this.props.image} className="card-img-top" alt={this.props.alt}/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
-                    <div className="card-text">{this.props.description}</div>
                     <NavLink to={'/article/' + +this.props.id} className="stretched-link">Les mer</NavLink>
                 </div>
             </div>
         );
+    }
+}
+
+export class ConfirmBox extends Component<{ modalId : React.Node, modalHeader : React.Node, modalBody : React.Node, onClick : () => mixed, children?: React.Node }>{
+    render(){
+        return(
+            <div className="modal fade" id={this.props.modalId} tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">{this.props.modalHeader}</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            {this.props.modalBody}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.props.onClick}>Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 
@@ -210,29 +250,4 @@ export class Alert extends Component {
             for (let instance of Alert.instances()) instance.alerts.push({ id: Alert.nextId++, text: text, type: 'danger' });
         });
     }
-}
-
-class ButtonPrimary extends Component<{ onClick : () => mixed, children?: React.Node }> {
-    render(){
-        return (
-            <button type="button" className="btn btn-primary" onClick={this.props.onClick}>
-                {this.props.children}
-            </button>
-        )
-    }
-}
-
-class ButtonDanger extends Component<{ onClick : () => mixed, children?: React.Node }> {
-    render(){
-        return (
-            <button type="button" className="btn btn-danger" onClick={this.props.onClick}>
-                {this.props.children}
-            </button>
-        )
-    }
-}
-
-export class Button{
-    static Danger = ButtonDanger;
-    static Primary = ButtonPrimary;
 }

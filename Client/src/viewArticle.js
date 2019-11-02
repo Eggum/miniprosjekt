@@ -2,33 +2,24 @@
 
 import * as React from 'react';
 import {Component} from "react-simplified";
-import {Alert, Button} from './widgets.js'
+import {Alert, ConfirmBox} from './widgets.js';
+import {Button} from './buttons.js';
 import {createHashHistory} from "history";
 import {Article, articleService} from "./services.js";
+import {NavLink} from "react-router-dom";
 
 
 
 
 const history = createHashHistory();
 
+
+
+
 export class ViewArticle extends Component<{ match: { params: { id: number } } }>{
 
     article = new Article();
     error : boolean = false;
-
-
-    /*
-    id : number = this.props.match.params.id;
-    title : string = "";
-    text : string = "";
-    creationDate : string = "";
-    image : string = "";
-    alt : string = "";
-    category : string = "";
-    importance : boolean = 200;
-    creator  : string = "";
-    error : boolean = false;
-*/
 
     mounted(){
         articleService
@@ -38,18 +29,18 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
                 this.article.title = articles[0].title;
                 this.article.text = articles[0].text;
                 this.article.image = articles[0].image;
+                this.article.alt = articles[0].alt;
+                this.article.image_text = articles[0].image_text;
                 this.article.creation_date = articles[0].creation_date;
                 this.article.category = articles[0].category;
                 this.article.importance = articles[0].importance;
+                this.article.paragraphs = this.article.text.split(/[\r\n]+/);
             } else {
                 this.error = true;
             }
             })
             .catch((error: Error) => Alert.danger(error.message));
     }
-
-
-
 
     render(){
         if (this.error === true) {
@@ -59,28 +50,33 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
         }
 
         return(
+            <div>
+                <ConfirmBox modalId="deleteConfirmBox" modalHeader="Delete article" modalBody="Are you sure you want to delete article?" onClick={this.delete}/>
             <article>
                 <img src={this.article.image} alt="Need something here"/>
                 <h1>{this.article.title}</h1>
-                <p>{this.article.text}</p>
                 <p>{this.article.creation_date}</p>
-                <p>{this.article.category}</p>
-                <Button.Primary onClick={this.save}>Edit</Button.Primary>
-                <Button.Danger onClick={this.delete}>Delete</Button.Danger>
+                <NavLink to={'/article/' + this.article.category}>{this.article.category}</NavLink>
+                {this.article.paragraphs.map((p, index) => (
+                    <p key={index}>{p}</p>
+                ))}
+                <Button.Primary onClick={this.edit}>Edit</Button.Primary>
+                <Button.ModalDanger dataTarget="deleteConfirmBox">Delete article</Button.ModalDanger>
             </article>
+            </div>
         )
     }
 
-    save(){
-
+    edit(){
+        history.push('/article/' + +this.props.match.params.id + '/edit');
     }
 
     delete(){
-        console.log("Skal slette artikkelen");
         articleService
             .deleteArticle(this.props.match.params.id)
-            .then(history.push('/'))
+            .then(()=>{
+                Alert.success("Article successfully deleted");
+                history.push('/')})
             .catch((error: Error) => Alert.danger(error.message));
-
     }
 }

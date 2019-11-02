@@ -5,17 +5,17 @@ import {Component} from "react-simplified";
 import {Alert, Card} from "./widgets";
 import {Article, articleService} from "./services";
 
-export class Search extends Component <{ match: { params: { search: string } } }>{
+export class ArticleByCategory extends Component <{ match: { params: { category: string } } }>{
 
-    input : string = this.props.match.params.search;
+    input : string = this.props.match.params.category;
     articles : Article[] = [];
 
     mounted() {
-        this.input = this.props.match.params.search;
+        this.input = this.props.match.params.category;
 
         articleService
             .getArticles()
-            .then(articles => this.articles = articles.filter(a => a.title.toUpperCase().includes(this.input.toUpperCase())))
+            .then(articles => this.articles = articles.filter(a => a.category.toUpperCase().includes(this.input.toUpperCase())))
             .catch((error: Error) => Alert.danger(error.message));
     }
 
