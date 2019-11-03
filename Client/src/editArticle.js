@@ -52,46 +52,54 @@ export class EditArticle extends Component<{ match: { params: { id: number } } }
                 <form>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
-                        <input type="text" className="form-control" id="title" placeholder={this.article.title}
+                        <input type="text" className="form-control" id="title" value={this.article.title}
                                onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                    if (this.article) this.article.title = event.target.value;
                                }}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="image">Article image</label>
-                        <input type="text" className="form-control" id="image" placeholder={this.article.image}
+                        <input type="text" className="form-control" id="image" value={this.article.image}
                                onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                    if (this.article) this.article.image = event.target.value;
                                }}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="imageText">Image text</label>
-                        <input type="text" className="form-control" id="imageText" placeholder={this.article.image_text}
+                        <input type="text" className="form-control" id="imageText" value={this.article.image_text}
                                onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                    if (this.article) this.article.image_text = event.target.value;
                                }}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="alt">Image alt</label>
-                        <input type="text" className="form-control" id="alt" placeholder={this.article.alt} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                        <input type="text" className="form-control" id="alt" value={this.article.alt} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                             if (this.article) this.article.alt = event.target.value;
                         }}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="importance">Empty</label>
-                        <input type="text" className="form-control" id="importance" placeholder={this.article.importance}/>
+                        <input type="text" className="form-control" id="importance" value={this.article.importance}/>
                     </div>
                     <label className="radio-inline">Category</label>
 
 
                     <div className="from-group">
                         {this.categories.map((c, index) => (
-                            <div className="form-check form-check-inline">
-                                <input className="form-check-input" type="radio" name="inlineRadioOptions" id={"radioButtonCategory" + index}
-                                       value={c.category} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                                    if (this.article) this.article.category = event.target.value;}}/>
-                                <label className="form-check-label" htmlFor={"radioButtonCategory" + index}>{c.category}</label>
-                            </div>
+                            this.article.category === c.category ?
+                                <div className="form-check form-check-inline">
+                                    <input checked className="form-check-input" type="radio" name="inlineRadioOptions" id={"radioButtonCategory" + index}
+                                           value={c.category} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                                           if (this.article) this.article.category = event.target.value;}}/>
+                                    <label className="form-check-label" htmlFor={"radioButtonCategory" + index}>{c.category}</label>
+                                </div>
+                                :
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="radio" name="inlineRadioOptions" id={"radioButtonCategory" + index}
+                                           value={c.category} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                                        if (this.article) this.article.category = event.target.value;}}/>
+                                    <label className="form-check-label" htmlFor={"radioButtonCategory" + index}>{c.category}</label>
+                                </div>
                         ))}
                     </div>
                     <div className="form-group">
@@ -99,7 +107,7 @@ export class EditArticle extends Component<{ match: { params: { id: number } } }
                     </div>
                     <div className="form-group">
                         <label htmlFor="articleText">Text</label>
-                        <textarea className="form-control" rows="20" id="articleText" placeholder={this.article.text} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                        <textarea className="form-control" rows="20" id="articleText" value={this.article.text} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                             if (this.article) this.article.text = event.target.value;
                         }}/>
                     </div>
@@ -111,14 +119,15 @@ export class EditArticle extends Component<{ match: { params: { id: number } } }
     }
 
     cancel(){
-        history.push('/article/' + +this.props.match.params.id);
+        history.goBack();
+  //      history.push('/article/' + +this.props.match.params.id);
     }
 
     save(){
 
         articleService
             .updateArticle(this.article)
-            .then( )
+            .then( Alert.success("Article updated"))
             .catch((error: Error) => Alert.danger(error.message));
         history.push('/article/' + this.article.id)
     }

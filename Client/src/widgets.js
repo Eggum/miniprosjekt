@@ -45,7 +45,6 @@ export class Menu extends Component {
                                 <NavLink key={index} className="dropdown-item" to={"/article/" + c.category}>{c.category}</NavLink>
                             ))}
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="#">Something else here</a>
                         </div>
                     </div>
                     <form className="form-inline ml-auto" >
@@ -71,65 +70,8 @@ export class Menu extends Component {
         }
     }
 }
-
-
 /*
-export class Menu extends Component {
-    render() {
-        return (
-            <nav id="navigationBar" className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-                <a className="navbar-brand" href="/">Home</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"/>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <NavLink className="nav-link" to="/article/new">New article</NavLink>
-                        <NavLink className="nav-link" to="/courses">Nothing</NavLink>
-                    </div>
-                    <div className="nav-item dropdown mt-2 mt-lg-0">
-                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-                    <form className="form-inline my-2 my-lg-0" >
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search"
-                               aria-label="Search" id="searchInput"/>
-                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.search}>Search</button>
-                    </form>
-                    <div>
-                        <NavLink className="nav-link" to="/courses">Nothing</NavLink>
-                    </div>
-                </div>
-            </nav>
-        );
-    }
 
-    search(){
-        let input = document.getElementById('searchInput').value;
-        if(input !== ""){
-
-            //    Search.input = input;
-            history.push('/search/' + input);
-
-        }
-    }
-}
-*/
-
-export class Carousel extends Component{
-    render(){
-        return(
-            <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-                <div className="carousel-inner">
                     <div className="carousel-item active">
                         <p className ="RENAME-ME-PLZ">Hei</p>
                     </div>
@@ -139,6 +81,13 @@ export class Carousel extends Component{
                     <div className="carousel-item">
                         <p className ="RENAME-ME-PLZ">Hei nr 3</p>
                     </div>
+ */
+export class Carousel extends Component<{children?: React.Node }>{
+    render(){
+        return(
+            <div id="carouselExampleControls" className="carousel slide prettyCarousel" data-ride="carousel">
+                <div className="carousel-inner">
+                    {this.props.children}
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>

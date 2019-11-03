@@ -11,7 +11,7 @@ const history = createHashHistory();
 
 
 export class NewArticle extends Component {
-    article = new Article;
+    article = new Article();
 
     categories : Category[] = [];
 
@@ -99,6 +99,7 @@ export class NewArticle extends Component {
     }
 
     cancel(){
-        history.push('/');
+      //  history.push('/');
+        history.goBack();
     }
 }
