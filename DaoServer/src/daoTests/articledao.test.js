@@ -25,7 +25,7 @@ var pool = mysql.createPool({
 });
 
 beforeAll(done => {
-    runsqlfile("sql_script_english.sql", pool, done);
+    runsqlfile("src/sql_script_english.sql", pool, done);
     /*
     runsqlfile("dao/create_tables.sql", pool, () => {
         runsqlfile("dao/create_testdata.sql", pool, done);
