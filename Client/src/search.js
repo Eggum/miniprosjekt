@@ -21,14 +21,35 @@ export class Search extends Component <{ match: { params: { search: string } } }
 
 
     render(){
-        return(
+        if(this.articles.length === 0){
+            return(
+                <div>
+                    <h1>Search result: </h1>
+                    <strong>Your search input "{this.input}" yielded no results.</strong>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <div className="card-columns">
+                        {this.articles.map(s => <Card key={s.id} title={s.title} description={s.text}
+                                                      image={s.image} id={s.id} alt={s.alt}/>)
+                        }
+                    </div>
+                </div>
+            )
+        }
+    }
+/*
+
+            this.articles.length() == 0 ?
+                <P> </p>
+                :
             <div>
                 <div className="card-columns">
                     {this.articles.map(s => <Card key={s.id} title={s.title} description={s.text} image={s.image} id={s.id} alt={s.alt}/>)
                     }
                 </div>
             </div>
-        )
-    }
-
+ */
 }

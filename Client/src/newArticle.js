@@ -2,17 +2,20 @@
 
 import * as React from 'react';
 import {Component} from "react-simplified";
-import {Alert} from "./widgets.js"
+import {Alert, Form} from "./widgets.js"
 import {Button} from "./buttons.js"
 import {Article, articleService} from './services.js';
 import {createHashHistory} from "history";
+import {ConfirmBox} from "./widgets";
 
 const history = createHashHistory();
 
 
 export class NewArticle extends Component {
     article = new Article();
-
+    //form = null;
+    //<form onSubmit = {this.save} className="needs-validation" ref={e => (this.form = e)}>
+/*
     categories : Category[] = [];
 
     mounted(){
@@ -21,70 +24,33 @@ export class NewArticle extends Component {
                 this.categories = categories})
             .catch((error: Error) => Alert.danger(error.message));
     }
-
+*/
     render(){
         return(
-            <form>
-                <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input type="text" className="form-control" id="title" placeholder="Write your title here"
-                           onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                               if (this.article) this.article.title = event.target.value;
-                           }}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="image">Article image</label>
-                    <input type="text" className="form-control" id="image" placeholder="Write image url"
-                           onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                               if (this.article) this.article.image = event.target.value;
-                           }}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="imageText">Image text</label>
-                    <input type="text" className="form-control" id="imageText" placeholder="Write image text"
-                           onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                               if (this.article) this.article.image_text = event.target.value;
-                           }}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="alt">Image alt</label>
-                    <input type="text" className="form-control" id="alt" placeholder="image alt" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                        if (this.article) this.article.alt = event.target.value;
-                    }}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="importance">Empty</label>
-                    <input type="text" className="form-control" id="importance" placeholder="importance"/>
-                </div>
-                <label className="radio-inline">Category</label>
-
-
-                <div className="from-group">
-                    {this.categories.map((c, index) => (
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id={"radioButtonCategory" + index}
-                                   value={c.category} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                                if (this.article) this.article.category = event.target.value;}}/>
-                            <label className="form-check-label" htmlFor={"radioButtonCategory" + index}>{c.category}</label>
-                        </div>
-                    ))}
-                </div>
-                <div className="form-group">
-                </div>
-                <div className="form-group">
-                    <label htmlFor="articleText">Text</label>
-                    <textarea className="form-control" rows="20" id="articleText" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                        if (this.article) this.article.text = event.target.value;
-                    }}/>
-                </div>
-                <Button.Primary onClick={this.save}>Save</Button.Primary>
-                <Button.Danger onClick={this.cancel}>Cancel</Button.Danger>
-            </form>
+            <div>
+                <ConfirmBox modalId="cancelNewArticleConfirmBox" modalHeader="Cancel create article" modalBody="Are you sure you want to cancel new article?" onClick={this.cancel}/>
+                <h1>New article</h1>
+                <Form article={this.article} dataTarget="cancelNewArticleConfirmBox" onSubmit={this.save} />
+            </div>
         )
     }
 
-    save(){
-        if(this.article.title !== undefined) {
+
+
+    save(event : SyntheticInputEvent<HTMLFormElement>){
+        event.preventDefault();
+        this.article.importance = 1;
+
+        this.article.creator = "user123";
+
+        articleService
+            .postArticle(this.article)
+            .then((articleID)=>{
+                history.push('/article/' + +articleID);
+            })
+            .catch((error: Error) => Alert.danger(error.message));
+        /*
+        if(this.article.title !== undefined && this.form.checkValidity()) {
 
             this.article.importance = 1;
             this.article.creator = "user2";
@@ -95,11 +61,14 @@ export class NewArticle extends Component {
                     history.push('/article/' + articleID);
                 })
                 .catch((error: Error) => Alert.danger(error.message));
+        } else {
+            console.log("HEI HEI HEI " + this.form.checkValidity());
+            window.scrollTo(0, 0);
         }
+        */
     }
 
     cancel(){
-      //  history.push('/');
         history.goBack();
     }
 }

@@ -21,14 +21,23 @@ export class ArticleByCategory extends Component <{ match: { params: { category:
 
 
     render(){
-        return(
-            <div>
-                <div className="card-columns">
-                    {this.articles.map(s => <Card key={s.id} title={s.title} description={s.text} image={s.image} id={s.id} alt={s.alt}/>)
-                    }
+        if(this.articles.length === 0){
+            return(
+                <div>
+                    <h1>Category result: </h1>
+                    <strong>There are no articles under the category: "{this.input}".</strong>
                 </div>
-            </div>
-        )
+            )} else
+            {
+                return (
+                    <div>
+                        <div className="card-columns">
+                            {this.articles.map(s => <Card key={s.id} title={s.title} description={s.text}
+                                                          image={s.image} id={s.id} alt={s.alt}/>)
+                            }
+                        </div>
+                    </div>
+                )
+            }
     }
-
 }

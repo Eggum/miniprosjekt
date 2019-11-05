@@ -7,9 +7,6 @@ var http = require('http');
 
 
 
-
-
-
 var express = require("express");
 var mysql = require("mysql");
 var app = express();
@@ -102,7 +99,7 @@ app.delete("/article/:articleID", (req, res) => {
             connection.query(
                 "delete from Article where id = ?",
                 req.params.articleID,
-                err => {
+                (err, rows) => {
                     connection.release();
                     if (err) {
                         console.log(err);
@@ -111,7 +108,7 @@ app.delete("/article/:articleID", (req, res) => {
                         res.json({ error: "Feil ved slett" });
                     } else {
                         console.log("delete ok");
-                        res.send("");
+                        res.send(rows);
                     }
                 }
             );
@@ -165,7 +162,7 @@ app.put("/article/:articleID", (req, res) => {
             connection.query(
                 "update Article set title = ?, text = ?, image = ?, alt = ?, category = ?, importance = ?, image_text = ?, creator = ? where id = ?",
                 val,
-                err => {
+                (err, rows) => {
                     connection.release();
                     if (err) {
                         console.log(err);
@@ -174,13 +171,15 @@ app.put("/article/:articleID", (req, res) => {
                         res.json({ error: "Feil ved insert" });
                     } else {
                         console.log("update ok");
-                        res.send("");
+                        res.send(rows);
                     }
                 }
             );
         }
     });
 });
+
+
 
 app.get("/category", (req, res) => {
     console.log("Request from client: Get categories");
@@ -378,7 +377,7 @@ app.put("/articles/:sakID", (req, res) => {
 
 
 
-
+/*
 wsServer = new WebSocketServer({
     httpServer: server,
     // You should not use autoAcceptConnections for production
@@ -420,3 +419,4 @@ wsServer.on('request', function(request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
+*/
