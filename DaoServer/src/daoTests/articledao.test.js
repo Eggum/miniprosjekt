@@ -52,9 +52,43 @@ test("get one article from db", done => {
     articledao.getOne(1, callback);
 });
 
-// getone
-// getall
+test("get all articles from db", done => {
+    function callback(status, data){
+        console.log(
+            "Test callback: status=" + status + ", data=" + JSON.stringify(data)
+        );
+        expect(data.length).toBe(23);
+        expect(data[0].title).toBe("Ny butikk i sentrum");
+        expect(data[1].title).toBe("Bankran på båten");
+        done();
+    }
+    articledao.getAll(callback);
+});
 
-// update
+test("update article in db", done => {
+    let title_before = "";
+    let article = {};
+    let title_after = "";
+
+    function callback1(status, data) {
+        expect(data[0].title).toBe("Spennende artikkel");
+        article = data[0];
+        title_before = data[0].title;
+        done();
+    }
+
+    function callback2(status, data) {
+        expect(data[0].title).toBe("Ikke spennende artikkel");
+        title_after = data[0].title;
+        expect(title_before).toEqual(title_after);
+        done();
+    }
+
+    articledao.getOne(6, callback1);
+
+    article.title = "Ikke spennende artikkel";
+    articledao.updateOne(article, callback2);
+});
+
 // post
 // delete

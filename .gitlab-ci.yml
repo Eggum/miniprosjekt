@@ -17,3 +17,17 @@ test:
   script:
     - npm install -g flow-bin
     - cd DaoServer && npm install && npm test && flow check src
+
+pages:
+  stage: deploy
+  dependencies:
+    - run_tests
+  script:
+    - mkdir .public
+    - cp -r coverage/* .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
