@@ -21,7 +21,7 @@ test:
 pages:
   stage: deploy
   dependencies:
-    - run_tests
+    - test
   script:
     - mkdir .public
     - cp -r coverage/* .public
