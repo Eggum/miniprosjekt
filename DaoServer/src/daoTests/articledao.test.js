@@ -1,6 +1,8 @@
 const ArticleDao = require("../dao/articledao.js");
-var mysql = require("mysql");
+const runsqlfile = require("./runsqlfile.js");
 
+var mysql = require("mysql");
+/*
 var pool = mysql.createPool({
     connectionLimit: 2,
     host: "mysql.stud.iie.ntnu.no",
@@ -9,6 +11,32 @@ var pool = mysql.createPool({
     database: "randeggu",
     debug: false
 });
+*/
+
+// GitLab CI Pool
+var pool = mysql.createPool({
+    connectionLimit: 1,
+    host: "mysql",
+    user: "root",
+    password: "secret",
+    database: "supertestdb",
+    debug: false,
+    multipleStatements: true
+});
+
+beforeAll(done => {
+    runssqlfile("sql script english.sql", pool, done);
+    /*
+    runsqlfile("dao/create_tables.sql", pool, () => {
+        runsqlfile("dao/create_testdata.sql", pool, done);
+    });
+    */
+});
+
+afterAll(() => {
+    pool.end();
+});
+
 
 let articledao = new ArticleDao(pool);
 
