@@ -13,7 +13,7 @@ module.exports = function run(filename, pool, done) {
             connection.query(sql, (err, rows) => {
                 connection.release();
                 if (err) {
-                    console.log(err);
+                    console.log("runsqlfile: " + err);
                     done();
                 } else {
                     console.log("runsqlfile: run ok");
