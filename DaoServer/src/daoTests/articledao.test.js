@@ -62,7 +62,6 @@ test("get all articles from db", done => {
 test("update article in db", done => {
     let title_before = "";
     let article = {};
-    let title_after = "";
 
     function callback1(status, data) {
         expect(data[0].title).toBe("Spennende artikkel");
@@ -84,13 +83,10 @@ test("update article in db", done => {
 
     function callback3(status, data){
         expect(data[0].title).toBe("Ikke spennende artikkel");
-        title_after = data[0].title;
-        expect(title_before).toEqual(title_after);
         done();
     }
 
     articledao.getOne(6, callback1);
-
 });
 
 test("post article to db", done => {
