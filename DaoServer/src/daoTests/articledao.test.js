@@ -69,9 +69,11 @@ test("update article in db", done => {
         article = data[0];
         title_before = data[0].title;
 
+        let art = {title: "Ikke spennende artikkel", text: data[0].text, image: data[0].image, alt: data[0].alt, category: data[0].category,
+            importance: data[0].importance, image_text: data[0].image_text, creator: data[0].creator, id: data[0].id};
 
-        article.title = "Ikke spennende artikkel";
-        articledao.updateOne(article, callback2);
+//        article.title = "Ikke spennende artikkel";
+        articledao.updateOne(art, callback2);
     }
 
     function callback2(status, data) {
