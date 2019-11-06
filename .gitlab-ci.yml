@@ -17,3 +17,4 @@ test:
   script:
     - npm install -g flow-bin
     - cd DaoServer && npm install && npm test && flow check src
+
