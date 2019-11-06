@@ -74,7 +74,6 @@ test("update article in db", done => {
         expect(data[0].title).toBe("Spennende artikkel");
         article = data[0];
         title_before = data[0].title;
-        done();
     }
 
     function callback2(status, data) {
