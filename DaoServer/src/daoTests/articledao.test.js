@@ -27,13 +27,17 @@ var pool = mysql.createPool({
 });
 
 beforeAll(done => {
-    runsqlfile("src/sql_script_english.sql", pool, done);
-    /*
-    runsqlfile("dao/create_tables.sql", pool, () => {
-        runsqlfile("dao/create_testdata.sql", pool, done);
+    runsqlfile("src/sql_script_english.sql", pool, () => {
+        runsqlfile("src/sql_script_english_data.sql", pool, done);
     });
-    */
 });
+/*
+beforeAll(done => {
+    runsqlfile("src/sql_script_english.sql", pool, done);
+
+});
+*/
+
 
 afterAll(() => {
     pool.end();
