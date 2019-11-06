@@ -1,3 +1,5 @@
+// @ flow
+
 const ArticleDao = require("../dao/articledao.js");
 const runsqlfile = require("./runsqlfile.js");
 
