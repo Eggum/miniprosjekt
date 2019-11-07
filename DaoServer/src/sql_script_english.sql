@@ -18,7 +18,7 @@ CREATE table Article(
                   title VARCHAR(30) NOT NULL ,
                   text LONGTEXT NOT NULL,
                   creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                  last_edited TIMESTAMP DEFAULT 0,
+                  last_edited TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                   image varchar(10000),
                   alt varchar(50),
                   category varchar(30),
