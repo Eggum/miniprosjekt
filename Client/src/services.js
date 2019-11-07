@@ -16,6 +16,10 @@ export class Article{
     paragraphs : string[] = [];
 }
 
+export class Category{
+    category : string;
+}
+
 class ArticleService{
     getArticles(){
         return axios.get<Article[]>('http://localhost:8080/article').then(response => response.data);
