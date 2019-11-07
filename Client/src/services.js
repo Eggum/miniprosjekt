@@ -12,7 +12,7 @@ export class Article{
     category : string;
     importance : number;
     image_text : string;
-    creator : string;
+    creator : number;
     paragraphs : string[] = [];
 }
 

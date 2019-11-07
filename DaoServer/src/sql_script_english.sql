@@ -5,7 +5,8 @@ Drop table if exists User;
 
 
 CREATE table User(
-                   username varchar(30) primary key ,
+                   id INT AUTO_INCREMENT PRIMARY KEY,
+                   username varchar(30) UNIQUE,
                    password varchar(300)
 );
 
@@ -24,8 +25,8 @@ CREATE table Article(
                       category varchar(30),
                       importance boolean,
                       image_text varchar(50),
-                      creator varchar(30),
-                      CONSTRAINT foreign key (creator) REFERENCES User(username),
+                      creator INT,
+                      CONSTRAINT foreign key (creator) REFERENCES User(id),
                       CONSTRAINT foreign key (category) REFERENCES Category(category)
 );
 
@@ -33,8 +34,8 @@ CREATE table Comment(
                       id INT AUTO_INCREMENT PRIMARY KEY ,
                       text TEXT,
                       creation_date TIMESTAMP DEFAULT current_timestamp,
-                      creator varchar(30),
+                      creator INT,
                       article int,
-                      CONSTRAINT foreign key (creator) REFERENCES User(username),
+                      CONSTRAINT foreign key (creator) REFERENCES User(id),
                       CONSTRAINT foreign key (article) REFERENCES Article(id)
 );

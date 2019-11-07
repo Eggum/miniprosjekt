@@ -41,7 +41,7 @@ export class NewArticle extends Component {
         event.preventDefault();
         this.article.importance = 1;
 
-        this.article.creator = "user123";
+        this.article.creator = 1;
 
         articleService
             .postArticle(this.article)
