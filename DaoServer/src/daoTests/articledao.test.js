@@ -64,6 +64,7 @@ test("update article in db", done => {
     let article = {};
 
     function callback1(status, data) {
+        console.log("BLABLA");
         expect(data[0].title).toBe("Spennende artikkel");
         article = data[0];
         title_before = data[0].title;
