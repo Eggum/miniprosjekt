@@ -16,3 +16,23 @@ test:
     - cd DaoServer && npm install && npm test && flow check src
 #    - cd ../Client && npm install && npm test && flow check src
     - cd ../Client && npm install && npm test
+
+
+
+
+pages:
+  stage: deploy
+  dependencies:
+    - test
+  script:
+    - mkdir .public
+    - mkdir .public/client
+    - mkdir .public/server
+    - cp -r Client/coverage/* .public/client
+    - cp -r DaoServer/coverage/* .public/server
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

@@ -53,6 +53,8 @@ app.get("/article", (req, res) => {
 app.get("/article/:articleID", (req, res) => {
     console.log("/article/:articleID: got get request from client");
     articledao.getOne(req.params.articleID, (status, data) => {
+        console.log("LISA");
+        console.log(data);
         res.status(status);
         res.json(data);
     })
