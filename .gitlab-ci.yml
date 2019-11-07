@@ -13,9 +13,16 @@ variables:
 test:
   script:
     - npm install -g flow-bin
-    - cd DaoServer && npm install && npm test && flow check src
+    - cd DaoServer
+    - npm install
+    - npm test
+    - flow check src
+#    - cd DaoServer && npm install && npm test && flow check src
 #    - cd ../Client && npm install && npm test && flow check src
-    - cd ../Client && npm install && npm test
+    - cd ../Client
+    - npm install
+    - npm test
+#    - cd ../Client && npm install && npm test
   artifacts:
     paths:
       - DaoServer/coverage
