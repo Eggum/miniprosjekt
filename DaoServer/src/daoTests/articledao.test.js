@@ -95,7 +95,7 @@ test("post article to db", done => {
         expect(data.affectedRows).toBe(1);
         done()
     }
-    articledao.createOne({title: "Ny artikkel", text: "bla bla", image: "url", alt: "alt alt", category: "Kultur", importance: 1, image_text: "bildetekst", creator: "user123"}, callback);
+    articledao.createOne({title: "Ny artikkel", text: "bla bla", image: "url", alt: "alt alt", category: "Kultur", importance: 1, image_text: "bildetekst", creator: 1}, callback);
 });
 
 test("delte one article from db", done => {

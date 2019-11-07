@@ -92,4 +92,14 @@ app.get("/category", (req, res) => {
     })
 });
 
+
+app.get("/article/:articleID/comment", (req, res) => {
+   console.log("/article/:articleID/comments got get request from client.");
+   commentdao.getAllFromArticle(req.params.articleID, (status, data) => {
+       res.status(status);
+       res.json(data);
+    })
+});
+
+
 var server = app.listen(8080);

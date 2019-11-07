@@ -31,7 +31,7 @@ CREATE table Article(
 );
 
 CREATE table Comment(
-                      id INT AUTO_INCREMENT PRIMARY KEY ,
+                      id INT AUTO_INCREMENT PRIMARY KEY,
                       text TEXT,
                       creation_date TIMESTAMP DEFAULT current_timestamp,
                       creator INT,
@@ -39,3 +39,11 @@ CREATE table Comment(
                       CONSTRAINT foreign key (creator) REFERENCES User(id),
                       CONSTRAINT foreign key (article) REFERENCES Article(id)
 );
+
+ALTER TABLE Article
+  ADD FOREIGN key (creator) REFERENCES User(id),
+  add foreign key (category) references Category(category);
+
+alter table Comment
+add foreign key (creator) references User(id),
+  add foreign key (article) references Article(id)
