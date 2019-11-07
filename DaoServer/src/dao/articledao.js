@@ -1,3 +1,5 @@
+// @ flow
+
 const Dao = require("./dao.js");
 
 
