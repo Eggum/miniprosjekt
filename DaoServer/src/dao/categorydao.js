@@ -4,7 +4,7 @@ module.exports = class CategoryDao extends Dao {
     getAll(callback) {
         super.query("select * from Category", [], callback);
     }
-
+/*
     createOne(json, callback) {
         var val = [json.category];
         super.query(
@@ -13,4 +13,5 @@ module.exports = class CategoryDao extends Dao {
             callback
         );
     }
+*/
 };
