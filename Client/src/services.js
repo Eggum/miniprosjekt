@@ -20,6 +20,20 @@ export class Category{
     category : string;
 }
 
+export class Comment{
+    id : number;
+    text : string;
+    creation_date : Date;
+    creator : number;
+    article : number;
+}
+
+class CommentService{
+    getComments(id: number){
+        return axios.get<Comment>('http://localhost:8080/article/' + id + '/comment').then(response => response.data);
+    }
+}
+
 class ArticleService{
     getArticles(){
         return axios.get<Article[]>('http://localhost:8080/article').then(response => response.data);
@@ -47,3 +61,4 @@ class ArticleService{
 }
 
 export let articleService = new ArticleService();
+export let commentService = new CommentService();

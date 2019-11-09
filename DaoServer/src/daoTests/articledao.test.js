@@ -11,7 +11,9 @@ var pool = mysql.createPool({
     user: "randeggu",
     password: "luOQ0NQQ",
     database: "randeggu",
-    debug: false
+    debug: false,
+    multipleStatements: true
+
 });
 */
 
@@ -26,6 +28,7 @@ var pool = mysql.createPool({
     multipleStatements: true
 });
 
+/*
 beforeAll(done => {
     runsqlfile("src/sql_script_english.sql", pool, () => {
         runsqlfile("src/sql_script_english_data.sql", pool, done);
@@ -35,6 +38,24 @@ beforeAll(done => {
 beforeAll(done => {
     runsqlfile("src/sql_script_english.sql", pool, done);
 
+});
+*/
+/*
+beforeAll(done => {
+    runsqlfile("src/databaseSQLfiles/categoryTable.sql", pool, () => {
+        runsqlfile("src/databaseSQLfiles/userTable.sql", pool, () => {
+            runsqlfile("src/databaseSQLfiles/articleTable.sql", pool, () => {
+                runsqlfile("src/databaseSQLfiles/commentTable.sql", pool, () => {
+                    runsqlfile("src/sql_script_english_data.sql", pool, done);
+                });
+            });
+        });
+    });
+});
+
+afterAll(done => {
+    runsqlfile("src/databaseSQLfiles/teardown.sql", pool, done);
+    pool.end();
 });
 */
 

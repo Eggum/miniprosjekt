@@ -5,6 +5,20 @@ const runsqlfile = require("./runsqlfile.js");
 
 var mysql = require("mysql");
 
+/*
+var pool = mysql.createPool({
+    connectionLimit: 2,
+    host: "mysql.stud.iie.ntnu.no",
+    user: "randeggu",
+    password: "luOQ0NQQ",
+    database: "randeggu",
+    debug: false,
+    multipleStatements: true
+
+});
+*/
+
+// GitLab CI Pool
 var pool = mysql.createPool({
     connectionLimit: 1,
     host: "mysql",
@@ -15,6 +29,7 @@ var pool = mysql.createPool({
     multipleStatements: true
 });
 
+/*
 beforeAll(done => {
     runsqlfile("src/sql_script_english.sql", pool, () => {
         runsqlfile("src/sql_script_english_data.sql", pool, done);
@@ -26,11 +41,23 @@ beforeAll(done => {
 
 });
 */
+/*
+beforeAll(done => {
+    runsqlfile("src/databaseSQLfiles/categoryTable.sql", pool, () => {
+        runsqlfile("src/databaseSQLfiles/userTable.sql", pool, () => {
+            runsqlfile("src/databaseSQLfiles/articleTable.sql", pool, () => {
+                runsqlfile("src/databaseSQLfiles/commentTable.sql", pool, () => {
+                    runsqlfile("src/sql_script_english_data.sql", pool, done);
+                });
+            });
+        });
+    });
+});
+*/
 
 afterAll(() => {
     pool.end();
 });
-
 
 let commentdao = new CommentDao(pool);
 
@@ -40,7 +67,6 @@ test("get all comments from db to article 1", done => {
             "Test callback: status = " + status + ", data=" + JSON.stringify(data)
         );
         expect(data.length).toBe(6);
-        expect(data[0].text).toBe("Dette var en kul artikkel");
         done();
     }
     commentdao.getAllFromArticle(1, callback);

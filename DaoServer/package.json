@@ -6,6 +6,8 @@
     "test": "jest"
   },
   "jest": {
+    "globalSetup": "./src/daoTests/setupTestDatabase.js",
+    "globalTeardown": "./src/daoTests/teardownTestDatabase.js",
     "verbose": true,
     "collectCoverage": true,
     "coverageReporters": [
