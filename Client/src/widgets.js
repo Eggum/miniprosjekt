@@ -4,7 +4,7 @@ import * as React from 'react';
 import {Component} from "react-simplified";
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import {createHashHistory} from "history";
-import {Article, articleService} from "./services.js";
+import {Category, Article, articleService} from "./services.js";
 import {Button} from "./buttons";
 
 
@@ -30,11 +30,11 @@ export class Carousel extends Component<{children?: React.Node }>{
                     {this.props.children}
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="carousel-control-prev-icon" aria-hidden="true"/>
                     <span className="sr-only">Previous</span>
                 </a>
                 <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="carousel-control-next-icon" aria-hidden="true"/>
                     <span className="sr-only">Next</span>
                 </a>
             </div>

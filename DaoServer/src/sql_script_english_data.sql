@@ -5,6 +5,7 @@ insert into Category values ('Nyheter');
 insert into Category values ('Utenriks');
 
 
+insert into User (username, password) values ('Anonym', 'anonym');
 insert into User (username, password) values ('Ola Nordman', 'passord123');
 insert into User (username, password) values ('Kari Nordman', 'KariErKulest');
 insert into User (username, password) values ('user123', '123');

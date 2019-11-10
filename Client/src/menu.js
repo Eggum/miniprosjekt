@@ -61,7 +61,7 @@ export class Menu extends Component {
                             {this.categories.map((c, index) => (
                                 <NavLink key={index} className="dropdown-item" to={"/article/" + c.category}>{c.category}</NavLink>
                             ))}
-                            <div className="dropdown-divider"></div>
+                            <div className="dropdown-divider"/>
                         </div>
                     </div>
                     <form className="form-inline ml-auto" >
@@ -81,9 +81,7 @@ export class Menu extends Component {
         let input = document.getElementById('searchInput').value;
         if(input !== ""){
 
-            //    Search.input = input;
             history.push('/search/' + input);
-
         }
     }
 }

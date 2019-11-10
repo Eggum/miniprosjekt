@@ -26,12 +26,22 @@ export class Comment{
     creation_date : Date;
     creator : number;
     article : number;
+    username : string;
 }
 
 class CommentService{
     getComments(id: number){
-        return axios.get<Comment>('http://localhost:8080/article/' + id + '/comment').then(response => response.data);
+        return axios.get<Comment[]>('http://localhost:8080/article/' + id + '/comment').then(response => response.data);
     }
+
+    postComment(comment : Comment){
+        return axios.post<Comment, void>('http://localhost:8080/article/' + comment.article + '/comment', comment).then(response => response.data);
+    }
+
+    deleteComment(comment: Comment){
+        return axios.delete<Comment>('http://localhost:8080/article/' + comment.article + '/comment/' + comment.id).then(response => response.data);
+    }
+
 }
 
 class ArticleService{
@@ -40,7 +50,7 @@ class ArticleService{
     }
 
     getCategories(){
-        return axios.get<String[]>('http://localhost:8080/category').then(response => response.data);
+        return axios.get<Category[]>('http://localhost:8080/category').then(response => response.data);
     }
 
     getArticle(id: number){

@@ -4,13 +4,13 @@ import * as React from 'react';
 import { Component } from "react-simplified";
 import { Card, Alert } from "./widgets.js";
 import { Carousel } from "./widgets";
-import { articleService } from "./services.js";
+import { Article, articleService } from "./services.js";
 import { NavLink } from 'react-router-dom';
 
 
 export class Home extends Component {
 
-    articles = [];
+    articles : Array<Article> = [];
 
     mounted(){
         articleService

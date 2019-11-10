@@ -3,8 +3,7 @@
 import * as React from 'react';
 import {Component} from "react-simplified";
 import {Alert, Form} from "./widgets.js"
-import {Button} from "./buttons.js"
-import {Article, articleService} from './services.js';
+import {Category, Article, articleService} from './services.js';
 import {createHashHistory} from "history";
 import {ConfirmBox} from "./widgets";
 
@@ -64,7 +63,7 @@ export class EditArticle extends Component<{ match: { params: { id: number } } }
         articleService
             .updateArticle(this.article)
             .then(data => {
-                console.log(data)
+                console.log(data);
                 history.push('/article/' + this.article.id);
                     Alert.success("Article updated")})
             .catch((error: Error) => Alert.danger(error.message));

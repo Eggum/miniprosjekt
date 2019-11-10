@@ -3,7 +3,6 @@
 import * as React from 'react';
 import {Component} from "react-simplified";
 import {Alert, Form} from "./widgets.js"
-import {Button} from "./buttons.js"
 import {Article, articleService} from './services.js';
 import {createHashHistory} from "history";
 import {ConfirmBox} from "./widgets";

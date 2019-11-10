@@ -53,8 +53,6 @@ app.get("/article", (req, res) => {
 app.get("/article/:articleID", (req, res) => {
     console.log("/article/:articleID: got get request from client");
     articledao.getOne(req.params.articleID, (status, data) => {
-        console.log("LISA");
-        console.log(data);
         res.status(status);
         res.json(data);
     })
@@ -98,6 +96,22 @@ app.get("/article/:articleID/comment", (req, res) => {
    commentdao.getAllFromArticle(req.params.articleID, (status, data) => {
        res.status(status);
        res.json(data);
+    })
+});
+
+app.post("/article/:articleID/comment", (req, res) => {
+   console.log("/article/:articleID/comment got post request from client.");
+   commentdao.createOne(req.body, (status, data) => {
+       res.status(status);
+       res.json(data);
+   })
+});
+
+app.delete("/article/:articleID/comment/:commentID", (req, res) => {
+    console.log("/article/:articleID/comment/:commentID got delete request from client.");
+    commentdao.deleteOne(req.params.commentID, (status, data) => {
+        res.status(status);
+        res.json(data);
     })
 });
 

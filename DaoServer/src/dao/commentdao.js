@@ -3,7 +3,10 @@ const Dao = require("./dao.js");
 
 module.exports = class CommentDao extends Dao {
     getAllFromArticle(articleID, callback) {
-        super.query("select Comment.id, text, creation_date, creator, article, username from Comment join User on Comment.creator = User.id where article = ?", [articleID], callback);
+        super.query("select Comment.id, text, creation_date, creator, article, username from Comment join User on Comment.creator = User.id where article = ? order by Comment.id asc",
+            [articleID],
+            callback
+        );
     }
 /*
     getOne(id, callback) {
