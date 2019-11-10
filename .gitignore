@@ -2,3 +2,5 @@ node_modules
 .idea
 serverSequelize
 server
+daoServerslett
+clientslett
