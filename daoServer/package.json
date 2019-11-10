@@ -1,5 +1,5 @@
 {
-  "name": "DaoServer",
+  "name": "daoServer",
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
@@ -18,7 +18,6 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "jest": "^23.6.0",
     "fs": "0.0.1-security",
     "mysql": "^2.16.0"
   },

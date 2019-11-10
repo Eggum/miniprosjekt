@@ -13,20 +13,20 @@ variables:
 test:
   script:
     - npm install -g flow-bin
-    - cd DaoServer
+    - cd daoServer
     - npm install
     - npm test
     - flow check src
-#    - cd DaoServer && npm install && npm test && flow check src
-#    - cd ../Client && npm install && npm test && flow check src
-    - cd ../Client
+#    - cd daoServer && npm install && npm test && flow check src
+#    - cd ../client && npm install && npm test && flow check src
+    - cd ../client
     - npm install
     - npm test
 #    - cd ../Client && npm install && npm test
   artifacts:
     paths:
-      - DaoServer/coverage
-      - Client/coverage
+      - daoServer/coverage
+      - client/coverage
 
 
 pages:
@@ -37,8 +37,8 @@ pages:
     - mkdir .public
     - mkdir .public/client
     - mkdir .public/server
-    - cp -r Client/coverage/* .public/client
-    - cp -r DaoServer/coverage/* .public/server
+    - cp -r client/coverage/* .public/client
+    - cp -r daoServer/coverage/* .public/server
     - mv .public public
   artifacts:
     paths:
