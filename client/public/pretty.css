@@ -1,0 +1,51 @@
+article{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 70%;
+    border-style: solid;
+    border-radius: 1px;
+    padding: 2em;
+    background-color: white;
+}
+
+article img{
+    width: 100%;
+}
+
+#navigationBar{
+    transition: top 0.3s;
+}
+
+.card-pretty:hover img{
+    opacity: 0.8;
+}
+
+#card-column-wrapper{
+    margin: 0.5%;
+}
+
+.prettyCarousel{
+    background-color: #0c5460;
+}
+
+.RENAME-ME-PLZ{
+    text-align: center;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    margin: 0.2%;
+    color: white;
+}
+
+.ostepop{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+
+body{
+    background-image: url("https://images.unsplash.com/photo-1441920007991-ae5ddfade6d1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80");
+    background-size: cover;
+}

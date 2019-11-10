@@ -1,0 +1,3 @@
+CREATE table Category(
+  category VARCHAR(30) PRIMARY KEY
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
