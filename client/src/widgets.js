@@ -57,7 +57,7 @@ export class Form extends Component<{ article: Article, dataTarget : string,  on
             <form onSubmit={this.props.onSubmit} className="needs-validation">
                 <div className="form-group">
                     <label htmlFor="title">Title</label>
-                    <input required type="text" className="form-control" id="title" value={this.props.article.title} placeholder="Write your title here"
+                    <input required type="text" className="form-control" id="title" maxLength="30" value={this.props.article.title} placeholder="Write your title here"
                            onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                if (this.props.article) this.props.article.title = event.target.value;
                            }}/>
@@ -74,35 +74,42 @@ export class Form extends Component<{ article: Article, dataTarget : string,  on
                 </div>
                 <div className="form-group">
                     <label htmlFor="imageText">Image text</label>
-                    <input required type="text" className="form-control" id="imageText" value={this.props.article.image_text} placeholder="Write image text"
+                    <input required type="text" className="form-control" maxLength="50" id="imageText" value={this.props.article.image_text} placeholder="Write image text"
                            onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                if (this.props.article) this.props.article.image_text = event.target.value;
                            }}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="alt">Image alt</label>
-                    <input required type="text" className="form-control" id="alt" value={this.props.article.alt}  placeholder="image alt"
+                    <input required type="text" className="form-control" id="alt" maxLength="50" value={this.props.article.alt}  placeholder="image alt"
                            onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                if (this.props.article) this.props.article.alt = event.target.value;
                            }}/>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="importance">Empty</label>
-                    <input required type="text" className="form-control" id="importance" placeholder="importance"/>
+                <div className="form-group form-check">
+                    <input type="checkbox" className="form-check-input" id="importance" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                        if (this.props.article) if (event.target.checked){
+                            this.props.article.importance = 1;
+                        } else {
+                            this.props.article.importance = 2;
+                        }
+                    }}/>
+                        <label className="form-check-label" htmlFor="importance">Check this if article is IMPORTANT</label>
                 </div>
+
                 <label className="radio-inline">Category</label>
 
                 <div className="from-group">
                     {this.categories.map((c, index) => (
                         this.props.article.category === c.category ?
-                            <div className="form-check form-check-inline">
+                            <div className="form-check form-check-inline" key={index}>
                                 <input checked className="form-check-input" type="radio" name="inlineRadioOptions" id={"radioButtonCategory" + index}
                                        value={c.category} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                     if (this.props.article) this.props.article.category = event.target.value;}}/>
                                 <label className="form-check-label" htmlFor={"radioButtonCategory" + index}>{c.category}</label>
                             </div>
                             :
-                            <div className="form-check form-check-inline">
+                            <div className="form-check form-check-inline" key={index}>
                                 <input className="form-check-input" type="radio" name="inlineRadioOptions" id={"radioButtonCategory" + index}
                                        value={c.category} onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                                     if (this.props.article) this.props.article.category = event.target.value;}}/>

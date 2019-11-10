@@ -38,16 +38,24 @@ export class NewArticle extends Component {
 
     save(event : SyntheticInputEvent<HTMLFormElement>){
         event.preventDefault();
-        this.article.importance = 1;
 
+        // it can be undefined at this point.
+        if(this.article.importance !== 1) {
+            this.article.importance = 2;
+        }
+        console.log("Importance: " + this.article.importance);
         this.article.creator = 1;
+
 
         articleService
             .postArticle(this.article)
             .then((articleID)=>{
                 history.push('/article/' + +articleID);
             })
-            .catch((error: Error) => Alert.danger(error.message));
+            .catch((error: Error) => {
+                window.scrollTo(0, 0);
+                Alert.danger(error.message);
+            });
         /*
         if(this.article.title !== undefined && this.form.checkValidity()) {
 

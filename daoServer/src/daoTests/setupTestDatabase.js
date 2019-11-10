@@ -1,6 +1,7 @@
 
 var mysql = require("mysql");
-const runsqlfile = require("./runsqlfile.js");
+//const runsqlfile = require("./runsqlfile.js");
+const runsqlfile = require("./runsqlfileV2");
 var fs = require("fs");
 
 
@@ -30,6 +31,12 @@ module.exports = async () => {
         multipleStatements: true
     });
 
+    runsqlfile("src/sql_script_english.sql", pool, () => {
+       runsqlfile("src/sql_script_english_data.sql", pool, () => {
+           console.log("done reading sql file");
+       });
+    });
+
 /*
     beforeAll(done => {
         runsqlfile("src/sql_script_english.sql", pool, () => {
@@ -37,6 +44,9 @@ module.exports = async () => {
         });
     });
 */
+
+
+/*
     let sql = fs.readFileSync("src/sql_script_english.sql", "utf8");
     pool.getConnection((err, connection) => {
         if (err) {
@@ -70,7 +80,7 @@ module.exports = async () => {
             });
         }
     });
-
+*/
 /*
     function (done) => {runsqlfile("src/sql_script_english.sql", pool, () => {
         runsqlfile("src/sql_script_english_data.sql", pool, done);
