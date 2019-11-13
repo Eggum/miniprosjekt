@@ -7,7 +7,7 @@ module.exports = class UserDao extends Dao {
         super.query("select * from User", [], callback);
     }
     */
-
+/*
     getOne(username, callback) {
         super.query(
             "select * from User where username= ?",
@@ -15,6 +15,7 @@ module.exports = class UserDao extends Dao {
             callback
         );
     }
+    */
 /*
     deleteOne(username, callback) {
         super.query(

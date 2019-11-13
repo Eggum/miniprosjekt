@@ -80,6 +80,9 @@ class UserService{
     loginUser(user : User){
         return axios.post<User, void>('http://localhost:8080/login', user).then(response => response.data);
     }
+    postUser(user : User){
+        return axios.post<User, void>('http://localhost:8080/User', user).then(response => response.data);
+    }
 }
 
 export let articleService = new ArticleService();
