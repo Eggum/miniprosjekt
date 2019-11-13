@@ -186,6 +186,7 @@ export class Alert extends Component {
         return (
             <>
                 {this.alerts.map((alert, i) => (
+                    <div className="alert-pretty">
                     <div key={alert.id} className={'alert alert-' + alert.type} role="alert">
                         {alert.text}
                         <button
@@ -197,6 +198,7 @@ export class Alert extends Component {
                         >
                             &times;
                         </button>
+                    </div>
                     </div>
                 ))}
             </>

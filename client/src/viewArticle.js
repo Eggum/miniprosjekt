@@ -18,7 +18,7 @@ const history = createHashHistory();
 
 export class ViewArticle extends Component<{ match: { params: { id: number } } }>{
 
-    article = new Article();
+    article : Article = new Article();
     error : boolean = false;
     comments : Array<Comment> = [];
     newComment : Comment = new Comment();
@@ -26,6 +26,18 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
     mounted(){
         articleService
             .getArticle(this.props.match.params.id)
+            .then(article => {if(article != null){
+                this.article.id = this.props.match.params.id;
+                this.article.title = article.title;
+                this.article.text = article.text;
+                this.article.image = article.image;
+                this.article.alt = article.alt;
+                this.article.image_text = article.image_text;
+                this.article.creation_date = article.creation_date;
+                this.article.category = article.category;
+                this.article.importance = article.importance;
+                this.article.paragraphs = this.article.text.split(/[\r\n]+/);
+            /*
             .then(articles => {if(articles[0] != null){
                 this.article.id = this.props.match.params.id;
                 this.article.title = articles[0].title;
@@ -37,6 +49,7 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
                 this.article.category = articles[0].category;
                 this.article.importance = articles[0].importance;
                 this.article.paragraphs = this.article.text.split(/[\r\n]+/);
+                */
             } else {
                 this.error = true;
             }
@@ -83,9 +96,6 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
         console.log("sletter; " + comment.text);
         commentService.deleteComment(comment)
             .then(res => {
-                console.log("res status" + res.status);
-                console.log("yo" + res.statusCode);
-                console.log("hei" + res.response);
                 console.log(res);
                 commentService.getComments(this.props.match.params.id)
                     .then(comments => this.comments = comments)
@@ -117,6 +127,8 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
             .then(()=>{
                 Alert.success("Article successfully deleted");
                 history.push('/')})
-            .catch((error: Error) => Alert.danger(error.message));
+            .catch((error: Error) => {
+                Alert.danger(error.message);
+            });
     }
 }

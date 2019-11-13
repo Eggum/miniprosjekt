@@ -11,7 +11,7 @@ const history = createHashHistory();
 
 
 export class NewArticle extends Component {
-    article = new Article();
+    article : Article = new Article();
     //form = null;
     //<form onSubmit = {this.save} className="needs-validation" ref={e => (this.form = e)}>
 /*

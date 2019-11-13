@@ -12,7 +12,7 @@ const history = createHashHistory();
 
 export class EditArticle extends Component<{ match: { params: { id: number } } }>{
 
-    article = new Article();
+    article : Article = new Article();
     error : boolean = false;
     categories : Category[] = [];
 
@@ -20,6 +20,18 @@ export class EditArticle extends Component<{ match: { params: { id: number } } }
     mounted(){
         articleService
             .getArticle(this.props.match.params.id)
+            .then(article => {if(article != null){
+                this.article.id = this.props.match.params.id;
+                this.article.title = article.title;
+                this.article.text = article.text;
+                this.article.image = article.image;
+                this.article.alt = article.alt;
+                this.article.image_text = article.image_text;
+                this.article.creation_date = article.creation_date;
+                this.article.category = article.category;
+                this.article.importance = article.importance;
+                this.article.paragraphs = this.article.text.split(/[\r\n]+/);
+            /*
             .then(articles => {if(articles[0] != null){
                 this.article.id = this.props.match.params.id;
                 this.article.title = articles[0].title;
@@ -31,6 +43,7 @@ export class EditArticle extends Component<{ match: { params: { id: number } } }
                 this.article.category = articles[0].category;
                 this.article.importance = articles[0].importance;
                 this.article.paragraphs = this.article.text.split(/[\r\n]+/);
+                */
             } else {
                 this.error = true;
             }

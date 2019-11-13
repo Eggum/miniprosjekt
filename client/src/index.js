@@ -14,6 +14,8 @@ import { Search } from './search.js';
 import { ArticleByCategory } from './viewByCategory';
 import { EditArticle } from './editArticle.js';
 import { Menu } from './menu.js'
+import { Login } from './login.js'
+import { SignUp } from './signUp.js'
 
 
 
@@ -26,6 +28,8 @@ if (root)
                 <Menu />
                 <Alert />
                 <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/search/:search" component={Search}/>
                 <Route exact path="/article/new" component={NewArticle} />
                 <Route exact path="/article/:id(\d+)" component={ViewArticle} />

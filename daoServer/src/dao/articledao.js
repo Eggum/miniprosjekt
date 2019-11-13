@@ -15,10 +15,19 @@ module.exports = class ArticleDao extends Dao {
             callback
         );
     }
-
+/*
     deleteOne(id, callback) {
         super.query(
             "delete from Article where id = ?",
+            [id],
+            callback
+        );
+    }
+*/
+
+    deleteOne(id, callback) {
+        super.query(
+            "CALL delete_article(?)",
             [id],
             callback
         );

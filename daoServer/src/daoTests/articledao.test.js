@@ -80,6 +80,17 @@ test("get all articles from db", done => {
     articledao.getAll(callback);
 });
 
+test("get article from db", done => {
+    function callback(status, data){
+        console.log(
+            "Test callback: status=" + status + ", data=" + JSON.stringify(data)
+        );
+        expect(data[0].title).toBe("Ny butikk i sentrum");
+        done();
+    }
+    articledao.getAll(callback);
+});
+
 test("update article in db", done => {
     let title_before = "";
     let article = {};

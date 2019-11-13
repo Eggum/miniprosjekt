@@ -2,9 +2,11 @@ const Dao = require("./dao.js");
 
 
 module.exports = class UserDao extends Dao {
+    /*
     getAll(callback) {
         super.query("select * from User", [], callback);
     }
+    */
 
     getOne(username, callback) {
         super.query(
@@ -13,7 +15,7 @@ module.exports = class UserDao extends Dao {
             callback
         );
     }
-
+/*
     deleteOne(username, callback) {
         super.query(
             "delete from User where username = ?",
@@ -21,11 +23,20 @@ module.exports = class UserDao extends Dao {
             callback
         );
     }
-
+*/
     createOne(json, callback) {
         var val = [json.username, json.password];
         super.query(
-            "insert into User (username, password) values (?,?)",
+            "CALL user_create_user(?,?)",
+            val,
+            callback
+        );
+    }
+
+    validateOne(json, callback) {
+        var val = [json.username, json.password];
+        super.query(
+            "CALL validate_user(?,?)",
             val,
             callback
         );

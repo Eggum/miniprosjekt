@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {createHashHistory} from "history";
 import {Component} from "react-simplified";
-import {articleService} from "./services";
+import {Category, articleService} from "./services";
 import {NavLink} from "react-router-dom";
 import {Alert} from "./widgets";
 
@@ -13,6 +13,22 @@ const history = createHashHistory();
 
 
 let prevScrollpos = window.pageYOffset;
+
+window.onscroll = function() {
+    let currentScrollPos = window.pageYOffset;
+    let navigationBar = document.getElementById("navigationBar");
+
+    if(navigationBar !== null) {
+        if (prevScrollpos > currentScrollPos) {
+            navigationBar.style.top = "0";
+        } else {
+            navigationBar.style.top = "-50px";
+        }
+    }
+    prevScrollpos = currentScrollPos;
+};
+
+/*
 window.onscroll = function() {
     let currentScrollPos = window.pageYOffset;
     if (prevScrollpos > currentScrollPos) {
@@ -22,7 +38,7 @@ window.onscroll = function() {
     }
     prevScrollpos = currentScrollPos;
 };
-
+*/
 
 
 
@@ -70,7 +86,7 @@ export class Menu extends Component {
                         <button className="btn btn-outline-info my-2 my-sm-0" onClick={this.search}>Search</button>
                     </form>
                     <div className="navbar-nav ">
-                        <NavLink className="nav-link" to="/courses">Nothing</NavLink>
+                        <NavLink className="nav-link" to="/login">Login</NavLink>
                     </div>
                 </div>
             </nav>
@@ -78,10 +94,13 @@ export class Menu extends Component {
     }
 
     search(){
-        let input = document.getElementById('searchInput').value;
-        if(input !== ""){
+        let searchInputField = document.getElementById('searchInput');
+        if(searchInputField != null) {
+            let input = searchInputField.value;
+            if (input !== "") {
 
-            history.push('/search/' + input);
+                history.push('/search/' + input);
+            }
         }
     }
 }

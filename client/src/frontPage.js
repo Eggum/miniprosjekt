@@ -15,7 +15,9 @@ export class Home extends Component {
     mounted(){
         articleService
             .getArticles()
-            .then(articles => this.articles = articles)
+            .then(articles => {
+                this.articles = articles;
+            })
             .catch((error: Error) => Alert.danger(error.message));
     }
     render(){
@@ -25,11 +27,11 @@ export class Home extends Component {
                 <Carousel>
                     {this.articles.filter(a => a.importance === 1).map((a, index) =>
                         index === 1 ?
-                            <NavLink style={{'background-image' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item active ostepop">
+                            <NavLink key = {index} style={{'backgroundImage' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item active ostepop">
                                 <h3 className ="RENAME-ME-PLZ">{a.title}</h3>
                                 <h4 className ="RENAME-ME-PLZ">{a.creation_date}</h4></NavLink>
                             :
-                            <NavLink  style={{'background-image' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item ostepop">
+                            <NavLink key = {index} style={{'backgroundImage' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item ostepop">
                                 <h3 className ="RENAME-ME-PLZ">{a.title}</h3>
                                 <h4 className ="RENAME-ME-PLZ">{a.creation_date}</h4></NavLink>
                 )}

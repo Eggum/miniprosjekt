@@ -6,7 +6,7 @@ export class Article{
     id : number;
     title : string;
     text : string;
-    creation_date : Date;
+    creation_date : string;
     image : string;
     alt : string;
     category : string;
@@ -23,10 +23,16 @@ export class Category{
 export class Comment{
     id : number;
     text : string;
-    creation_date : Date;
+    creation_date : string;
     creator : number;
     article : number;
     username : string;
+}
+
+export class User{
+    id : number;
+    username : string;
+    password : string;
 }
 
 class CommentService{
@@ -70,5 +76,12 @@ class ArticleService{
     }
 }
 
+class UserService{
+    loginUser(user : User){
+        return axios.post<User, void>('http://localhost:8080/login', user).then(response => response.data);
+    }
+}
+
 export let articleService = new ArticleService();
 export let commentService = new CommentService();
+export let userService = new UserService;
