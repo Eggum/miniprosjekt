@@ -54,7 +54,7 @@ test("get user in db", done => {
         expect(data[0].id).toBe(1);
         done();
     }
-    userdao.getOne({username: "Anonym", callback})
+    userdao.getOne({username: "Anonym"}, callback);
 });
 
 test("validate user in db", done => {
@@ -64,7 +64,7 @@ test("validate user in db", done => {
     }
     function callback2(status, data){
         expect(data[0][0].validationResult).toBe(0);
-        userdao.validateOne({username: "NewUser", password: "ikkeKult"}, callback3)
+        userdao.validateOne({username: "NewUser", password: "kult123"}, callback3)
     }
 
     function callback3(status, data){
