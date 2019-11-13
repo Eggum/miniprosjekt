@@ -186,19 +186,19 @@ export class Alert extends Component {
         return (
             <>
                 {this.alerts.map((alert, i) => (
-                    <div className="alert-pretty">
-                    <div key={alert.id} className={'alert alert-' + alert.type} role="alert">
-                        {alert.text}
-                        <button
-                            type="button"
-                            className="close"
-                            onClick={() => {
-                                this.alerts.splice(i, 1);
-                            }}
-                        >
-                            &times;
-                        </button>
-                    </div>
+                    <div className="alert-pretty" key={alert.id}>
+                        <div key={alert.id} className={'alert alert-' + alert.type} role="alert">
+                            {alert.text}
+                            <button
+                                type="button"
+                                className="close"
+                                onClick={() => {
+                                    this.alerts.splice(i, 1);
+                                }}
+                            >
+                                &times;
+                            </button>
+                        </div>
                     </div>
                 ))}
             </>

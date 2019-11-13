@@ -34,8 +34,13 @@ export class Login extends Component {
         console.log(this.user.username + this.user.password);
         userService.loginUser(this.user)
             .then(res => {
+                if(res != null){
                 console.log("resultat: " + res.jwt);
                 localStorage.setItem("myToken", res.jwt);
+                }
             })
+            .catch((error: Error) => {
+                Alert.danger(error.message);
+            });
     }
 }
