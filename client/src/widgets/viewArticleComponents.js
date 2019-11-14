@@ -5,7 +5,7 @@ import {Component} from "react-simplified";
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import {createHashHistory} from "history";
 import {Comment } from "../services.js";
-import {Button} from "../buttons";
+import {Button} from "./buttons";
 
 
 const history = createHashHistory();

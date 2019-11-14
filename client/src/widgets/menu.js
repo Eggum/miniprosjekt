@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {createHashHistory} from "history";
 import {Component} from "react-simplified";
-import {Category, articleService} from "./services";
+import {Category, articleService} from "../services";
 import {NavLink} from "react-router-dom";
 import {Alert} from "./widgets";
 

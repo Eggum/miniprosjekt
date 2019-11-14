@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import {Component} from "react-simplified";
-import {Alert, Card} from "./widgets";
-import {Article, articleService} from "./services";
+import {Alert, Card} from "../widgets/widgets";
+import {Article, articleService} from "../services";
 
 export class ArticleByCategory extends Component <{ match: { params: { category: string } } }>{
 

@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { Component } from "react-simplified";
-import { Card, Alert } from "./widgets.js";
-import { Carousel } from "./widgets";
-import { Article, articleService } from "./services.js";
+import { Card, Alert } from "../widgets/widgets.js";
+import { Carousel } from "../widgets/widgets";
+import { Article, articleService } from "../services.js";
 import { NavLink } from 'react-router-dom';
 
 

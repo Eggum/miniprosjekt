@@ -3,10 +3,10 @@
 import * as React from 'react';
 import {createHashHistory} from "history";
 import {Component} from "react-simplified";
-import {articleService, User, userService} from "./services";
+import {articleService, User, userService} from "../services";
 import {NavLink} from "react-router-dom";
-import {Alert} from "./widgets";
-import {Button} from "./buttons";
+import {Alert} from "../widgets/widgets";
+import {Button} from "../widgets/buttons";
 
 export class SignUp extends Component {
     user : User = new User();

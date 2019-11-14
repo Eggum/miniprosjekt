@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import {Component} from "react-simplified";
-import {Alert, Form} from "./widgets.js"
-import {Category, Article, articleService} from './services.js';
+import {Alert, Form} from "../widgets/widgets.js"
+import {Category, Article, articleService} from '../services.js';
 import {createHashHistory} from "history";
-import {ConfirmBox} from "./widgets";
+import {ConfirmBox} from "../widgets/widgets";
 
 const history = createHashHistory();
 

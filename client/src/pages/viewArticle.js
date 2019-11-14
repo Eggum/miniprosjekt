@@ -2,12 +2,12 @@
 
 import * as React from 'react';
 import {Component} from "react-simplified";
-import {Alert, ConfirmBox} from './widgets.js';
-import {Button} from './buttons.js';
+import {Alert, ConfirmBox} from '../widgets/widgets.js';
+import {Button} from '../widgets/buttons.js';
 import {createHashHistory} from "history";
-import {Article, articleService, Comment, commentService} from "./services.js";
+import {Article, articleService, Comment, commentService} from "../services.js";
 import {NavLink} from "react-router-dom";
-import {CommentSection} from './pages/viewArticleComponents.js';
+import {CommentSection} from '../widgets/viewArticleComponents.js';
 
 
 

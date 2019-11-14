@@ -31,8 +31,8 @@ module.exports = async () => {
         multipleStatements: true
     });
 
-    runsqlfile("src/sql_script_english.sql", pool, () => {
-       runsqlfile("src/sql_script_english_data.sql", pool, () => {
+    runsqlfile("src/daoTests/sql_script_english.sql", pool, () => {
+       runsqlfile("src/daoTests/sql_script_english_data.sql", pool, () => {
            console.log("done reading sql file");
        });
     });

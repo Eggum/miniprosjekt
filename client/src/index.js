@@ -6,16 +6,16 @@ import ReactDOM from "react-dom";
 import * as React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 import {createHashHistory} from "history";
-import { Home } from './frontPage.js';
-import { NewArticle } from './newArticle.js';
-import { ViewArticle } from './viewArticle.js';
-import { Alert } from './widgets.js';
-import { Search } from './search.js';
-import { ArticleByCategory } from './viewByCategory';
-import { EditArticle } from './editArticle.js';
-import { Menu } from './menu.js'
-import { Login } from './login.js'
-import { SignUp } from './signUp.js'
+import { Home } from './pages/frontPage.js';
+import { NewArticle } from './pages/newArticle.js';
+import { ViewArticle } from './pages/viewArticle.js';
+import { Alert } from './widgets/widgets.js';
+import { Search } from './pages/search.js';
+import { ArticleByCategory } from './pages/viewByCategory';
+import { EditArticle } from './pages/editArticle.js';
+import { Menu } from './widgets/menu.js'
+import { Login } from './pages/login.js'
+import { SignUp } from './pages/signUp.js'
 
 
 

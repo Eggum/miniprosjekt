@@ -28,16 +28,10 @@ let userdao = new UserDao(pool);
 let categorydao = new CategoryDao(pool);
 
 
-
-
-
-
-
-
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
 
     next();
 });
@@ -45,16 +39,63 @@ app.use(bodyParser.json());
 
 
 
+/*
+app.use("/api", (req, res, next) => {
+    var token = req.headers["x-access-token"];
+
+    console.log("token motatt " + token);
+    res.status(200);
+    next();
+/*
+        jwt.verify(token, publicKey, (err, decoded) => {
+            if (err) {
+                console.log("Token IKKE ok");
+                res.status(401);
+                res.json({ error: "Not authorized" });
+            } else {
+                console.log("Token ok: " + decoded.brukernavn);
+                res.status(200);
+                next();
+            }
+        });
+});
+*/
+
+const autentiser = (req, res, next) => {
+    var token = req.headers["x-access-token"];
+
+    console.log("token motatt " + token);
+
+    next();
+    /*
+    jwt.verify(token, publicKey, (err, decoded) => {
+        if (err) {
+            console.log("Token IKKE ok");
+            res.status(401);
+            res.json({ error: "Not authorized" });
+        } else {
+            console.log("Token ok: " + decoded.username);
+            res.status(200);
+            next();
+        }
+    });
+    */
+};
 
 
+app.get("/article", [autentiser, (req, res) => {
 
-app.get("/article", (req, res) => {
+    var token = req.headers["x-access-token"];
+
+    console.log("token motatt art " + token);
+
+
     console.log("/article: request get all articles from client");
     articledao.getAll((status, data) => {
         res.status(status);
         res.json(data);
     })
-});
+}]);
 
 app.get("/article/:articleID", (req, res) => {
     console.log("/article/:articleID: got get request from client");
@@ -64,29 +105,29 @@ app.get("/article/:articleID", (req, res) => {
     })
 });
 
-app.delete("/article/:articleID", (req, res) => {
+app.delete("/article/:articleID", [autentiser, (req, res) => {
     console.log("/article/:articleID: got delete request from client");
     articledao.deleteOne(req.params.articleID, (status, data) => {
         res.status(status);
         res.json(data);
     })
-});
+}]);
 
-app.post("/article", (req, res) => {
+app.post("/article", [autentiser, (req, res) => {
     console.log("/article: got post request from client");
     articledao.createOne(req.body, (status, data) => {
         res.status(status);
         res.json(data.insertId);
     })
-});
+}]);
 
-app.put("/article/:articleID", (req, res) => {
+app.put("/article/:articleID", [autentiser, (req, res) => {
    console.log("/article/:articleID got put request from client");
    articledao.updateOne(req.body, (status, data) => {
        res.status(status);
        res.json(data);
    })
-});
+}]);
 
 app.get("/category", (req, res) => {
     console.log("/category got get request from client");
@@ -105,13 +146,13 @@ app.get("/article/:articleID/comment", (req, res) => {
     })
 });
 
-app.post("/article/:articleID/comment", (req, res) => {
+app.post("/article/:articleID/comment", [autentiser, (req, res) => {
    console.log("/article/:articleID/comment got post request from client.");
    commentdao.createOne(req.body, (status, data) => {
        res.status(status);
        res.json(data);
    })
-});
+}]);
 
 app.post("/user", (req, res) => {
     console.log("/user: got post request from client");
@@ -121,16 +162,16 @@ app.post("/user", (req, res) => {
     })
 });
 
-app.delete("/article/:articleID/comment/:commentID", (req, res) => {
+app.delete("/article/:articleID/comment/:commentID", [autentiser, (req, res) => {
     console.log("/article/:articleID/comment/:commentID got delete request from client.");
     commentdao.deleteOne(req.params.commentID, (status, data) => {
         res.status(status);
         res.json(data);
     })
-});
+}]);
 
 
-var server = app.listen(8080);
+var server = app.listen(4000);
 
 
 
@@ -169,7 +210,7 @@ app.post("/login", (req, res) => {
         if(data[0][0].validationResult === 1){
             console.log("Username & password ok");
             let token = jwt.sign({ username: req.body.username }, privateKey, {
-                expiresIn: 30
+                expiresIn: 1
             });
             res.json({ jwt: token });
         } else {
@@ -178,20 +219,4 @@ app.post("/login", (req, res) => {
             res.json({ error: "Not authorized" });
         }
     })
-});
-
-
-app.use("/api", (req, res, next) => {
-    var token = req.headers["x-access-token"];
-
-    jwt.verify(token, publicKey, (err, decoded) => {
-        if (err) {
-            console.log("Token IKKE ok");
-            res.status(401);
-            res.json({ error: "Not authorized" });
-        } else {
-            console.log("Token ok: " + decoded.brukernavn);
-            next();
-        }
-    });
 });

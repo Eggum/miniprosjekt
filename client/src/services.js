@@ -2,6 +2,22 @@
 
 import axios from 'axios';
 
+//                localStorage.setItem("myToken", res.jwt);
+
+axios.interceptors.request.use(
+
+    (config) => {
+        const token = localStorage.getItem("myToken");
+        if (token) {
+            config.headers['x-access-token'] = token;
+        }
+        // config.headers['Content-Type'] = 'application/json';
+        return config;
+    },
+    error => {
+        Promise.reject(error)
+    });
+
 export class Article{
     id : number;
     title : string;
@@ -37,51 +53,51 @@ export class User{
 
 class CommentService{
     getComments(id: number){
-        return axios.get<Comment[]>('http://localhost:8080/article/' + id + '/comment').then(response => response.data);
+        return axios.get<Comment[]>('http://localhost:4000/article/' + id + '/comment').then(response => response.data);
     }
 
     postComment(comment : Comment){
-        return axios.post<Comment, void>('http://localhost:8080/article/' + comment.article + '/comment', comment).then(response => response.data);
+        return axios.post<Comment, void>('http://localhost:4000/article/' + comment.article + '/comment', comment).then(response => response.data);
     }
 
     deleteComment(comment: Comment){
-        return axios.delete<Comment>('http://localhost:8080/article/' + comment.article + '/comment/' + comment.id).then(response => response.data);
+        return axios.delete<Comment>('http://localhost:4000/article/' + comment.article + '/comment/' + comment.id).then(response => response.data);
     }
 
 }
 
 class ArticleService{
     getArticles(){
-        return axios.get<Article[]>('http://localhost:8080/article').then(response => response.data);
+        return axios.get<Article[]>('http://localhost:4000/article').then(response => response.data);
     }
 
     getCategories(){
-        return axios.get<Category[]>('http://localhost:8080/category').then(response => response.data);
+        return axios.get<Category[]>('http://localhost:4000/category').then(response => response.data);
     }
 
     getArticle(id: number){
-        return axios.get<Article>('http://localhost:8080/article/' + id).then(response => response.data);
+        return axios.get<Article>('http://localhost:4000/article/' + id).then(response => response.data);
     }
 
     updateArticle(article: Article){
-        return axios.put<Article, void>('http://localhost:8080/article/' + article.id, article).then(response => response.data);
+        return axios.put<Article, void>('http://localhost:4000/article/' + article.id, article).then(response => response.data);
     }
 
     deleteArticle(id: number){
-        return axios.delete<Article>('http://localhost:8080/article/' + id).then(response => response.data);
+        return axios.delete<Article>('http://localhost:4000/article/' + id).then(response => response.data);
     }
 
     postArticle(article : Article){
-        return axios.post<Article, void>('http://localhost:8080/article/', article).then(response => response.data);
+        return axios.post<Article, void>('http://localhost:4000/article/', article).then(response => response.data);
     }
 }
 
 class UserService{
     loginUser(user : User){
-        return axios.post<User, void>('http://localhost:8080/login', user).then(response => response.data);
+        return axios.post<User, void>('http://localhost:4000/login', user).then(response => response.data);
     }
     postUser(user : User){
-        return axios.post<User, void>('http://localhost:8080/User', user).then(response => response.data);
+        return axios.post<User, void>('http://localhost:4000/User', user).then(response => response.data);
     }
 }
 

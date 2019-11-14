@@ -4,9 +4,9 @@ import * as React from 'react';
 import {createHashHistory} from "history";
 import {Component} from "react-simplified";
 import {NavLink} from "react-router-dom";
-import {Alert} from "./widgets";
-import {Button} from "./buttons";
-import {User, userService} from "./services.js";
+import {Alert} from "../widgets/widgets";
+import {Button} from "../widgets/buttons";
+import {User, userService} from "../services.js";
 
 export class Login extends Component {
 

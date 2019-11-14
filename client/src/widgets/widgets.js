@@ -4,7 +4,7 @@ import * as React from 'react';
 import {Component} from "react-simplified";
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import {createHashHistory} from "history";
-import {Category, Article, articleService} from "./services.js";
+import {Category, Article, articleService} from "../services.js";
 import {Button} from "./buttons";
 
 
