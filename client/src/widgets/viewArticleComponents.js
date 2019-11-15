@@ -6,13 +6,22 @@ import { HashRouter, Route, NavLink } from 'react-router-dom';
 import {createHashHistory} from "history";
 import {Comment } from "../services.js";
 import {Button} from "./buttons";
+import {connect} from "react-redux";
 
 
 const history = createHashHistory();
 
 
+// maps state to component as prop!
+function mapStateToProps(state) {
+    return {
+        stateName: state.name,
+        isLogged : state.isLogged,
+        stateID: state.id
+    };
+}
 
-export class CommentSection extends Component<{comments : Array<Comment>, newComment : Comment, onClick : () => mixed, onDelete : (c : Comment) => mixed}>{
+class CommentSectionComp extends Component<{comments : Array<Comment>, newComment : Comment, onClick : () => mixed, onDelete : (c : Comment) => mixed, isLogged : boolean, stateName : string, stateID : number}>{
 
     render(){
         return(
@@ -25,12 +34,22 @@ export class CommentSection extends Component<{comments : Array<Comment>, newCom
                                     <h5 className="card-title">{c.username}</h5>
                                     <h6 className="card-subtitle mb-2 text-muted">{c.creation_date}</h6>
                                     <p className="card-text">{c.text}</p>
-                                    <Button.Danger onClick={() => this.props.onDelete(c)}>Delete comment</Button.Danger>
+                                    {(this.props.isLogged && this.props.stateID === c.creator)
+                                        ?
+                                        <Button.Danger onClick={() => this.props.onDelete(c)}>Delete comment</Button.Danger>
+                                        :
+                                        null
+                                    }
                                 </div>
                             </div>
                         )
                 )}
                 <label htmlFor="newComment">New comment</label>
+                {this.props.isLogged
+                ?
+                <h5>{this.props.stateName}</h5>
+                :
+                <h5>Anonym</h5>}
                 <input required type="text" className="form-control" id="newComment" placeholder="..."
                        onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                            if (this.props.newComment) this.props.newComment.text = event.target.value;
@@ -40,5 +59,5 @@ export class CommentSection extends Component<{comments : Array<Comment>, newCom
         )
     }
 }
-//onClick={this.props.onDelete(c)}
-//() => this.handleClick(id)
+
+export const CommentSection = connect(mapStateToProps)(CommentSectionComp);

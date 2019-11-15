@@ -10,7 +10,7 @@ module.exports = class ArticleDao extends Dao {
 
     getOne(id, callback) {
         super.query(
-            "select * from Article where id= ?",
+            "select Article.*, User.username from Article join User on User.id = Article.creator where Article.id = ?",
             [id],
             callback
         );

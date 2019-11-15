@@ -41,8 +41,10 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                 this.article.alt = article.alt;
                 this.article.image_text = article.image_text;
                 this.article.creation_date = article.creation_date;
+                this.article.creator = article.creator;
                 this.article.category = article.category;
                 this.article.importance = article.importance;
+                this.article.username = article.username;
                 this.article.paragraphs = this.article.text.split(/[\r\n]+/);
             } else {
                 this.error = true;
@@ -69,12 +71,14 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                     <img src={this.article.image} alt="Need something here"/>
                     <h1>{this.article.title}</h1>
                     <p>{this.article.creation_date}</p>
+                    <p>Author: {this.article.username}</p>
                     <NavLink to={'/article/' + this.article.category}>{this.article.category}</NavLink>
+                    <hr/>
                    {this.article.paragraphs.map((p, index) => (
                         <p key={index}>{p}</p>
                     ))}
 
-                    {this.props.isLogged ?
+                    {(this.props.isLogged && this.props.stateID === this.article.creator) ?
                         <div>
                             <Button.Primary onClick={this.edit}>Edit</Button.Primary>
                             <Button.ModalDanger dataTarget="deleteConfirmBox">Delete article</Button.ModalDanger>

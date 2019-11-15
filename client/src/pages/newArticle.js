@@ -6,11 +6,20 @@ import {Alert, Form} from "../widgets/widgets.js"
 import {Article, articleService} from '../services.js';
 import {createHashHistory} from "history";
 import {ConfirmBox} from "../widgets/widgets";
+import {connect} from "react-redux";
 
 const history = createHashHistory();
 
 
-export class NewArticle extends Component {
+// maps state to component as prop!
+function mapStateToProps(state) {
+    return {
+        isLogged : state.isLogged,
+        stateID: state.id
+    };
+}
+
+class NewArticleComp extends Component <{stateID : number}>{
     article : Article = new Article();
     //form = null;
     //<form onSubmit = {this.save} className="needs-validation" ref={e => (this.form = e)}>
@@ -39,12 +48,13 @@ export class NewArticle extends Component {
     save(event : SyntheticInputEvent<HTMLFormElement>){
         event.preventDefault();
 
-        // it can be undefined at this point.
+        // article importance can be undefined at this point.
         if(this.article.importance !== 1) {
             this.article.importance = 2;
         }
         console.log("Importance: " + this.article.importance);
-        this.article.creator = 1;
+        console.log(this.props.stateID);
+        this.article.creator = this.props.stateID;
 
 
         articleService
@@ -79,3 +89,5 @@ export class NewArticle extends Component {
         history.goBack();
     }
 }
+
+export const NewArticle = connect(mapStateToProps)(NewArticleComp);

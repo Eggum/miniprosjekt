@@ -29,6 +29,7 @@ export class Article{
     importance : number;
     image_text : string;
     creator : number;
+    username : string;
     paragraphs : string[] = [];
 }
 

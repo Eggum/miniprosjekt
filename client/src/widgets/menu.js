@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {changeId, logIn, logOut} from "../redux/actions";
 
 const history = createHashHistory();
 
@@ -24,9 +25,20 @@ function mapStateToProps(state) {
     };
 }
 
+
+function mapDispatchToProps(dispatch){
+    return{
+        logoutUser: () => dispatch(logOut()),
+        changeID: newID => dispatch(changeId(newID))
+    };
+}
+
+
 type prop = {
     stateName : string,
-    isLogged : boolean
+    isLogged : boolean,
+    logoutUser: () => mixed,
+    changeID: (number) => mixed
 }
 
 let prevScrollpos = window.pageYOffset;
@@ -80,7 +92,6 @@ class MenuBar extends Component <prop>{
                             {this.categories.map((c, index) => (
                                 <NavLink key={index} className="dropdown-item" to={"/article/" + c.category}>{c.category}</NavLink>
                             ))}
-                            <div className="dropdown-divider"/>
                         </div>
                     </div>
                     <form className="form-inline ml-auto" >
@@ -89,11 +100,34 @@ class MenuBar extends Component <prop>{
                         <button className="btn btn-outline-info my-2 my-sm-0" onClick={this.search}>Search</button>
                     </form>
                     <div className="navbar-nav ">
-                        <NavLink className="nav-link" to="/login">{this.props.isLogged ? this.props.stateName : "Login"}</NavLink>
+
+                        {this.props.isLogged
+                        ?
+                            <div className="nav-item dropdown navbar-nav">
+                                <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {this.props.stateName}
+                                </a>
+                                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                    <NavLink className="dropdown-item" to="/login">Change user</NavLink>
+                                    <NavLink className="dropdown-item" to="/signUp">New user</NavLink>
+                                    <div className="dropdown-divider"/>
+                                    <button className="dropdown-item" onClick={this.logout}>Log out</button>
+                                </div>
+                            </div>
+                        :
+                            <NavLink className="nav-link" to="/login">Login</NavLink>
+                        }
                     </div>
                 </div>
             </nav>
         );
+    }
+    //                        <NavLink className="nav-link" to="/login">{this.props.isLogged ? this.props.stateName : "Login"}</NavLink>
+
+    logout(){
+        this.props.changeID(1);
+        this.props.logoutUser();
     }
 
     search(){
@@ -117,4 +151,4 @@ class MenuBar extends Component <prop>{
 
 
 
-export const Menu = connect(mapStateToProps)(MenuBar);
+export const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuBar);

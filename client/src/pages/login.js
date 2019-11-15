@@ -47,33 +47,35 @@ class LoginComp extends Component<prop> {
     render(){
         return(
             <div className="loginBackground">
-                <form className="login">
+                <form className="login" onSubmit={this.login}>
+                    <h1>Login</h1>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
-                        <input className="form-control" id="username" placeholder="username" type="text" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                        <input required className="form-control" id="username" placeholder="username" type="text" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                             if (this.user) this.user.username = event.target.value;
                         }}/>
                     </div>
                         <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input className="form-control" id="password" autoComplete="current-password" type="password" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
+                        <input required className="form-control" id="password" autoComplete="current-password" type="password" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
                             if (this.user) this.user.password = event.target.value;
                         }}/>
                     </div>
                     <div className="form-group">
-                        <Button.Primary onClick={this.login}> Login </Button.Primary>
+                        <button className="btn btn-primary" type="submit">Login</button>
                         <NavLink to="/signUp"> Sign up </NavLink>
                     </div>
                 </form>
             </div>
         )
     }
+    /*
+    event : SyntheticInputEvent<HTMLFormElement>){
+        event.preventDefault();
+     */
 
-    login(){
-      //  console.log(this.user.username + this.user.password);
-       // console.log(currentUser.username);
-
-    //    this.props.changeName(this.user.username);
+    login(event : SyntheticInputEvent<HTMLFormElement>){
+        event.preventDefault();
 
 
         userService.loginUser(this.user)
