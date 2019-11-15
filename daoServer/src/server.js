@@ -205,12 +205,25 @@ app.post("/login", (req, res) => {
 
     userdao.validateOne(req.body, (status, data) => {
 
+        console.log("sjå her randi");
+        console.log(data);
+        console.log(data[0]);
+        console.log(data[0][0]);
+
         if(data[0][0].validationResult === 1){
             console.log("Username & password ok");
             let token = jwt.sign({ username: req.body.username }, privateKey, {
                 expiresIn: 600
             });
-            res.json({ jwt: token });
+            userdao.getUserId(req.body.username, (status, data) => {
+                console.log(data);
+                res.status(status);
+                res.json({id: data[0].id, jwt: token});
+            });
+
+
+
+            //res.json({ jwt: token });
         } else {
             console.log("Username & password not ok");
             res.status(401);

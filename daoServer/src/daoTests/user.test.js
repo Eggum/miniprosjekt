@@ -76,3 +76,11 @@ test("validate user in db", done => {
 
     userdao.createOne({username: "NewUser", password: "kult123"}, callback1);
 });
+
+test("get id of user", done => {
+    function callback(status, data){
+        expect(data[0].id).toBe(1);
+        done();
+    }
+    userdao.getUserId("Anonym", callback);
+});

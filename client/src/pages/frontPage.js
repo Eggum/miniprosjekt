@@ -20,6 +20,7 @@ export class Home extends Component {
             })
             .catch((error: Error) => Alert.danger(error.message));
     }
+
     render(){
 
         return(

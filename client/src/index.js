@@ -13,39 +13,27 @@ import { Alert } from './widgets/widgets.js';
 import { Search } from './pages/search.js';
 import { ArticleByCategory } from './pages/viewByCategory';
 import { EditArticle } from './pages/editArticle.js';
-import { Menu } from './widgets/menu.js'
-import { Login } from './pages/login.js'
-import { SignUp } from './pages/signUp.js'
+import { Menu } from './widgets/menu.js';
+import { Login } from './pages/login.js';
+import { SignUp } from './pages/signUp.js';
+import { createStore } from 'redux';
+import allReducer from './redux/reducers';
+import { Provider } from 'react-redux';
+import {Ost} from './ost.js'
 
 import {currentUser} from "./sharedState.js";
 
 
-/*
-function requireAuth(nextState, replace, next) {
-    console.log("stauts " + currentUser.loggedIn);
-    if (currentUser.loggedIn === true) {
-        replace({
-            pathname: "/login",
-            state: {nextPathname: nextState.location.pathname}
-        });
-        next();
-    }
-    next();
-}
-*/
-/*
-<Route exact path="/home" render={() => (
-  isLoggedIn() ? (
-    <Redirect to="/front"/>
-  ) : (
-    <Home />
-  )
-)}/>
- */
 
 const root = document.getElementById('root');
+const store = createStore(
+    allReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
+
 if (root)
     ReactDOM.render(
+        <Provider store = {store}>
         <HashRouter>
             <div>
                 <Menu />
@@ -59,6 +47,9 @@ if (root)
                 <Route exact path="/article/:id(\d+)/edit" component={EditArticle} />
                 <Route exact path="/article/:category(\D+)" component={ArticleByCategory} />
             </div>
-        </HashRouter>,
+        </HashRouter>
+        </Provider>
+        ,
+
         root
     );

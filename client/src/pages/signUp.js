@@ -29,11 +29,12 @@ export class SignUp extends Component {
         )
     }
 
+
     register(){
         console.log("Registerer");
         console.log(this.user.username + this.user.password);
         userService.postUser(this.user)
-            .then(res => {
+            .then((res) => {
                 console.log("resultat: " + res.jwt);
                 localStorage.setItem("myToken", res.jwt);
             })

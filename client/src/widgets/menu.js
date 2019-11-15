@@ -7,12 +7,27 @@ import {Category, articleService} from "../services";
 import {NavLink} from "react-router-dom";
 import {Alert} from "./widgets";
 import {currentUser} from "../sharedState.js";
+import {useSelector} from 'react-redux';
 
-
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 const history = createHashHistory();
 
 
+
+// maps state to component as prop!
+function mapStateToProps(state) {
+    return {
+        stateName: state.name,
+        isLogged : state.isLogged
+    };
+}
+
+type prop = {
+    stateName : string,
+    isLogged : boolean
+}
 
 let prevScrollpos = window.pageYOffset;
 
@@ -30,28 +45,11 @@ window.onscroll = function() {
     prevScrollpos = currentScrollPos;
 };
 
-/*
-window.onscroll = function() {
-    let currentScrollPos = window.pageYOffset;
-    if (prevScrollpos > currentScrollPos) {
-        document.getElementById("navigationBar").style.top = "0";
-    } else {
-        document.getElementById("navigationBar").style.top = "-50px";
-    }
-    prevScrollpos = currentScrollPos;
-};
-*/
-
-
-
-export class Menu extends Component {
-
-
+class MenuBar extends Component <prop>{
     categories : Category[] = [];
    // currentUser : string = currentUser.cUsername;
 
     mounted(){
-        console.log("Meny mounted blir kjørt");
         console.log("brukernavn " + currentUser.cUsername);
 
         articleService.getCategories()
@@ -63,7 +61,7 @@ export class Menu extends Component {
     render() {
         return (
             <nav id="navigationBar" className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-                <a className="navbar-brand" href="/">Home</a>
+                <NavLink className="navbar-brand" to="/">Home</NavLink>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"/>
@@ -91,7 +89,7 @@ export class Menu extends Component {
                         <button className="btn btn-outline-info my-2 my-sm-0" onClick={this.search}>Search</button>
                     </form>
                     <div className="navbar-nav ">
-                        <NavLink className="nav-link" to="/login">{currentUser.cUsername}</NavLink>
+                        <NavLink className="nav-link" to="/login">{this.props.isLogged ? this.props.stateName : "Login"}</NavLink>
                     </div>
                 </div>
             </nav>
@@ -109,3 +107,14 @@ export class Menu extends Component {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+export const Menu = connect(mapStateToProps)(MenuBar);

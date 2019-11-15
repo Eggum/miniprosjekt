@@ -42,4 +42,12 @@ module.exports = class UserDao extends Dao {
             callback
         );
     }
+
+    getUserId(username, callback) {
+        super.query(
+            "select id from User where username = ?",
+            [username],
+            callback
+        );
+    }
 };

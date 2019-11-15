@@ -8,15 +8,22 @@ import {createHashHistory} from "history";
 import {Article, articleService, Comment, commentService} from "../services.js";
 import {NavLink} from "react-router-dom";
 import {CommentSection} from '../widgets/viewArticleComponents.js';
+import {connect} from "react-redux";
 
 
 
 const history = createHashHistory();
 
 
+// maps state to component as prop!
+function mapStateToProps(state) {
+    return {
+        isLogged : state.isLogged,
+        stateID: state.id
+    };
+}
 
-
-export class ViewArticle extends Component<{ match: { params: { id: number } } }>{
+class ViewArticleComp extends Component<{ match: { params: { id: number } } , isLogged : boolean, stateID : number}>{
 
     article : Article = new Article();
     error : boolean = false;
@@ -37,19 +44,6 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
                 this.article.category = article.category;
                 this.article.importance = article.importance;
                 this.article.paragraphs = this.article.text.split(/[\r\n]+/);
-            /*
-            .then(articles => {if(articles[0] != null){
-                this.article.id = this.props.match.params.id;
-                this.article.title = articles[0].title;
-                this.article.text = articles[0].text;
-                this.article.image = articles[0].image;
-                this.article.alt = articles[0].alt;
-                this.article.image_text = articles[0].image_text;
-                this.article.creation_date = articles[0].creation_date;
-                this.article.category = articles[0].category;
-                this.article.importance = articles[0].importance;
-                this.article.paragraphs = this.article.text.split(/[\r\n]+/);
-                */
             } else {
                 this.error = true;
             }
@@ -79,8 +73,15 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
                    {this.article.paragraphs.map((p, index) => (
                         <p key={index}>{p}</p>
                     ))}
-                    <Button.Primary onClick={this.edit}>Edit</Button.Primary>
-                    <Button.ModalDanger dataTarget="deleteConfirmBox">Delete article</Button.ModalDanger>
+
+                    {this.props.isLogged ?
+                        <div>
+                            <Button.Primary onClick={this.edit}>Edit</Button.Primary>
+                            <Button.ModalDanger dataTarget="deleteConfirmBox">Delete article</Button.ModalDanger>
+                        </div>
+                        : null
+                    }
+
 
                     <CommentSection comments={this.comments} newComment={this.newComment} onClick={this.publish_comment} onDelete={this.delete_comment}/>
                 </article>
@@ -106,7 +107,7 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
     publish_comment(){
         console.log("publish");
         if(this.newComment.text !== "" && this.newComment.text !== undefined && this.newComment.text !== null) {
-            this.newComment.creator = 1;
+            this.newComment.creator = this.props.stateID;
             this.newComment.article = this.props.match.params.id;
 
             commentService.postComment(this.newComment)
@@ -132,3 +133,5 @@ export class ViewArticle extends Component<{ match: { params: { id: number } } }
             });
     }
 }
+
+export const ViewArticle = connect(mapStateToProps)(ViewArticleComp);
