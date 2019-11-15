@@ -6,6 +6,8 @@ import {Component} from "react-simplified";
 import {Category, articleService} from "../services";
 import {NavLink} from "react-router-dom";
 import {Alert} from "./widgets";
+import {currentUser} from "../sharedState.js";
+
 
 
 const history = createHashHistory();
@@ -46,9 +48,12 @@ export class Menu extends Component {
 
 
     categories : Category[] = [];
+   // currentUser : string = currentUser.cUsername;
 
     mounted(){
         console.log("Meny mounted blir kjørt");
+        console.log("brukernavn " + currentUser.cUsername);
+
         articleService.getCategories()
             .then((categories)=>{
                 this.categories = categories})
@@ -86,7 +91,7 @@ export class Menu extends Component {
                         <button className="btn btn-outline-info my-2 my-sm-0" onClick={this.search}>Search</button>
                     </form>
                     <div className="navbar-nav ">
-                        <NavLink className="nav-link" to="/login">Login</NavLink>
+                        <NavLink className="nav-link" to="/login">{currentUser.cUsername}</NavLink>
                     </div>
                 </div>
             </nav>
@@ -95,7 +100,7 @@ export class Menu extends Component {
 
     search(){
         let searchInputField = document.getElementById('searchInput');
-        if(searchInputField != null) {
+        if(searchInputField != null && searchInputField instanceof HTMLInputElement) {
             let input = searchInputField.value;
             if (input !== "") {
 

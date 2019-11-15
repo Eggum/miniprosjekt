@@ -66,8 +66,6 @@ const autentiser = (req, res, next) => {
 
     console.log("token motatt " + token);
 
-    next();
-    /*
     jwt.verify(token, publicKey, (err, decoded) => {
         if (err) {
             console.log("Token IKKE ok");
@@ -79,11 +77,11 @@ const autentiser = (req, res, next) => {
             next();
         }
     });
-    */
+
 };
 
 
-app.get("/article", [autentiser, (req, res) => {
+app.get("/article", (req, res) => {
 
     var token = req.headers["x-access-token"];
 
@@ -95,7 +93,7 @@ app.get("/article", [autentiser, (req, res) => {
         res.status(status);
         res.json(data);
     })
-}]);
+});
 
 app.get("/article/:articleID", (req, res) => {
     console.log("/article/:articleID: got get request from client");
@@ -210,7 +208,7 @@ app.post("/login", (req, res) => {
         if(data[0][0].validationResult === 1){
             console.log("Username & password ok");
             let token = jwt.sign({ username: req.body.username }, privateKey, {
-                expiresIn: 1
+                expiresIn: 600
             });
             res.json({ jwt: token });
         } else {

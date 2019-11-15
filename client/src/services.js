@@ -103,4 +103,4 @@ class UserService{
 
 export let articleService = new ArticleService();
 export let commentService = new CommentService();
-export let userService = new UserService;
+export let userService = new UserService();

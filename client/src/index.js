@@ -17,8 +17,31 @@ import { Menu } from './widgets/menu.js'
 import { Login } from './pages/login.js'
 import { SignUp } from './pages/signUp.js'
 
+import {currentUser} from "./sharedState.js";
 
 
+/*
+function requireAuth(nextState, replace, next) {
+    console.log("stauts " + currentUser.loggedIn);
+    if (currentUser.loggedIn === true) {
+        replace({
+            pathname: "/login",
+            state: {nextPathname: nextState.location.pathname}
+        });
+        next();
+    }
+    next();
+}
+*/
+/*
+<Route exact path="/home" render={() => (
+  isLoggedIn() ? (
+    <Redirect to="/front"/>
+  ) : (
+    <Home />
+  )
+)}/>
+ */
 
 const root = document.getElementById('root');
 if (root)
