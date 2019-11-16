@@ -7,6 +7,8 @@ import {Article, articleService} from '../services.js';
 import {createHashHistory} from "history";
 import {ConfirmBox} from "../widgets/widgets";
 import {connect} from "react-redux";
+import {LoginPopUp} from "../widgets/loginAgainBox";
+declare var jQuery : any;
 
 const history = createHashHistory();
 
@@ -37,6 +39,7 @@ class NewArticleComp extends Component <{stateID : number}>{
         return(
             <div>
                 <ConfirmBox modalId="cancelNewArticleConfirmBox" modalHeader="Cancel create article" modalBody="Are you sure you want to cancel new article?" onClick={this.cancel}/>
+                <LoginPopUp/>
                 <h1>New article</h1>
                 <Form article={this.article} dataTarget="cancelNewArticleConfirmBox" onSubmit={this.save} />
             </div>
@@ -61,10 +64,24 @@ class NewArticleComp extends Component <{stateID : number}>{
             .postArticle(this.article)
             .then((articleID)=>{
                 history.push('/article/' + +articleID);
-            })
+            })/*
             .catch((error: Error) => {
                 window.scrollTo(0, 0);
                 Alert.danger(error.message);
+            });
+            */
+            .catch((error : Error) => {
+                Alert.danger(error.message);
+                if (error.response.status === 401) {
+                    jQuery('#loginPopUp').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    jQuery('#loginPopUp').modal('show')
+                        // modal.style.display = 'block';
+                        //  modal('show');
+                }
             });
         /*
         if(this.article.title !== undefined && this.form.checkValidity()) {

@@ -9,8 +9,9 @@ import {Article, articleService, Comment, commentService} from "../services.js";
 import {NavLink} from "react-router-dom";
 import {CommentSection} from '../widgets/viewArticleComponents.js';
 import {connect} from "react-redux";
+import {LoginPopUp} from "../widgets/loginAgainBox.js";
 
-
+declare var jQuery : any;
 
 const history = createHashHistory();
 
@@ -67,6 +68,7 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
         return(
             <div>
                     <ConfirmBox modalId="deleteConfirmBox" modalHeader="Delete article" modalBody="Are you sure you want to delete article?" onClick={this.delete}/>
+                    <LoginPopUp/>
                 <article>
                     <img src={this.article.image} alt="Need something here"/>
                     <h1>{this.article.title}</h1>
@@ -104,6 +106,23 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                 console.log(res);
                 commentService.getComments(this.props.match.params.id)
                     .then(comments => this.comments = comments)
+                    .catch((error: Error) => {
+                        Alert.danger(error.message);
+                    });
+            })
+            .catch((error: Error) => {
+                Alert.danger(error.message);
+                if(error.response.status === 401){
+                    jQuery('#loginPopUp').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    jQuery('#loginPopUp').modal('show');
+                   // modal.style.display = 'block';
+                  //  modal('show');
+
+                }
             });
 
     }
@@ -119,6 +138,9 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                     console.log(e);
                     commentService.getComments(this.props.match.params.id)
                         .then(comments => this.comments = comments)
+                        .catch((error: Error) => {
+                            Alert.danger(error.message);
+                        });
                 });
 
         } else {

@@ -4,6 +4,8 @@ import axios from 'axios';
 
 //                localStorage.setItem("myToken", res.jwt);
 
+
+
 axios.interceptors.request.use(
 
     (config) => {
@@ -17,6 +19,19 @@ axios.interceptors.request.use(
     error => {
         Promise.reject(error)
     });
+
+axios.interceptors.response.use(function (response) {
+  //  const logoutUser: () => dispatch(logOut());
+  //  const changeID: newID => dispatch(changeId(newID));
+
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+}, function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    return Promise.reject(error);
+});
 
 export class Article{
     id : number;
@@ -93,12 +108,17 @@ class ArticleService{
     }
 }
 
+type UserResponse = {
+    jwt : string,
+    id : number
+}
+
 class UserService{
     loginUser(user : User){
-        return axios.post<User, void>('http://localhost:4000/login', user).then(response => response.data);
+        return axios.post<User, UserResponse>('http://localhost:4000/login', user).then(response => response.data);
     }
     postUser(user : User){
-        return axios.post<User, void>('http://localhost:4000/User', user).then(response => response.data);
+        return axios.post<User, UserResponse>('http://localhost:4000/User', user).then(response => response.data);
     }
 }
 

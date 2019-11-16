@@ -34,7 +34,7 @@ module.exports = class ArticleDao extends Dao {
     }
 
     createOne(json, callback) {
-        var val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator];
+        let val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator];
         super.query(
             "insert into Article (title, text, image, alt, category, importance, image_text, creator) values (?,?,?,?,?,?,?,?)",
             val,
@@ -43,7 +43,7 @@ module.exports = class ArticleDao extends Dao {
     }
 
     updateOne(json, callback) {
-        var val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator, json.id];
+        let val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator, json.id];
         super.query(
             "update Article set title = ?, text = ?, image = ?, alt = ?, category = ?, importance = ?, image_text = ?, creator = ? where id = ?",
             val,

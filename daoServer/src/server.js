@@ -144,19 +144,24 @@ app.get("/article/:articleID/comment", (req, res) => {
     })
 });
 
-app.post("/article/:articleID/comment", [autentiser, (req, res) => {
+app.post("/article/:articleID/comment", (req, res) => {
    console.log("/article/:articleID/comment got post request from client.");
    commentdao.createOne(req.body, (status, data) => {
        res.status(status);
        res.json(data);
    })
-}]);
+});
 
 app.post("/user", (req, res) => {
     console.log("/user: got post request from client");
     userdao.createOne(req.body, (status, data) => {
-        res.status(status);
-        res.json(data.insertId);
+        userdao.getUserId(req.body.username, (status, data) => {
+            let token = jwt.sign({ username: req.body.username }, privateKey, {
+                expiresIn: 600
+            });
+            res.status(status);
+            res.json({id: data[0].id, jwt: token});
+        });
     })
 });
 
@@ -213,16 +218,13 @@ app.post("/login", (req, res) => {
         if(data[0][0].validationResult === 1){
             console.log("Username & password ok");
             let token = jwt.sign({ username: req.body.username }, privateKey, {
-                expiresIn: 600
+                expiresIn: 2
             });
             userdao.getUserId(req.body.username, (status, data) => {
                 console.log(data);
                 res.status(status);
                 res.json({id: data[0].id, jwt: token});
             });
-
-
-
             //res.json({ jwt: token });
         } else {
             console.log("Username & password not ok");

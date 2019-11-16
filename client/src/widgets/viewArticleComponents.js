@@ -29,14 +29,16 @@ class CommentSectionComp extends Component<{comments : Array<Comment>, newCommen
                 <h2>Comments:</h2>
                 {this.props.comments.map((c : Comment) =>
                          (
-                            <div className="card" key={c.id}>
-                                <div className="card-body">
+                            <div className="card bg-light mb-3" key={c.id}>
+                                <div className="card-header">
                                     <h5 className="card-title">{c.username}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">{c.creation_date}</h6>
+                                </div>
+                                <div className="card-body">
                                     <p className="card-text">{c.text}</p>
+                                    <small className="card-subtitle mb-2 text-muted">{c.creation_date}</small>
                                     {(this.props.isLogged && this.props.stateID === c.creator)
                                         ?
-                                        <Button.Danger onClick={() => this.props.onDelete(c)}>Delete comment</Button.Danger>
+                                        <Button.DangerSmallRight onClick={() => this.props.onDelete(c)}>Delete comment</Button.DangerSmallRight>
                                         :
                                         null
                                     }

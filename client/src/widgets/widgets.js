@@ -6,6 +6,7 @@ import { HashRouter, Route, NavLink } from 'react-router-dom';
 import {createHashHistory} from "history";
 import {Category, Article, articleService} from "../services.js";
 import {Button} from "./buttons";
+import {User} from "../services";
 
 
 const history = createHashHistory();
@@ -140,7 +141,7 @@ export class Card extends Component<{ title: React.Node, image: React.Node, id: 
                 <img src={this.props.image} className="card-img-top" alt={this.props.alt}/>
                 <div className="card-body">
                     <h5 className="card-title">{this.props.title}</h5>
-                    <NavLink to={'/article/' + +this.props.id} className="stretched-link">Les mer</NavLink>
+                    <NavLink to={'/article/' + +this.props.id} className="stretched-link">Read more</NavLink>
                 </div>
             </div>
         );
@@ -173,7 +174,6 @@ export class ConfirmBox extends Component<{ modalId : React.Node, modalHeader : 
         )
     }
 }
-
 
 /**
  * Renders alert messages using Bootstrap classes.
@@ -233,3 +233,5 @@ export class Alert extends Component {
         });
     }
 }
+
+
