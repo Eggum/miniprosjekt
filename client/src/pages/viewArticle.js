@@ -7,7 +7,7 @@ import {Button} from '../widgets/buttons.js';
 import {createHashHistory} from "history";
 import {Article, articleService, Comment, commentService} from "../services.js";
 import {NavLink} from "react-router-dom";
-import {CommentSection} from '../widgets/viewArticleComponents.js';
+import {CommentSection} from '../widgets/commentSection.js';
 import {connect} from "react-redux";
 import {LoginPopUp} from "../widgets/loginAgainBox.js";
 import type {ErrorResponse} from "../types";

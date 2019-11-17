@@ -59,7 +59,6 @@ window.onscroll = function() {
 
 class MenuBar extends Component <prop>{
     categories : Category[] = [];
-   // currentUser : string = currentUser.cUsername;
 
     mounted(){
         console.log("brukernavn " + currentUser.cUsername);
@@ -81,7 +80,6 @@ class MenuBar extends Component <prop>{
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <NavLink className="nav-link" to="/article/new">New article</NavLink>
-                        <NavLink className="nav-link" to="/courses">Nothing</NavLink>
                     </div>
                     <div className="nav-item dropdown navbar-nav">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

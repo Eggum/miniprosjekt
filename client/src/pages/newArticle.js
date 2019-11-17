@@ -22,7 +22,7 @@ function mapStateToProps(state) {
     };
 }
 
-class NewArticleComp extends Component <{stateID : number}>{
+class NewArticleComp extends Component <{stateID : number, isLogged : boolean}>{
     article : Article = new Article();
     //<form onSubmit = {this.save} className="needs-validation" ref={e => (this.form = e)}>
 /*
@@ -35,11 +35,23 @@ class NewArticleComp extends Component <{stateID : number}>{
             .catch((error: Error) => Alert.danger(error.message));
     }
 */
+
+    mounted(){
+        if(!this.props.isLogged){
+            jQuery('#loginPopUp').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            jQuery('#loginPopUp').modal('show')
+        }
+    }
+
     render(){
         return(
             <div>
                 <ConfirmBox modalId="cancelNewArticleConfirmBox" modalHeader="Cancel create article" modalBody="Are you sure you want to cancel new article?" onClick={this.cancel}/>
-                <LoginPopUp/>
+                <LoginPopUp ifCancel={this.cancel}/>
                 <h1>New article</h1>
                 <Form article={this.article} dataTarget="cancelNewArticleConfirmBox" onSubmit={this.save} />
             </div>

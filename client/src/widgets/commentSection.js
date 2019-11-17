@@ -35,7 +35,7 @@ class CommentSectionComp extends Component<{comments : Array<Comment>, newCommen
                                 </div>
                                 <div className="card-body">
                                     <p className="card-text">{c.text}</p>
-                                    <small className="card-subtitle mb-2 text-muted">{c.creation_date}</small>
+                                    <small className="card-subtitle mb-2 text-muted">{new Date(c.creation_date).toLocaleString()}</small>
                                     {(this.props.isLogged && this.props.stateID === c.creator)
                                         ?
                                         <Button.DangerSmallRight onClick={() => this.props.onDelete(c)}>Delete comment</Button.DangerSmallRight>

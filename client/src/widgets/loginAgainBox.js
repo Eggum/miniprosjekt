@@ -15,7 +15,8 @@ type props = {
     changeName : (string) => mixed,
     loginUser: () => mixed,
     logoutUser: () => mixed,
-    changeID: (number) => mixed
+    changeID: (number) => mixed,
+    ifCancel: () => mixed
 }
 
 // maps state to component as props.
@@ -83,10 +84,12 @@ class LoginAgainBox extends Component<props>{
     }
 
     cancel(){
-        Alert.warning("You are logged out.");
+        Alert.warning("You are not logged in.");
         this.props.changeName("Anonym");
         this.props.changeID(1);
         this.props.logoutUser();
+
+        this.props.ifCancel();
     }
 
     login(event : SyntheticInputEvent<HTMLFormElement>){
