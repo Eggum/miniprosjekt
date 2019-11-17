@@ -1,8 +1,3 @@
-// @flow
-
-type Error = {
-    error : string
-}
 
 module.exports = class Dao {
 //    pool;
