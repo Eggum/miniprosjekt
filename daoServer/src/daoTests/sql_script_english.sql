@@ -10,7 +10,7 @@ CREATE table User(
                    id INT AUTO_INCREMENT PRIMARY KEY,
                    username varchar(30) UNIQUE,
                    password varchar(256),
-                   salt BINARY(32)
+                   salt BINARY(255)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE table Category(
   category VARCHAR(30) PRIMARY KEY
@@ -53,7 +53,7 @@ CREATE PROCEDURE user_create_user(
   IN password VARCHAR(30)
 )
 BEGIN
-  DECLARE salt_pw BINARY(32);
+  DECLARE salt_pw BINARY(255);
   DECLARE hashed_pwd VARCHAR(256);
 
   SET salt_pw = RAND();
@@ -67,7 +67,7 @@ END;
 CREATE PROCEDURE validate_user(IN uname VARCHAR(30), IN passwordIn VARCHAR(30))
 BEGIN
 
-  DECLARE salt_pw BINARY(32);
+  DECLARE salt_pw BINARY(255);
   DECLARE hashed_pwd VARCHAR(256);
   DECLARE stored_pwd VARCHAR(256);
 

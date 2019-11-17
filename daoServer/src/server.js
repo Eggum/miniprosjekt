@@ -1,12 +1,15 @@
+// @flow
+
 var http = require('http');
 var bodyParser = require("body-parser");
 var jwt = require("jsonwebtoken");
-
-
-
 var express = require("express");
 var mysql = require("mysql");
 var app = express();
+
+// Burde vært ekte sertifikat, lest fra config...
+let privateKey = (publicKey = "shhhhhverysecret");
+
 const ArticleDao = require("./dao/articledao.js");
 const CommentDao = require("./dao/commentdao.js");
 const UserDao = require("./dao/userdao.js");
@@ -38,31 +41,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 
-
-/*
-app.use("/api", (req, res, next) => {
-    var token = req.headers["x-access-token"];
-
-    console.log("token motatt " + token);
-    res.status(200);
-    next();
-/*
-        jwt.verify(token, publicKey, (err, decoded) => {
-            if (err) {
-                console.log("Token IKKE ok");
-                res.status(401);
-                res.json({ error: "Not authorized" });
-            } else {
-                console.log("Token ok: " + decoded.brukernavn);
-                res.status(200);
-                next();
-            }
-        });
-});
-*/
-
 const autentiser = (req, res, next) => {
-    var token = req.headers["x-access-token"];
+    let token = req.headers["x-access-token"];
 
     console.log("token motatt " + token);
 
@@ -81,9 +61,9 @@ const autentiser = (req, res, next) => {
 };
 
 
-app.get("/article", (req, res) => {
+app.get("/article", (req, res : express$Response) => {
 
-    var token = req.headers["x-access-token"];
+    let token = req.headers["x-access-token"];
 
     console.log("token motatt art " + token);
 
@@ -99,6 +79,7 @@ app.get("/article/:articleID", (req, res) => {
     console.log("/article/:articleID: got get request from client");
     articledao.getOne(req.params.articleID, (status, data) => {
         res.status(status);
+        console.log(data[0]);
         res.json(data[0]);
     })
 });
@@ -121,6 +102,7 @@ app.post("/article", [autentiser, (req, res) => {
 
 app.put("/article/:articleID", [autentiser, (req, res) => {
    console.log("/article/:articleID got put request from client");
+   console.log(req.body);
    articledao.updateOne(req.body, (status, data) => {
        res.status(status);
        res.json(data);
@@ -183,8 +165,6 @@ var server = app.listen(4000);
 
 
 
-// Burde vært ekte sertifikat, lest fra config...
-let privateKey = (publicKey = "shhhhhverysecret");
 
 
 app.post("/token", (req, res) => {
@@ -218,7 +198,7 @@ app.post("/login", (req, res) => {
         if(data[0][0].validationResult === 1){
             console.log("Username & password ok");
             let token = jwt.sign({ username: req.body.username }, privateKey, {
-                expiresIn: 2
+                expiresIn: 600
             });
             userdao.getUserId(req.body.username, (status, data) => {
                 console.log(data);

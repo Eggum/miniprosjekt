@@ -10,6 +10,7 @@ import {NavLink} from "react-router-dom";
 import {CommentSection} from '../widgets/viewArticleComponents.js';
 import {connect} from "react-redux";
 import {LoginPopUp} from "../widgets/loginAgainBox.js";
+import type {ErrorResponse} from "../types";
 
 declare var jQuery : any;
 
@@ -72,7 +73,7 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                 <article>
                     <img src={this.article.image} alt="Need something here"/>
                     <h1>{this.article.title}</h1>
-                    <p>{this.article.creation_date}</p>
+                    <p>{new Date(this.article.creation_date).toLocaleString()}</p>
                     <p>Author: {this.article.username}</p>
                     <NavLink to={'/article/' + this.article.category}>{this.article.category}</NavLink>
                     <hr/>
@@ -99,6 +100,7 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
         history.push('/article/' + +this.props.match.params.id + '/edit');
     }
 
+
     delete_comment(comment : Comment){
         console.log("sletter; " + comment.text);
         commentService.deleteComment(comment)
@@ -110,8 +112,8 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                         Alert.danger(error.message);
                     });
             })
-            .catch((error: Error) => {
-                Alert.danger(error.message);
+            .catch((error: ErrorResponse) => {
+                //Alert.danger(error.message);
                 if(error.response.status === 401){
                     jQuery('#loginPopUp').modal({
                         backdrop: 'static',
@@ -119,12 +121,8 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                     });
 
                     jQuery('#loginPopUp').modal('show');
-                   // modal.style.display = 'block';
-                  //  modal('show');
-
                 }
             });
-
     }
 
     publish_comment(){
@@ -154,8 +152,16 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
             .then(()=>{
                 Alert.success("Article successfully deleted");
                 history.push('/')})
-            .catch((error: Error) => {
+            .catch((error : ErrorResponse) => {
                 Alert.danger(error.message);
+                if (error.response.status === 401) {
+                    jQuery('#loginPopUp').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    jQuery('#loginPopUp').modal('show')
+                }
             });
     }
 }

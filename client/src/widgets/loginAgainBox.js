@@ -3,16 +3,18 @@
 import * as React from 'react';
 import {Component} from "react-simplified";
 import {User, userService} from "../services";
-import {NavLink} from "react-router-dom";
 import {Alert} from "./widgets";
 import {changeId, changeName, logIn, logOut} from "../redux/actions";
 import {connect} from "react-redux";
+declare var jQuery : any;
 
-type prop = {
+
+type props = {
     stateName : string,
     isLogged : boolean,
     changeName : (string) => mixed,
     loginUser: () => mixed,
+    logoutUser: () => mixed,
     changeID: (number) => mixed
 }
 
@@ -34,7 +36,7 @@ function mapDispatchToProps(dispatch){
     };
 }
 
-class LoginAgainBox extends Component<{ modalId : React.Node, modalBody : React.Node, onClick : () => mixed, children?: React.Node }>{
+class LoginAgainBox extends Component<props>{
 
     user : User = new User();
 
@@ -81,7 +83,8 @@ class LoginAgainBox extends Component<{ modalId : React.Node, modalBody : React.
     }
 
     cancel(){
-        this.props.changeName("anonym");
+        Alert.warning("You are logged out.");
+        this.props.changeName("Anonym");
         this.props.changeID(1);
         this.props.logoutUser();
     }
@@ -100,12 +103,18 @@ class LoginAgainBox extends Component<{ modalId : React.Node, modalBody : React.
                     this.props.changeID(res.id);
                     this.props.loginUser();
                 }
+                jQuery('#loginPopUp').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                });
+
+                jQuery('#loginPopUp').modal('hide');
             })
             .catch((error: Error) => {
                 this.props.changeName("anonym");
                 this.props.changeID(1);
                 this.props.logoutUser();
-                Alert.danger("You are not logged in");
+                Alert.danger("Wrong username or password");
             });
 
     }

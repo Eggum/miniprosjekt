@@ -8,6 +8,7 @@ import {createHashHistory} from "history";
 import {ConfirmBox} from "../widgets/widgets";
 import {connect} from "react-redux";
 import {LoginPopUp} from "../widgets/loginAgainBox";
+import type {ErrorResponse} from "../types";
 declare var jQuery : any;
 
 const history = createHashHistory();
@@ -23,7 +24,6 @@ function mapStateToProps(state) {
 
 class NewArticleComp extends Component <{stateID : number}>{
     article : Article = new Article();
-    //form = null;
     //<form onSubmit = {this.save} className="needs-validation" ref={e => (this.form = e)}>
 /*
     categories : Category[] = [];
@@ -70,7 +70,7 @@ class NewArticleComp extends Component <{stateID : number}>{
                 Alert.danger(error.message);
             });
             */
-            .catch((error : Error) => {
+            .catch((error : ErrorResponse) => {
                 Alert.danger(error.message);
                 if (error.response.status === 401) {
                     jQuery('#loginPopUp').modal({
@@ -79,8 +79,6 @@ class NewArticleComp extends Component <{stateID : number}>{
                     });
 
                     jQuery('#loginPopUp').modal('show')
-                        // modal.style.display = 'block';
-                        //  modal('show');
                 }
             });
         /*
@@ -101,7 +99,6 @@ class NewArticleComp extends Component <{stateID : number}>{
         }
         */
     }
-
     cancel(){
         history.goBack();
     }

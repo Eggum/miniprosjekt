@@ -2,7 +2,6 @@
 
 
 import ReactDOM from "react-dom";
-
 import * as React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 import {createHashHistory} from "history";
@@ -19,10 +18,7 @@ import { SignUp } from './pages/signUp.js';
 import { createStore } from 'redux';
 import allReducer from './redux/reducers';
 import { Provider } from 'react-redux';
-import {Ost} from './ost.js'
-
-import {currentUser} from "./sharedState.js";
-
+import { Footer} from "./widgets/footer";
 
 
 const root = document.getElementById('root');
@@ -46,6 +42,7 @@ if (root)
                 <Route exact path="/article/:id(\d+)" component={ViewArticle} />
                 <Route exact path="/article/:id(\d+)/edit" component={EditArticle} />
                 <Route exact path="/article/:category(\D+)" component={ArticleByCategory} />
+                <Footer/>
             </div>
         </HashRouter>
         </Provider>

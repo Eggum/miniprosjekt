@@ -33,6 +33,15 @@ class ButtonDangerSmallFloatRight extends Component<{ onClick : () => mixed, chi
     }
 }
 
+class ButtonRound extends Component<{ onClick : () => mixed, children?: React.Node }>{
+    render(){
+        return(
+            <button type="button" className="buttonRound" onClick={this.props.onClick}>
+                {this.props.children}
+            </button>
+        )
+    }
+}
 
 class ButtonModalDanger extends Component<{ dataTarget: string, children?: React.Node }>{
     render(){
@@ -45,6 +54,7 @@ class ButtonModalDanger extends Component<{ dataTarget: string, children?: React
 }
 
 export class Button{
+    static Round = ButtonRound;
     static Danger = ButtonDanger;
     static Primary = ButtonPrimary;
     static ModalDanger = ButtonModalDanger;

@@ -11,7 +11,7 @@ import {useSelector} from 'react-redux';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {changeId, logIn, logOut} from "../redux/actions";
+import {changeId, logOut} from "../redux/actions";
 
 const history = createHashHistory();
 

@@ -1,10 +1,10 @@
 // @flow
 
 import axios from 'axios';
+import type {UserResponse} from "./types";
+
 
 //                localStorage.setItem("myToken", res.jwt);
-
-
 
 axios.interceptors.request.use(
 
@@ -67,6 +67,8 @@ export class User{
     password : string;
 }
 
+
+
 class CommentService{
     getComments(id: number){
         return axios.get<Comment[]>('http://localhost:4000/article/' + id + '/comment').then(response => response.data);
@@ -106,11 +108,6 @@ class ArticleService{
     postArticle(article : Article){
         return axios.post<Article, void>('http://localhost:4000/article/', article).then(response => response.data);
     }
-}
-
-type UserResponse = {
-    jwt : string,
-    id : number
 }
 
 class UserService{
