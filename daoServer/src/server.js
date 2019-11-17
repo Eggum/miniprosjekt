@@ -1,4 +1,3 @@
-// @flow
 
 var http = require('http');
 var bodyParser = require("body-parser");
@@ -7,14 +6,16 @@ var express = require("express");
 var mysql = require("mysql");
 var app = express();
 
-// Burde vært ekte sertifikat, lest fra config...
-let privateKey = (publicKey = "shhhhhverysecret");
-
 const ArticleDao = require("./dao/articledao.js");
 const CommentDao = require("./dao/commentdao.js");
 const UserDao = require("./dao/userdao.js");
 const CategoryDao = require("./dao/categorydao.js");
 
+
+
+// Burde vært ekte sertifikat, lest fra config...
+let publicKey;
+let privateKey = (publicKey = "shhhhhverysecret");
 
 var pool = mysql.createPool({
     connectionLimit: 2,
@@ -61,7 +62,7 @@ const autentiser = (req, res, next) => {
 };
 
 
-app.get("/article", (req, res : express$Response) => {
+app.get("/article", (req, res) => {
 
     let token = req.headers["x-access-token"];
 
@@ -157,9 +158,6 @@ app.delete("/article/:articleID/comment/:commentID", [autentiser, (req, res) => 
 
 
 var server = app.listen(4000);
-
-
-
 
 
 
