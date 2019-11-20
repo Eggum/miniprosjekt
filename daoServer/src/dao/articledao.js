@@ -33,7 +33,7 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
-    createOne(json, callback : () => mixed) {
+    createOne(json : {title : string, text : string, image : string, alt : string, category : string, importance : number, image_text : string, creator : number}, callback : () => mixed) {
         let val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator];
         super.query(
             "insert into Article (title, text, image, alt, category, importance, image_text, creator) values (?,?,?,?,?,?,?,?)",
@@ -42,7 +42,7 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
-    updateOne(json, callback : () => mixed) {
+    updateOne(json : {title : string, text : string, image : string, alt : string, category : string, importance : number, image_text : string, creator : number, id : number}, callback : () => mixed) {
         let val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator, json.id];
         super.query(
             "update Article set title = ?, text = ?, image = ?, alt = ?, category = ?, importance = ?, image_text = ?, creator = ? where id = ?",

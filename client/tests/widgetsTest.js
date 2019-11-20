@@ -12,7 +12,7 @@ import {ConfirmBox} from "../src/widgets/widgets";
 describe('Confirm box tests', () => {
     const test = () => console.log("test");
 
-    const wrapper = shallow(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>)
+    let wrapper = shallow(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
     it('initially', () => {
         let instance = ConfirmBox.instance();
         expect(typeof instance).toEqual('object');
@@ -26,13 +26,13 @@ describe('Confirm box tests', () => {
 
 
     it('after box', done => {
-        ConfirmBox;
-
+        wrapper = mount(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
+        
         // Wait for the Alert component to finish drawing
         setTimeout(() => {
             let instance = ConfirmBox.instance();
             expect(typeof instance).toEqual('object');
-            
+
             expect(wrapper.find('button.btn btn-secondary')).toHaveLength(1);
             expect(wrapper.find('button.close')).toHaveLength(1);
             expect(wrapper.find('button.btn btn-primary')).toHaveLength(1);
