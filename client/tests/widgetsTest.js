@@ -19,8 +19,41 @@ describe('Confirm box tests', () => {
   //      if (instance) expect(instance.modalId).toEqual([]);
 
         expect(wrapper.find('button.btn btn-secondary')).toHaveLength(0);
+        expect(wrapper.find('button.close')).toHaveLength(0);
+        expect(wrapper.find('button.btn btn-primary')).toHaveLength(0);
+
     });
 
+
+    it('after box', done => {
+        ConfirmBox;
+
+        // Wait for the Alert component to finish drawing
+        setTimeout(() => {
+            let instance = ConfirmBox.instance();
+            expect(typeof instance).toEqual('object');
+            
+            expect(wrapper.find('button.btn btn-secondary')).toHaveLength(1);
+            expect(wrapper.find('button.close')).toHaveLength(1);
+            expect(wrapper.find('button.btn btn-primary')).toHaveLength(1);
+
+
+            done();
+        });
+    });
+
+
+    it('after clicking close button', () => {
+        wrapper.find('button.btn btn-secondary').simulate('click');
+
+        let instance = Alert.instance();
+        expect(typeof instance).toEqual('object');
+
+
+        expect(wrapper.find('button.btn btn-secondary')).toHaveLength(0);
+        expect(wrapper.find('button.close')).toHaveLength(0);
+        expect(wrapper.find('button.btn btn-primary')).toHaveLength(0);
+    });
 });
 
 

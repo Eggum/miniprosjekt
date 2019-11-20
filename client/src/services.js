@@ -1,6 +1,6 @@
 // @flow
 
-import axios, {AxiosRequestConfig} from 'axios';
+import axios from 'axios';
 import type {UserResponse} from "./types";
 
 
@@ -8,7 +8,7 @@ import type {UserResponse} from "./types";
 
 axios.interceptors.request.use(
 
-    (config: AxiosRequestConfig) => {
+    (config: any) => {
         const token = localStorage.getItem("myToken");
         if (token) {
             config.headers['x-access-token'] = token;
