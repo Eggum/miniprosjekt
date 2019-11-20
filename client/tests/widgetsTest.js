@@ -7,14 +7,31 @@ import { shallow, mount } from 'enzyme';
 import {ConfirmBox} from "../src/widgets/widgets";
 
 
-/*
-describe('bøabøa', () =>{
+
+describe('Confirm box tests', () =>{
     const wrapper = mount(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
     it('initially', () => {
-        expect(typeof wrapper)
-    })
+        expect(typeof wrapper).toEqual('object');
+        expect(wrapper.find('button.btn btn-secondary')).toHaveLength(1);
+        expect(wrapper.find('button.close')).toHaveLength(1);
+        expect(wrapper.find('button.btn btn-primary')).toHaveLength(1);
+    });
+
+    it('after clicking close button', () => {
+        wrapper.find('button.btn btn-secondary').simulate('click');
+
+        let instance = Alert.instance();
+        expect(typeof instance).toEqual('object');
+
+
+        expect(wrapper.find('button.btn btn-secondary')).toHaveLength(0);
+        expect(wrapper.find('button.close')).toHaveLength(0);
+        expect(wrapper.find('button.btn btn-primary')).toHaveLength(0);
+    });
 });
 
+
+/*
 describe('Confirm box tests', () => {
     const test = () => console.log("test");
 
