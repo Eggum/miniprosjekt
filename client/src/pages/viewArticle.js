@@ -88,8 +88,6 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
                         </div>
                         : null
                     }
-
-
                     <CommentSection comments={this.comments} newComment={this.newComment} onClick={this.publish_comment} onDelete={this.delete_comment}/>
                 </article>
             </div>

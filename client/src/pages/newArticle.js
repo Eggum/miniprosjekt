@@ -93,23 +93,6 @@ class NewArticleComp extends Component <{stateID : number, isLogged : boolean}>{
                     jQuery('#loginPopUp').modal('show')
                 }
             });
-        /*
-        if(this.article.title !== undefined && this.form.checkValidity()) {
-
-            this.article.importance = 1;
-            this.article.creator = "user2";
-
-            articleService
-                .postArticle(this.article)
-                .then((articleID)=>{
-                    history.push('/article/' + articleID);
-                })
-                .catch((error: Error) => Alert.danger(error.message));
-        } else {
-            console.log("HEI HEI HEI " + this.form.checkValidity());
-            window.scrollTo(0, 0);
-        }
-        */
     }
     cancel(){
         history.goBack();

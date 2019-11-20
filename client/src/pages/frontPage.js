@@ -33,13 +33,13 @@ export class Home extends Component {
                 <Carousel>
                     {this.articles.filter(a => a.importance === 1).map((a, index) =>
                         index === 1 ?
-                            <NavLink key = {index} style={{'backgroundImage' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item active ostepop">
-                                <h3 className ="RENAME-ME-PLZ">{a.title}</h3>
-                                <h4 className ="RENAME-ME-PLZ">{new Date(a.creation_date).toLocaleString()}</h4></NavLink>
+                            <NavLink key = {index} style={{'backgroundImage' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item active carouselBackground">
+                                <h3 className ="carouselText">{a.title}</h3>
+                                <h4 className ="carouselText">{new Date(a.creation_date).toLocaleString()}</h4></NavLink>
                             :
-                            <NavLink key = {index} style={{'backgroundImage' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item ostepop">
-                                <h3 className ="RENAME-ME-PLZ">{a.title}</h3>
-                                <h4 className ="RENAME-ME-PLZ">{new Date(a.creation_date).toLocaleString()}</h4></NavLink>
+                            <NavLink key = {index} style={{'backgroundImage' : 'url("' + a.image + '")'}}  to={"/article/" + a.id} className="carousel-item carouselBackground">
+                                <h3 className ="carouselText">{a.title}</h3>
+                                <h4 className ="carouselText">{new Date(a.creation_date).toLocaleString()}</h4></NavLink>
                 )}
                 </Carousel>
                 <div id="card-column-wrapper">

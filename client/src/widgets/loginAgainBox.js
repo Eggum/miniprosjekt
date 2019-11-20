@@ -6,7 +6,9 @@ import {User, userService} from "../services";
 import {Alert} from "./widgets";
 import {changeId, changeName, logIn, logOut} from "../redux/actions";
 import {connect} from "react-redux";
+import {createHashHistory} from "history";
 declare var jQuery : any;
+const history = createHashHistory();
 
 
 type props = {
@@ -49,7 +51,7 @@ class LoginAgainBox extends Component<props>{
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Please login again</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">Please login</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.cancel}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -75,6 +77,7 @@ class LoginAgainBox extends Component<props>{
                             </form>
                         </div>
                         <div className="modal-footer">
+                            <button type="button" className="btn btn-link" data-dismiss="modal" onClick={this.signUp}>Sign up</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.cancel}>Cancel</button>
                         </div>
                     </div>
@@ -83,13 +86,24 @@ class LoginAgainBox extends Component<props>{
         )
     }
 
+    signUp(){
+        this.props.changeName("Anonym");
+        this.props.changeID(1);
+        this.props.logoutUser();
+
+        history.push('/signUp');
+    }
+
     cancel(){
         Alert.warning("You are not logged in.");
         this.props.changeName("Anonym");
         this.props.changeID(1);
         this.props.logoutUser();
 
-        this.props.ifCancel();
+        // ifCancel if a function sent in in case the program needs extra handling when closing the loginAgainBox.
+        if(this.props.ifCancel) {
+            this.props.ifCancel();
+        }
     }
 
     login(event : SyntheticInputEvent<HTMLFormElement>){
@@ -99,7 +113,6 @@ class LoginAgainBox extends Component<props>{
         userService.loginUser(this.user)
             .then(res => {
                 if(res != null){
-                    //    console.log("resultat: " + res.jwt);
                     Alert.info("You are logged in");
                     localStorage.setItem("myToken", res.jwt);
                     this.props.changeName(this.user.username);
@@ -119,7 +132,6 @@ class LoginAgainBox extends Component<props>{
                 this.props.logoutUser();
                 Alert.danger("Wrong username or password");
             });
-
     }
 }
 

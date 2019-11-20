@@ -6,7 +6,7 @@ module.exports = class Dao {
         this.pool = pool;
     }
 
-    query(sql, params, callback) {
+    query(sql : string, params, callback) {
         this.pool.getConnection((err, connection) => {
             console.log("dao: connected to database");
             if (err) {

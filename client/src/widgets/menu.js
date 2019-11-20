@@ -6,9 +6,7 @@ import {Component} from "react-simplified";
 import {Category, articleService} from "../services";
 import {NavLink} from "react-router-dom";
 import {Alert} from "./widgets";
-import {currentUser} from "../sharedState.js";
 import {useSelector} from 'react-redux';
-
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {changeId, logOut} from "../redux/actions";
@@ -41,28 +39,26 @@ type prop = {
     changeID: (number) => mixed
 }
 
-let prevScrollpos = window.pageYOffset;
+let prevScrollPosition = window.pageYOffset;
 
 window.onscroll = function() {
-    let currentScrollPos = window.pageYOffset;
+    let currentScrollPosition = window.pageYOffset;
     let navigationBar = document.getElementById("navigationBar");
 
     if(navigationBar !== null) {
-        if (prevScrollpos > currentScrollPos) {
+        if (prevScrollPosition > currentScrollPosition) {
             navigationBar.style.top = "0";
         } else {
             navigationBar.style.top = "-50px";
         }
     }
-    prevScrollpos = currentScrollPos;
+    prevScrollPosition = currentScrollPosition;
 };
 
 class MenuBar extends Component <prop>{
     categories : Category[] = [];
 
     mounted(){
-        console.log("brukernavn " + currentUser.cUsername);
-
         articleService.getCategories()
             .then((categories)=>{
                 this.categories = categories})
@@ -121,7 +117,6 @@ class MenuBar extends Component <prop>{
             </nav>
         );
     }
-    //                        <NavLink className="nav-link" to="/login">{this.props.isLogged ? this.props.stateName : "Login"}</NavLink>
 
     logout(){
         this.props.changeID(1);
@@ -139,13 +134,6 @@ class MenuBar extends Component <prop>{
         }
     }
 }
-
-
-
-
-
-
-
 
 
 

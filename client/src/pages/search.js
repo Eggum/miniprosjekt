@@ -40,16 +40,4 @@ export class Search extends Component <{ match: { params: { search: string } } }
             )
         }
     }
-/*
-
-            this.articles.length() == 0 ?
-                <P> </p>
-                :
-            <div>
-                <div className="card-columns">
-                    {this.articles.map(s => <Card key={s.id} title={s.title} description={s.text} image={s.image} id={s.id} alt={s.alt}/>)
-                    }
-                </div>
-            </div>
- */
 }

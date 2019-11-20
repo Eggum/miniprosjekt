@@ -53,10 +53,21 @@ class ButtonModalDanger extends Component<{ dataTarget: string, children?: React
     }
 }
 
+class ButtonSubmit extends Component<{children?: React.Node}>{
+    render(){
+        return(
+            <button className="btn btn-primary" type="submit">
+                {this.props.children}
+            </button>
+        )
+    }
+}
+
 export class Button{
     static Round = ButtonRound;
     static Danger = ButtonDanger;
     static Primary = ButtonPrimary;
     static ModalDanger = ButtonModalDanger;
     static DangerSmallRight = ButtonDangerSmallFloatRight;
+    static Submit = ButtonSubmit;
 }

@@ -5,7 +5,6 @@ export type ErrorResponse = {
     message : string
 }
 
-
 export type UserResponse = {
     jwt : string,
     id : number

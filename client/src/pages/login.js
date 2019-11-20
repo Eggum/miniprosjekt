@@ -62,17 +62,13 @@ class LoginComp extends Component<prop> {
                         }}/>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary" type="submit">Login</button>
+                        <Button.Submit>Login</Button.Submit>
                         <NavLink to="/signUp"> Sign up </NavLink>
                     </div>
                 </form>
             </div>
         )
     }
-    /*
-    event : SyntheticInputEvent<HTMLFormElement>){
-        event.preventDefault();
-     */
 
     login(event : SyntheticInputEvent<HTMLFormElement>){
         event.preventDefault();
@@ -81,10 +77,8 @@ class LoginComp extends Component<prop> {
         userService.loginUser(this.user)
             .then(res => {
                 if(res != null){
-            //    console.log("resultat: " + res.jwt);
                 localStorage.setItem("myToken", res.jwt);
                 }
-            //    console.log("HEI DETTE ER ID? " + res.id);
                 this.props.changeName(this.user.username);
                 this.props.changeID(res.id);
                 this.props.loginUser();
@@ -93,12 +87,8 @@ class LoginComp extends Component<prop> {
             .catch((error: Error) => {
                 Alert.danger(error.message);
             });
-
     }
 }
-
-
-
 
 
 export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComp);
