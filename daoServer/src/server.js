@@ -1,3 +1,4 @@
+// @ flow
 
 var http = require('http');
 var bodyParser = require("body-parser");
@@ -17,7 +18,7 @@ const CategoryDao = require("./dao/categorydao.js");
 let publicKey;
 let privateKey = (publicKey = "shhhhhverysecret");
 
-var pool = mysql.createPool({
+const pool : mysql.Pool = mysql.createPool({
     connectionLimit: 2,
     host: "mysql.stud.iie.ntnu.no",
     user: "randeggu",
@@ -32,7 +33,7 @@ let userdao = new UserDao(pool);
 let categorydao = new CategoryDao(pool);
 
 
-app.use((req, res, next) => {
+app.use((req : express$Request, res : express$Response, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
@@ -42,7 +43,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 
-const autentiser = (req, res, next) => {
+const autentiser = (req : express$Request, res : express$Response, next) => {
     let token = req.headers["x-access-token"];
 
     console.log("token motatt " + token);

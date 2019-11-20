@@ -22,6 +22,7 @@ test:
     - cd ../client
     - npm install
     - npm test
+    - flow check src
 #    - cd ../Client && npm install && npm test
   artifacts:
     paths:
