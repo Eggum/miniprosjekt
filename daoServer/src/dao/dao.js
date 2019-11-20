@@ -1,3 +1,4 @@
+// @flow
 
 module.exports = class Dao {
 //    pool;
