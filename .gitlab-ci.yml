@@ -10,30 +10,34 @@ variables:
   MYSQL_ROOT_PASSWORD: secret
 
 
-test:
+test-client:
+  script:
+    - npm install -g flow-bin
+    - cd client
+    - npm install
+    - npm test
+    - flow check src
+  artifacts:
+    paths:
+      - client/coverage
+
+
+test-server:
   script:
     - npm install -g flow-bin
     - cd daoServer
     - npm install
     - npm test
     - flow check src
-#    - cd daoServer && npm install && npm test && flow check src
-#    - cd ../client && npm install && npm test && flow check src
-    - cd ../client
-    - npm install
-    - npm test
-    - flow check src
-#    - cd ../Client && npm install && npm test
   artifacts:
     paths:
       - daoServer/coverage
-      - client/coverage
-
 
 pages:
   stage: deploy
   dependencies:
-    - test
+    - test-server
+    - test-client
   script:
     - mkdir .public
     - mkdir .public/client

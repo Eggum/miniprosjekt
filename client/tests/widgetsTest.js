@@ -7,6 +7,7 @@ import { shallow, mount } from 'enzyme';
 import {ConfirmBox} from "../src/widgets/widgets";
 
 
+/*
 describe('bøabøa', () =>{
     const wrapper = mount(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
     it('initially', () => {
@@ -61,7 +62,7 @@ describe('Confirm box tests', () => {
     });
 });
 
-
+*/
 
 describe('Alert tests', () => {
     const wrapper = shallow(<Alert />);
