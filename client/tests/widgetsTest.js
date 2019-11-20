@@ -7,7 +7,12 @@ import { shallow, mount } from 'enzyme';
 import {ConfirmBox} from "../src/widgets/widgets";
 
 
-
+describe('bøabøa', () =>{
+    const wrapper = mount(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
+    it('initially', () => {
+        expect(typeof wrapper)
+    })
+});
 
 describe('Confirm box tests', () => {
     const test = () => console.log("test");
@@ -27,7 +32,7 @@ describe('Confirm box tests', () => {
 
     it('after box', done => {
         wrapper = mount(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
-        
+
         // Wait for the Alert component to finish drawing
         setTimeout(() => {
             let instance = ConfirmBox.instance();

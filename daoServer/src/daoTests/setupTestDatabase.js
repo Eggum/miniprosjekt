@@ -1,6 +1,4 @@
-
 const regeneratorRuntime = require("regenerator-runtime/runtime");
-
 var mysql = require("mysql");
 //const runsqlfile = require("./runsqlfile.js");
 const runsqlfile = require("./runsqlfileV2");
@@ -8,20 +6,6 @@ const runsqlfile = require("./runsqlfileV2");
 
 module.exports = async () => {
 
-    /*
-    var pool = mysql.createPool({
-        connectionLimit: 2,
-        host: "mysql.stud.iie.ntnu.no",
-        user: "randeggu",
-        password: "luOQ0NQQ",
-        database: "randeggu",
-        debug: false,
-        multipleStatements: true
-
-    });
-    */
-
-// GitLab CI Pool
     var pool = mysql.createPool({
         connectionLimit: 1,
         host: "mysql",

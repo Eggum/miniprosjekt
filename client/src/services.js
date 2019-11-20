@@ -3,6 +3,7 @@
 import axios from 'axios';
 import type {UserResponse} from "./types";
 
+// AxiosRequestConfig !!!!!!!!!!!!!!!!
 
 //                localStorage.setItem("myToken", res.jwt);
 
