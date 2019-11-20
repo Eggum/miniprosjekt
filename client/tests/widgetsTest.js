@@ -4,11 +4,24 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Alert } from '../src/widgets/widgets.js';
 import { shallow, mount } from 'enzyme';
+import {ConfirmBox} from "../src/widgets/widgets";
 
 
 
 
+describe('Confirm box tests', () => {
+    const test = () => console.log("test");
 
+    const wrapper = shallow(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>)
+    it('initially', () => {
+        let instance = ConfirmBox.instance();
+        expect(typeof instance).toEqual('object');
+  //      if (instance) expect(instance.modalId).toEqual([]);
+
+        expect(wrapper.find('button.btn btn-secondary')).toHaveLength(0);
+    });
+
+});
 
 
 

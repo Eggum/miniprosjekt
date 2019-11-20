@@ -4,11 +4,11 @@ const Dao = require("./dao.js");
 
 
 module.exports = class ArticleDao extends Dao {
-    getAll(callback) {
+    getAll(callback : () => mixed) {
         super.query("select * from Article", [], callback);
     }
 
-    getOne(id, callback) {
+    getOne(id : number, callback : () => mixed) {
         super.query(
             "select Article.*, User.username from Article join User on User.id = Article.creator where Article.id = ?",
             [id],
@@ -25,7 +25,7 @@ module.exports = class ArticleDao extends Dao {
     }
 */
 
-    deleteOne(id, callback) {
+    deleteOne(id : number, callback : () => mixed) {
         super.query(
             "CALL delete_article(?)",
             [id],
@@ -33,7 +33,7 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
-    createOne(json, callback) {
+    createOne(json, callback : () => mixed) {
         let val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator];
         super.query(
             "insert into Article (title, text, image, alt, category, importance, image_text, creator) values (?,?,?,?,?,?,?,?)",
@@ -42,7 +42,7 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
-    updateOne(json, callback) {
+    updateOne(json, callback : () => mixed) {
         let val = [json.title, json.text, json.image, json.alt, json.category, json.importance, json.image_text, json.creator, json.id];
         super.query(
             "update Article set title = ?, text = ?, image = ?, alt = ?, category = ?, importance = ?, image_text = ?, creator = ? where id = ?",

@@ -183,7 +183,7 @@ app.post("/token", (req, res) => {
     });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", (req : express$Request, res) => {
     console.log(req.body.username, req.body.password);
 
     userdao.validateOne(req.body, (status, data) => {
