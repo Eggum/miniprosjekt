@@ -2,9 +2,10 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert, Card } from '../src/widgets/widgets.js';
+import { Alert} from '../src/widgets/Alert.js';
 import { shallow, mount, ShallowWrapper } from 'enzyme';
-import { ConfirmBox } from '../src/widgets/widgets';
+import { ConfirmBox } from '../src/widgets/confirmBox';
+import {Card} from "../src/widgets/card";
 
 //title: React.Node, image: React.Node, id: React.Node, alt: React.Node
 describe('Card test', () => {

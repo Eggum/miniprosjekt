@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert, ConfirmBox } from '../widgets/widgets.js';
+import { Alert} from '../widgets/Alert.js';
 import { Button } from '../widgets/buttons.js';
 import { createHashHistory } from 'history';
 import type { HashHistory } from 'history';
@@ -18,6 +18,7 @@ import { LoadingSpinner } from '../widgets/loadingSpinner.js';
 import { connect } from 'react-redux';
 import { LoginPopUp } from '../widgets/loginAgainBox.js';
 import type { ErrorResponse } from '../types';
+import {ConfirmBox} from "../widgets/confirmBox";
 
 declare var jQuery: any;
 

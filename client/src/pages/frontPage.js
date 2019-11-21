@@ -2,11 +2,12 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Card, Alert } from '../widgets/widgets.js';
-import { Carousel } from '../widgets/widgets';
+import { Alert } from '../widgets/Alert.js';
+import { Carousel } from '../widgets/carousel';
 import { Article, articleService } from '../services.js';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../widgets/buttons.js';
+import {Card} from "../widgets/card";
 
 export class Home extends Component {
     articles: Array<Article> = [];

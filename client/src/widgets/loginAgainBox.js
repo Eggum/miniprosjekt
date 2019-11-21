@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { User, userService } from '../services';
-import { Alert } from './widgets';
+import { Alert } from './Alert';
 import { changeId, changeName, logIn, logOut } from '../redux/actions';
 import { connect } from 'react-redux';
 import { createHashHistory } from 'history';

@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert, Card } from '../widgets/widgets';
+import { Alert} from '../widgets/Alert';
 import { Article, articleService } from '../services';
+import {Card} from "../widgets/card";
 
 export class ArticleByCategory extends Component<{
     match: { params: { category: string } }
