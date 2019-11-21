@@ -6,7 +6,7 @@ const runsqlfile = require("./runsqlfileV2");
 
 module.exports = async () => {
 
-    var pool = mysql.createPool({
+    let pool = mysql.createPool({
         connectionLimit: 1,
         host: "mysql",
         user: "root",
