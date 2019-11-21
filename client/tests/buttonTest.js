@@ -7,6 +7,11 @@ import { shallow, mount, ShallowWrapper } from 'enzyme/build';
 import {ConfirmBox} from "../src/widgets/widgets";
 import {Button} from "../src/widgets/buttons.js";
 
+
+it('generisk', () =>{
+    expect(1).toEqual(1);
+});
+
 /*
 describe('Button tests', () => {
     const mockCallBack = jest.fn();
