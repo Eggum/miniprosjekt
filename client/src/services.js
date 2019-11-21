@@ -3,8 +3,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import type {UserResponse} from "./types";
 
-// AxiosRequestConfig !!!!!!!!!!!!!!!!
-
 //                localStorage.setItem("myToken", res.jwt);
 
 axios.interceptors.request.use(

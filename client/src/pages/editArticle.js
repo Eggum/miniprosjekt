@@ -5,12 +5,13 @@ import {Component} from "react-simplified";
 import {Alert, Form} from "../widgets/widgets.js"
 import {Category, Article, articleService} from '../services.js';
 import {createHashHistory} from "history";
+import type {HashHistory} from 'history';
 import {ConfirmBox} from "../widgets/widgets";
 import {LoginPopUp} from "../widgets/loginAgainBox";
 import type {ErrorResponse} from "../types";
 declare var jQuery : any;
 
-const history = createHashHistory();
+const history : HashHistory = createHashHistory();
 
 
 export class EditArticle extends Component<{ match: { params: { id: number } } }>{

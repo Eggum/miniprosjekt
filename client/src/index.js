@@ -47,6 +47,5 @@ if (root)
         </HashRouter>
         </Provider>
         ,
-
         root
     );

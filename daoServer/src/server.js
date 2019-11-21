@@ -14,7 +14,7 @@ const CategoryDao = require("./dao/categorydao.js");
 
 
 
-// Burde vært ekte sertifikat, lest fra config...
+// Burde vært ekte sertifikat, lest fra config.
 let publicKey;
 let privateKey = (publicKey = "shhhhhverysecret");
 
@@ -119,7 +119,6 @@ app.get("/category", (req : express$Request, res : express$Response) => {
     })
 });
 
-
 app.get("/article/:articleID/comment", (req : express$Request, res : express$Response) => {
    console.log("/article/:articleID/comments got get request from client.");
    commentdao.getAllFromArticle(req.params.articleID, (status, data) => {
@@ -189,11 +188,6 @@ app.post("/login", (req : express$Request, res : express$Response) => {
 
     userdao.validateOne(req.body, (status, data) => {
 
-        console.log("sjå her randi");
-        console.log(data);
-        console.log(data[0]);
-        console.log(data[0][0]);
-
         if(data[0][0].validationResult === 1){
             console.log("Username & password ok");
             let token = jwt.sign({ username: req.body.username }, privateKey, {
@@ -204,7 +198,6 @@ app.post("/login", (req : express$Request, res : express$Response) => {
                 res.status(status);
                 res.json({id: data[0].id, jwt: token});
             });
-            //res.json({ jwt: token });
         } else {
             console.log("Username & password not ok");
             res.status(401);

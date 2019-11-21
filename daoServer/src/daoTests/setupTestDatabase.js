@@ -1,6 +1,5 @@
 const regeneratorRuntime = require("regenerator-runtime/runtime");
 var mysql = require("mysql");
-//const runsqlfile = require("./runsqlfile.js");
 const runsqlfile = require("./runsqlfileV2");
 
 

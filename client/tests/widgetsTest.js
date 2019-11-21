@@ -92,7 +92,7 @@ describe('Confirm box tests', () => {
 */
 
 describe('Alert tests', () => {
-    const wrapper = shallow(<Alert />);
+    const wrapper : ShallowWrapper = shallow(<Alert />);
 
     it('initially', () => {
         let instance = Alert.instance();

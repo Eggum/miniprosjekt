@@ -1,22 +1,8 @@
 // @ flow
 
 const CategoryDao = require("../dao/categorydao.js");
-const runsqlfile = require("./runsqlfile.js");
 
 var mysql = require("mysql");
-
-/*
-var pool = mysql.createPool({
-    connectionLimit: 2,
-    host: "mysql.stud.iie.ntnu.no",
-    user: "randeggu",
-    password: "luOQ0NQQ",
-    database: "randeggu",
-    debug: false,
-    multipleStatements: true
-
-});
-*/
 
 // GitLab CI Pool
 var pool = mysql.createPool({

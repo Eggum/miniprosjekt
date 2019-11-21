@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import {createHashHistory} from "history";
+import type {HashHistory} from 'history';
 import {Component} from "react-simplified";
 import {NavLink} from "react-router-dom";
 import {Alert} from "../widgets/widgets";
@@ -11,7 +12,7 @@ import {connect} from "react-redux";
 import {changeName, logIn, changeId} from "../redux/actions";
 
 
-const history = createHashHistory();
+const history : HashHistory = createHashHistory();
 
 type prop = {
     stateName : string,

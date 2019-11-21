@@ -8,6 +8,7 @@ import {createHashHistory} from "history";
 import {Article, articleService, Comment, commentService} from "../services.js";
 import {NavLink} from "react-router-dom";
 import {CommentSection} from '../widgets/commentSection.js';
+import {LoadingSpinner} from '../widgets/loadingSpinner.js';
 import {connect} from "react-redux";
 import {LoginPopUp} from "../widgets/loginAgainBox.js";
 import type {ErrorResponse} from "../types";
@@ -64,7 +65,12 @@ class ViewArticleComp extends Component<{ match: { params: { id: number } } , is
             Alert.danger('Article not found: ' + this.props.match.params.id);
             history.push('/');
             return null; // Return empty object (nothing to render)
+        } else if(this.article.title === undefined){
+            return(
+                <LoadingSpinner/>
+            )
         }
+
 
         return(
             <div>

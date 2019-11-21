@@ -85,7 +85,6 @@ class SignUpComp extends Component <prop> {
             .catch((error: Error) => {
                 Alert.danger(error.message);
             });
-
     }
 }
 
