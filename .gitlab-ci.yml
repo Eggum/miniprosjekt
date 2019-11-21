@@ -17,6 +17,7 @@ test-client:
     - npm install
     - npm test
     - flow check src
+    - flow check tests
   artifacts:
     paths:
       - client/coverage
