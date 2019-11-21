@@ -1,26 +1,25 @@
 // @flow
 
 import * as React from 'react';
-import {createHashHistory} from "history";
-import type {HashHistory} from 'history';
-import {Component} from "react-simplified";
-import {NavLink} from "react-router-dom";
-import {Alert} from "../widgets/widgets";
-import {Button} from "../widgets/buttons";
-import {User, userService} from "../services.js";
-import {connect} from "react-redux";
-import {changeName, logIn, changeId} from "../redux/actions";
+import { createHashHistory } from 'history';
+import type { HashHistory } from 'history';
+import { Component } from 'react-simplified';
+import { NavLink } from 'react-router-dom';
+import { Alert } from '../widgets/widgets';
+import { Button } from '../widgets/buttons';
+import { User, userService } from '../services.js';
+import { connect } from 'react-redux';
+import { changeName, logIn, changeId } from '../redux/actions';
 
-
-const history : HashHistory = createHashHistory();
+const history: HashHistory = createHashHistory();
 
 type prop = {
-    stateName : string,
-    isLogged : boolean,
-    changeName : (string) => mixed,
+    stateName: string,
+    isLogged: boolean,
+    changeName: string => mixed,
     loginUser: () => mixed,
-    changeID: (number) => mixed
-}
+    changeID: number => mixed
+};
 
 // maps state to component as props.
 function mapStateToProps(state) {
@@ -31,36 +30,53 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch){
-    return{
+function mapDispatchToProps(dispatch) {
+    return {
         changeName: newName => dispatch(changeName(newName)),
         loginUser: () => dispatch(logIn()),
         changeID: newID => dispatch(changeId(newID))
     };
 }
 
-
 class LoginComp extends Component<prop> {
+    user: User = new User();
 
-    user : User = new User();
-
-
-    render(){
-        return(
+    render() {
+        return (
             <div className="loginBackground">
                 <form className="login" onSubmit={this.login}>
                     <h1>Login</h1>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
-                        <input required className="form-control" id="username" placeholder="username" type="text" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                            if (this.user) this.user.username = event.target.value;
-                        }}/>
+                        <input
+                            required
+                            className="form-control"
+                            id="username"
+                            placeholder="username"
+                            type="text"
+                            onChange={(
+                                event: SyntheticInputEvent<HTMLInputElement>
+                            ) => {
+                                if (this.user)
+                                    this.user.username = event.target.value;
+                            }}
+                        />
                     </div>
-                        <div className="form-group">
+                    <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input required className="form-control" id="password" autoComplete="current-password" type="password" onChange={(event: SyntheticInputEvent<HTMLInputElement>) => {
-                            if (this.user) this.user.password = event.target.value;
-                        }}/>
+                        <input
+                            required
+                            className="form-control"
+                            id="password"
+                            autoComplete="current-password"
+                            type="password"
+                            onChange={(
+                                event: SyntheticInputEvent<HTMLInputElement>
+                            ) => {
+                                if (this.user)
+                                    this.user.password = event.target.value;
+                            }}
+                        />
                     </div>
                     <div className="form-group">
                         <Button.Submit>Login</Button.Submit>
@@ -68,17 +84,17 @@ class LoginComp extends Component<prop> {
                     </div>
                 </form>
             </div>
-        )
+        );
     }
 
-    login(event : SyntheticInputEvent<HTMLFormElement>){
+    login(event: SyntheticInputEvent<HTMLFormElement>) {
         event.preventDefault();
 
-
-        userService.loginUser(this.user)
+        userService
+            .loginUser(this.user)
             .then(res => {
-                if(res != null){
-                localStorage.setItem("myToken", res.jwt);
+                if (res != null) {
+                    localStorage.setItem('myToken', res.jwt);
                 }
                 this.props.changeName(this.user.username);
                 this.props.changeID(res.id);
@@ -91,5 +107,7 @@ class LoginComp extends Component<prop> {
     }
 }
 
-
-export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComp);
+export const Login = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginComp);

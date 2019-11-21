@@ -1,15 +1,15 @@
 // @flow
 
 type Action = {
-    +type: string,
+    +type: string
 };
 
-const loggedReducer = (state : boolean = false, action : Action) => {
-    switch(action.type){
+const loggedReducer = (state: boolean = false, action: Action) => {
+    switch (action.type) {
         case 'SIGN_IN':
-            return state = true;
+            return (state = true);
         case 'SIGN_OUT':
-            return state = false;
+            return (state = false);
         default:
             return state;
     }

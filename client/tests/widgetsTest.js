@@ -4,16 +4,17 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Alert, Card } from '../src/widgets/widgets.js';
 import { shallow, mount, ShallowWrapper } from 'enzyme';
-import {ConfirmBox} from "../src/widgets/widgets";
+import { ConfirmBox } from '../src/widgets/widgets';
 
 //title: React.Node, image: React.Node, id: React.Node, alt: React.Node
-describe('Card test', () =>{
-    const wrapper : ShallowWrapper = shallow(<Card title="Artikkel" image="url" alt="bilde alt" id="2"/>);
-    it('renders correctly', () =>{
-       expect(wrapper.debug()).toMatchSnapshot();
+describe('Card test', () => {
+    const wrapper: ShallowWrapper = shallow(
+        <Card title="Artikkel" image="url" alt="bilde alt" id="2" />
+    );
+    it('renders correctly', () => {
+        expect(wrapper.debug()).toMatchSnapshot();
     });
 });
-
 
 /*
 describe('Confirm box tests', () =>{
@@ -92,7 +93,7 @@ describe('Confirm box tests', () => {
 */
 
 describe('Alert tests', () => {
-    const wrapper : ShallowWrapper = shallow(<Alert />);
+    const wrapper: ShallowWrapper = shallow(<Alert />);
 
     it('initially', () => {
         let instance = Alert.instance();
@@ -109,7 +110,10 @@ describe('Alert tests', () => {
         setTimeout(() => {
             let instance = Alert.instance();
             expect(typeof instance).toEqual('object');
-            if (instance) expect(instance.alerts).toEqual([{ id: 0, text: 'test', type: 'danger' }]);
+            if (instance)
+                expect(instance.alerts).toEqual([
+                    { id: 0, text: 'test', type: 'danger' }
+                ]);
 
             expect(wrapper.find('button.close')).toHaveLength(1);
 

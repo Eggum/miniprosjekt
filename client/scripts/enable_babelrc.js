@@ -5,7 +5,10 @@
 const path = require('path');
 const fs = require('fs');
 
-const webpack_config_path = path.join(__dirname, '../node_modules/react-scripts/config/webpack.config.js');
+const webpack_config_path = path.join(
+  __dirname,
+  '../node_modules/react-scripts/config/webpack.config.js'
+);
 
 fs.readFile(webpack_config_path, 'utf8', (error, data) => {
   if (error) {

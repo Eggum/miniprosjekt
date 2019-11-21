@@ -1,29 +1,27 @@
 // @ flow
 
-var http = require('http');
-var bodyParser = require("body-parser");
-var jwt = require("jsonwebtoken");
-var express = require("express");
-var mysql = require("mysql");
-var app = express();
+const http = require('http');
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+const express = require('express');
+const mysql = require('mysql');
+const app = express();
 
-const ArticleDao = require("./dao/articledao.js");
-const CommentDao = require("./dao/commentdao.js");
-const UserDao = require("./dao/userdao.js");
-const CategoryDao = require("./dao/categorydao.js");
-
-
+const ArticleDao = require('./dao/articledao.js');
+const CommentDao = require('./dao/commentdao.js');
+const UserDao = require('./dao/userdao.js');
+const CategoryDao = require('./dao/categorydao.js');
 
 // Burde vært ekte sertifikat, lest fra config.
 let publicKey;
-let privateKey = (publicKey = "shhhhhverysecret");
+let privateKey = (publicKey = 'shhhhhverysecret');
 
-const pool : mysql.Pool = mysql.createPool({
+const pool: mysql.Pool = mysql.createPool({
     connectionLimit: 2,
-    host: "mysql.stud.iie.ntnu.no",
-    user: "randeggu",
-    password: "luOQ0NQQ",
-    database: "randeggu",
+    host: 'mysql.stud.iie.ntnu.no',
+    user: 'randeggu',
+    password: 'luOQ0NQQ',
+    database: 'randeggu',
     debug: false
 });
 
@@ -32,149 +30,165 @@ let commentdao = new CommentDao(pool);
 let userdao = new UserDao(pool);
 let categorydao = new CategoryDao(pool);
 
-
-app.use((req : express$Request, res : express$Response, next) => {
+app.use((req: express$Request, res: express$Response, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, x-access-token'
+    );
 
     next();
 });
 app.use(bodyParser.json());
 
+const authenticate = (req: express$Request, res: express$Response, next) => {
+    let token = req.headers['x-access-token'];
 
-const autentiser = (req : express$Request, res : express$Response, next) => {
-    let token = req.headers["x-access-token"];
-
-    console.log("token motatt " + token);
+    console.log('token motatt ' + token);
 
     jwt.verify(token, publicKey, (err, decoded) => {
         if (err) {
-            console.log("Token IKKE ok");
+            console.log('Token IKKE ok');
             res.status(401);
-            res.json({ error: "Not authorized" });
+            res.json({ error: 'Not authorized' });
         } else {
-            console.log("Token ok: " + decoded.username);
+            console.log('Token ok: ' + decoded.username);
             res.status(200);
             next();
         }
     });
-
 };
 
-
-app.get("/article", (req : express$Request, res : express$Response) => {
-
-    let token = req.headers["x-access-token"];
-
-    console.log("token motatt art " + token);
-
-
-    console.log("/article: request get all articles from client");
+app.get('/article', (req: express$Request, res: express$Response) => {
+    console.log('/article: request get all articles from client');
     articledao.getAll((status, data) => {
         res.status(status);
         res.json(data);
-    })
+    });
 });
 
-app.get("/article/:articleID", (req : express$Request, res : express$Response) => {
-    console.log("/article/:articleID: got get request from client");
-    articledao.getOne(req.params.articleID, (status, data) => {
-        res.status(status);
-        console.log(data[0]);
-        res.json(data[0]);
-    })
-});
+app.get(
+    '/article/:articleID',
+    (req: express$Request, res: express$Response) => {
+        console.log('/article/:articleID: got get request from client');
+        articledao.getOne(req.params.articleID, (status, data) => {
+            res.status(status);
+            console.log(data[0]);
+            res.json(data[0]);
+        });
+    }
+);
 
-app.delete("/article/:articleID", [autentiser, (req : express$Request, res : express$Response) => {
-    console.log("/article/:articleID: got delete request from client");
-    articledao.deleteOne(req.params.articleID, (status, data) => {
-        res.status(status);
-        res.json(data);
-    })
-}]);
+app.delete('/article/:articleID', [
+    authenticate,
+    (req: express$Request, res: express$Response) => {
+        console.log('/article/:articleID: got delete request from client');
+        articledao.deleteOne(req.params.articleID, (status, data) => {
+            res.status(status);
+            res.json(data);
+        });
+    }
+]);
 
-app.post("/article", [autentiser, (req : express$Request, res : express$Response) => {
-    console.log("/article: got post request from client");
-    articledao.createOne(req.body, (status, data) => {
-        res.status(status);
-        res.json(data.insertId);
-    })
-}]);
+app.post('/article', [
+    authenticate,
+    (req: express$Request, res: express$Response) => {
+        console.log('/article: got post request from client');
+        articledao.createOne(req.body, (status, data) => {
+            res.status(status);
+            res.json(data.insertId);
+        });
+    }
+]);
 
-app.put("/article/:articleID", [autentiser, (req : express$Request, res : express$Response) => {
-   console.log("/article/:articleID got put request from client");
-   console.log(req.body);
-   articledao.updateOne(req.body, (status, data) => {
-       res.status(status);
-       res.json(data);
-   })
-}]);
+app.put('/article/:articleID', [
+    authenticate,
+    (req: express$Request, res: express$Response) => {
+        console.log('/article/:articleID got put request from client');
+        console.log(req.body);
+        articledao.updateOne(req.body, (status, data) => {
+            res.status(status);
+            res.json(data);
+        });
+    }
+]);
 
-app.get("/category", (req : express$Request, res : express$Response) => {
-    console.log("/category got get request from client");
+app.get('/category', (req: express$Request, res: express$Response) => {
+    console.log('/category got get request from client');
     categorydao.getAll((status, data) => {
         res.status(status);
         res.json(data);
-    })
+    });
 });
 
-app.get("/article/:articleID/comment", (req : express$Request, res : express$Response) => {
-   console.log("/article/:articleID/comments got get request from client.");
-   commentdao.getAllFromArticle(req.params.articleID, (status, data) => {
-       res.status(status);
-       res.json(data);
-    })
-});
+app.get(
+    '/article/:articleID/comment',
+    (req: express$Request, res: express$Response) => {
+        console.log(
+            '/article/:articleID/comments got get request from client.'
+        );
+        commentdao.getAllFromArticle(req.params.articleID, (status, data) => {
+            res.status(status);
+            res.json(data);
+        });
+    }
+);
 
-app.post("/article/:articleID/comment", (req : express$Request, res : express$Response) => {
-   console.log("/article/:articleID/comment got post request from client.");
-   commentdao.createOne(req.body, (status, data) => {
-       res.status(status);
-       res.json(data);
-   })
-});
+app.post(
+    '/article/:articleID/comment',
+    (req: express$Request, res: express$Response) => {
+        console.log(
+            '/article/:articleID/comment got post request from client.'
+        );
+        commentdao.createOne(req.body, (status, data) => {
+            res.status(status);
+            res.json(data);
+        });
+    }
+);
 
-app.post("/user", (req : express$Request, res : express$Response) => {
-    console.log("/user: got post request from client");
+app.post('/user', (req: express$Request, res: express$Response) => {
+    console.log('/user: got post request from client');
     userdao.createOne(req.body, (status, data) => {
         userdao.getUserId(req.body.username, (status, data) => {
             let token = jwt.sign({ username: req.body.username }, privateKey, {
                 expiresIn: 600
             });
             res.status(status);
-            res.json({id: data[0].id, jwt: token});
+            res.json({ id: data[0].id, jwt: token });
         });
-    })
+    });
 });
 
-app.delete("/article/:articleID/comment/:commentID", [autentiser, (req : express$Request, res : express$Response) => {
-    console.log("/article/:articleID/comment/:commentID got delete request from client.");
-    commentdao.deleteOne(req.params.commentID, (status, data) => {
-        res.status(status);
-        res.json(data);
-    })
-}]);
-
+app.delete('/article/:articleID/comment/:commentID', [
+    authenticate,
+    (req: express$Request, res: express$Response) => {
+        console.log(
+            '/article/:articleID/comment/:commentID got delete request from client.'
+        );
+        commentdao.deleteOne(req.params.commentID, (status, data) => {
+            res.status(status);
+            res.json(data);
+        });
+    }
+]);
 
 var server = app.listen(4000);
 
-
-
-
-
-
-
-app.post("/token", (req : express$Request, res : express$Response) => {
-    let token = req.headers["x-access-token"];
+app.post('/token', (req: express$Request, res: express$Response) => {
+    let token = req.headers['x-access-token'];
 
     jwt.verify(token, publicKey, (err, decoded) => {
         if (err) {
-            console.log("Token not ok");
+            console.log('Token not ok');
             res.status(401);
-            res.json({ error: "Not authorized" });
+            res.json({ error: 'Not authorized' });
         } else {
-            console.log("Token ok: " + decoded.username);
+            console.log('Token ok: ' + decoded.username);
             let token = jwt.sign({ username: req.body.username }, privateKey, {
                 expiresIn: 30
             });
@@ -183,25 +197,24 @@ app.post("/token", (req : express$Request, res : express$Response) => {
     });
 });
 
-app.post("/login", (req : express$Request, res : express$Response) => {
+app.post('/login', (req: express$Request, res: express$Response) => {
     console.log(req.body.username, req.body.password);
 
     userdao.validateOne(req.body, (status, data) => {
-
-        if(data[0][0].validationResult === 1){
-            console.log("Username & password ok");
+        if (data[0][0].validationResult === 1) {
+            console.log('Username & password ok');
             let token = jwt.sign({ username: req.body.username }, privateKey, {
                 expiresIn: 600
             });
             userdao.getUserId(req.body.username, (status, data) => {
                 console.log(data);
                 res.status(status);
-                res.json({id: data[0].id, jwt: token});
+                res.json({ id: data[0].id, jwt: token });
             });
         } else {
-            console.log("Username & password not ok");
+            console.log('Username & password not ok');
             res.status(401);
-            res.json({ error: "Not authorized" });
+            res.json({ error: 'Not authorized' });
         }
-    })
+    });
 });

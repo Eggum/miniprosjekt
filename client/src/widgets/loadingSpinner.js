@@ -1,13 +1,11 @@
 // @flow
 
 import * as React from 'react';
-import {Component} from "react-simplified";
+import { Component } from 'react-simplified';
 
-
-
-export class LoadingSpinner extends Component{
-    render(){
-        return(
+export class LoadingSpinner extends Component {
+    render() {
+        return (
             <div className="text-center">
                 <div className="spinner-grow text-primary" role="status">
                     <span className="sr-only">Loading...</span>
@@ -34,6 +32,6 @@ export class LoadingSpinner extends Component{
                     <span className="sr-only">Loading...</span>
                 </div>
             </div>
-        )
+        );
     }
 }
