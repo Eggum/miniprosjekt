@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card test renders correctly 1`] = `
+"<div className=\\"card card-pretty\\">
+  <img src=\\"url\\" className=\\"card-img-top\\" alt=\\"bilde alt\\" />
+  <div className=\\"card-body\\">
+    <h5 className=\\"card-title\\">
+      Artikkel
+    </h5>
+    <NavLink to=\\"/article/2\\" className=\\"stretched-link\\">
+      Read more
+    </NavLink>
+  </div>
+</div>"
+`;

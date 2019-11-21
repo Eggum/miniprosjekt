@@ -2,35 +2,45 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from '../src/widgets/widgets.js';
-import { shallow, mount } from 'enzyme';
+import { Alert, Card } from '../src/widgets/widgets.js';
+import { shallow, mount, ShallowWrapper } from 'enzyme';
 import {ConfirmBox} from "../src/widgets/widgets";
 
-
-
-describe('Confirm box tests', () =>{
-    const wrapper = mount(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
-    it('initially', () => {
-        expect(typeof wrapper).toEqual('object');
-        expect(wrapper.find('button.btn btn-secondary')).toHaveLength(1);
-        expect(wrapper.find('button.close')).toHaveLength(1);
-        expect(wrapper.find('button.btn btn-primary')).toHaveLength(1);
-    });
-
-    it('after clicking close button', () => {
-        wrapper.find('button.btn btn-secondary').simulate('click');
-
-        let instance = Alert.instance();
-        expect(typeof instance).toEqual('object');
-
-
-        expect(wrapper.find('button.btn btn-secondary')).toHaveLength(0);
-        expect(wrapper.find('button.close')).toHaveLength(0);
-        expect(wrapper.find('button.btn btn-primary')).toHaveLength(0);
+//title: React.Node, image: React.Node, id: React.Node, alt: React.Node
+describe('Card test', () =>{
+    const wrapper : ShallowWrapper = shallow(<Card title="Artikkel" image="url" alt="bilde alt" id="2"/>);
+    it('renders correctly', () =>{
+       expect(wrapper.debug()).toMatchSnapshot();
     });
 });
 
 
+/*
+describe('Confirm box tests', () =>{
+    const test = jest.fn();
+
+    const wrapper: ShallowWrapper = shallow(<ConfirmBox modalId={1} modalHeader={"test"} modalBody={"test"} onClick={test}/>);
+    it('initially', () => {
+        expect(typeof wrapper).toEqual('object');
+        expect(wrapper.find('button.btn-secondary')).toHaveLength(1);
+        expect(wrapper.find('button.close')).toHaveLength(1);
+        expect(wrapper.find('button.btn-primary')).toHaveLength(1);
+    });
+
+    it('after clicking close button', () => {
+        wrapper.find('button.close').simulate('click');
+
+        let instance = ConfirmBox.instance();
+        expect(typeof instance).toEqual('object');
+
+        expect(wrapper.find('button.close')).toHaveLength(0);
+
+        //   const computedStyle = window.getComputedStyle(wrapper.element)
+      //  return computedStyle.display !== 'none'
+    });
+});
+
+*/
 /*
 describe('Confirm box tests', () => {
     const test = () => console.log("test");
