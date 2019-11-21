@@ -5,7 +5,7 @@ import { createHashHistory } from 'history';
 import type { HashHistory } from 'history';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
-import { Alert } from '../widgets/Alert';
+import { Alert } from '../widgets/alert';
 import { Button } from '../widgets/buttons';
 import { User, userService } from '../services.js';
 import { connect } from 'react-redux';

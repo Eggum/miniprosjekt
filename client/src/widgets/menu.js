@@ -6,7 +6,7 @@ import type { HashHistory } from 'history';
 import { Component } from 'react-simplified';
 import { Category, articleService } from '../services';
 import { NavLink } from 'react-router-dom';
-import { Alert } from './Alert';
+import { Alert } from './alert';
 import { useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

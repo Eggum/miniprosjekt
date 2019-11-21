@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert} from '../widgets/Alert';
+import { Alert} from '../widgets/alert';
 import { Article, articleService } from '../services';
 import {Card} from "../widgets/card";
 

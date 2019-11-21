@@ -4,7 +4,7 @@ import {Component} from "react-simplified";
 import {Article, articleService, Category} from "../services";
 import {Button} from "./buttons";
 import * as React from "react";
-import {Alert} from "./Alert";
+import {Alert} from "./alert";
 
 export class Form extends Component<{
     article: Article,

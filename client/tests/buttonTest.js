@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert} from '../src/widgets/Alert.js';
+import { Alert} from '../src/widgets/alert.js';
 import { shallow, mount, ShallowWrapper } from 'enzyme';
 import { ConfirmBox } from '../src/widgets/confirmBox';
 import { Button } from '../src/widgets/buttons.js';

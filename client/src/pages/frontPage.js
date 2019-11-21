@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert } from '../widgets/Alert.js';
+import { Alert } from '../widgets/alert.js';
 import { Carousel } from '../widgets/carousel';
 import { Article, articleService } from '../services.js';
 import { NavLink } from 'react-router-dom';

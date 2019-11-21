@@ -7,7 +7,7 @@ import { createHashHistory } from 'history';
 import { Home } from './pages/frontPage.js';
 import { NewArticle } from './pages/newArticle.js';
 import { ViewArticle } from './pages/viewArticle.js';
-import { Alert } from './widgets/Alert.js';
+import { Alert } from './widgets/alert.js';
 import { Search } from './pages/search.js';
 import { ArticleByCategory } from './pages/viewByCategory';
 import { EditArticle } from './pages/editArticle.js';

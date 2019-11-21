@@ -6,7 +6,7 @@ import type { HashHistory } from 'history';
 import { Component } from 'react-simplified';
 import { User, userService } from '../services';
 import { NavLink } from 'react-router-dom';
-import { Alert } from '../widgets/Alert';
+import { Alert } from '../widgets/alert';
 import { Button } from '../widgets/buttons';
 import { changeId, changeName, logIn } from '../redux/actions';
 import { connect } from 'react-redux';
