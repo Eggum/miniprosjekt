@@ -1,12 +1,8 @@
 // @flow
 
 import * as React from 'react';
-import { Component } from 'react-simplified';
-import { Alert} from '../src/widgets/alert.js';
 import { shallow, mount, ShallowWrapper } from 'enzyme';
-import { ConfirmBox } from '../src/widgets/confirmBox';
 import { Button } from '../src/widgets/buttons.js';
-import {Card} from "../src/widgets/card";
 
 describe('Button tests', () => {
     const test = jest.fn();
@@ -18,5 +14,9 @@ describe('Button tests', () => {
 
         wrapper.find('button.btn').simulate('click');
         expect(test.mock.calls.length).toEqual(1);
+    });
+
+    it('renders correctly', () => {
+        expect(wrapper.debug()).toMatchSnapshot();
     });
 });

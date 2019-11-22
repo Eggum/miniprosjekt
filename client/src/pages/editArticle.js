@@ -78,8 +78,6 @@ export class EditArticle extends Component<{
 
     save(event: SyntheticInputEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log('Hmm');
-        console.log(this.article);
 
         articleService
             .updateArticle(this.article)

@@ -181,7 +181,6 @@ export class Form extends Component<{
                         )
                     )}
                 </div>
-                <div className="form-group"></div>
                 <div className="form-group">
                     <label htmlFor="articleText">Text</label>
                     <textarea

@@ -18,6 +18,7 @@ import { createStore } from 'redux';
 import allReducer from './redux/reducers';
 import { Provider } from 'react-redux';
 import { Footer } from './widgets/footer';
+import { Spinner } from './pages/justToShowLoadingSpinners.js';
 
 const root = document.getElementById('root');
 const store = createStore(
@@ -52,6 +53,7 @@ if (root)
                         path="/article/:category(\D+)"
                         component={ArticleByCategory}
                     />
+                    <Route exact path="/login/ost" component={Spinner} />
                     <Footer />
                 </div>
             </HashRouter>

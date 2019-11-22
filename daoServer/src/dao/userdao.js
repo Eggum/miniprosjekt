@@ -5,7 +5,7 @@ const Dao = require('./dao.js');
 module.exports = class UserDao extends Dao {
     createOne(
         json: { username: string, password: string },
-        callback: (number, {affectedRows : number}) => mixed
+        callback: (number, { affectedRows: number }) => mixed
     ) {
         let val = [json.username, json.password];
         super.query('CALL user_create_user(?,?)', val, callback);

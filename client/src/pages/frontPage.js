@@ -8,6 +8,8 @@ import { Article, articleService } from '../services.js';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../widgets/buttons.js';
 import {Card} from "../widgets/card";
+import { LoadingSpinner } from '../widgets/loadingSpinner.js';
+
 
 export class Home extends Component {
     articles: Array<Article> = [];
@@ -32,69 +34,75 @@ export class Home extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Carousel>
-                    {this.articles
-                        .filter(a => a.importance === 1)
-                        .map((a, index) =>
-                            index === 1 ? (
-                                <NavLink
-                                    key={index}
-                                    style={{
-                                        backgroundImage:
-                                            'url("' + a.image + '")'
-                                    }}
-                                    to={'/article/' + a.id}
-                                    className="carousel-item active carouselBackground"
-                                >
-                                    <h3 className="carouselText">{a.title}</h3>
-                                    <h4 className="carouselText">
-                                        {new Date(
-                                            a.creation_date
-                                        ).toLocaleString()}
-                                    </h4>
-                                </NavLink>
-                            ) : (
-                                <NavLink
-                                    key={index}
-                                    style={{
-                                        backgroundImage:
-                                            'url("' + a.image + '")'
-                                    }}
-                                    to={'/article/' + a.id}
-                                    className="carousel-item carouselBackground"
-                                >
-                                    <h3 className="carouselText">{a.title}</h3>
-                                    <h4 className="carouselText">
-                                        {new Date(
-                                            a.creation_date
-                                        ).toLocaleString()}
-                                    </h4>
-                                </NavLink>
-                            )
-                        )}
-                </Carousel>
-                <div id="card-column-wrapper">
-                    <div className="card-columns">
-                        {this.articlesSliced.map(s => (
-                            <Card
-                                key={s.id}
-                                title={s.title}
-                                image={s.image}
-                                id={s.id}
-                                alt={s.alt}
-                            />
-                        ))}
+        if(this.articles.length === 0){
+            return(
+                <LoadingSpinner/>
+            )
+        } else {
+            return (
+                <div>
+                    <Carousel>
+                        {this.articles
+                            .filter(a => a.importance === 1)
+                            .map((a, index) =>
+                                index === 1 ? (
+                                    <NavLink
+                                        key={index}
+                                        style={{
+                                            backgroundImage:
+                                                'url("' + a.image + '")'
+                                        }}
+                                        to={'/article/' + a.id}
+                                        className="carousel-item active carouselBackground"
+                                    >
+                                        <h3 className="carouselText">{a.title}</h3>
+                                        <h4 className="carouselText">
+                                            {new Date(
+                                                a.creation_date
+                                            ).toLocaleString()}
+                                        </h4>
+                                    </NavLink>
+                                ) : (
+                                    <NavLink
+                                        key={index}
+                                        style={{
+                                            backgroundImage:
+                                                'url("' + a.image + '")'
+                                        }}
+                                        to={'/article/' + a.id}
+                                        className="carousel-item carouselBackground"
+                                    >
+                                        <h3 className="carouselText">{a.title}</h3>
+                                        <h4 className="carouselText">
+                                            {new Date(
+                                                a.creation_date
+                                            ).toLocaleString()}
+                                        </h4>
+                                    </NavLink>
+                                )
+                            )}
+                    </Carousel>
+                    <div id="card-column-wrapper">
+                        <div className="card-columns">
+                            {this.articlesSliced.map(s => (
+                                <Card
+                                    key={s.id}
+                                    title={s.title}
+                                    image={s.image}
+                                    id={s.id}
+                                    alt={s.alt}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div className="textAlignCenter">
+                        <Button.Round onClick={this.moreArticles}>
+                            Load more articles
+                        </Button.Round>
                     </div>
                 </div>
-                <div className="textAlignCenter">
-                    <Button.Round onClick={this.moreArticles}>
-                        Load more articles
-                    </Button.Round>
-                </div>
-            </div>
-        );
+            );
+        }
     }
 
     moreArticles() {

@@ -6,7 +6,7 @@ import type { HashHistory } from 'history';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
 import { Alert } from '../widgets/alert';
-import { Button } from '../widgets/buttons';
+import { LoginForm } from '../widgets/login';
 import { User, userService } from '../services.js';
 import { connect } from 'react-redux';
 import { changeName, logIn, changeId } from '../redux/actions';
@@ -44,45 +44,7 @@ class LoginComp extends Component<prop> {
     render() {
         return (
             <div className="loginBackground">
-                <form className="login" onSubmit={this.login}>
-                    <h1>Login</h1>
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input
-                            required
-                            className="form-control"
-                            id="username"
-                            placeholder="username"
-                            type="text"
-                            onChange={(
-                                event: SyntheticInputEvent<HTMLInputElement>
-                            ) => {
-                                if (this.user)
-                                    this.user.username = event.target.value;
-                            }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            required
-                            className="form-control"
-                            id="password"
-                            autoComplete="current-password"
-                            type="password"
-                            onChange={(
-                                event: SyntheticInputEvent<HTMLInputElement>
-                            ) => {
-                                if (this.user)
-                                    this.user.password = event.target.value;
-                            }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <Button.Submit>Login</Button.Submit>
-                        <NavLink to="/signUp"> Sign up </NavLink>
-                    </div>
-                </form>
+                <LoginForm login={this.login} user={this.user}/>
             </div>
         );
     }

@@ -5,9 +5,8 @@ import { createHashHistory } from 'history';
 import type { HashHistory } from 'history';
 import { Component } from 'react-simplified';
 import { User, userService } from '../services';
-import { NavLink } from 'react-router-dom';
 import { Alert } from '../widgets/alert';
-import { Button } from '../widgets/buttons';
+import { SignUpForm } from '../widgets/signUp';
 import { changeId, changeName, logIn } from '../redux/actions';
 import { connect } from 'react-redux';
 
@@ -44,55 +43,7 @@ class SignUpComp extends Component<prop> {
     render() {
         return (
             <div className="loginBackground">
-                <form className="login">
-                    <h1>Sign up</h1>
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input
-                            required
-                            className="form-control"
-                            id="username"
-                            type="text"
-                            onChange={(
-                                event: SyntheticInputEvent<HTMLInputElement>
-                            ) => {
-                                if (this.user)
-                                    this.user.username = event.target.value;
-                            }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            required
-                            className="form-control"
-                            id="password"
-                            type="password"
-                            onChange={(
-                                event: SyntheticInputEvent<HTMLInputElement>
-                            ) => {
-                                if (this.user)
-                                    this.user.password = event.target.value;
-                            }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="passwordRepeat">Repeat password</label>
-                        <input
-                            required
-                            className="form-control"
-                            id="passwordRepeat"
-                            type="password"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <Button.Primary onClick={this.register}>
-                            {' '}
-                            Register{' '}
-                        </Button.Primary>
-                        <NavLink to="/login"> Back to login </NavLink>
-                    </div>
-                </form>
+                <SignUpForm register={this.register} user={this.user} />
             </div>
         );
     }

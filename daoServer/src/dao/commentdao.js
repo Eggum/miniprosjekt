@@ -3,7 +3,10 @@
 const Dao = require('./dao.js');
 
 module.exports = class CommentDao extends Dao {
-    getAllFromArticle(articleID: number, callback: (number, {length : number}) => mixed) {
+    getAllFromArticle(
+        articleID: number,
+        callback: (number, { length: number }) => mixed
+    ) {
         super.query(
             'select Comment.id, text, creation_date, creator, article, username from Comment join User on Comment.creator = User.id where article = ? order by Comment.id asc',
             [articleID],
@@ -11,13 +14,16 @@ module.exports = class CommentDao extends Dao {
         );
     }
 
-    deleteOne(id: number, callback: (number, {affectedRows : number}) => mixed) {
+    deleteOne(
+        id: number,
+        callback: (number, { affectedRows: number }) => mixed
+    ) {
         super.query('delete from Comment where id = ?', [id], callback);
     }
 
     createOne(
         json: { text: string, creator: number, article: number },
-        callback: (number, {affectedRows : number}) => mixed
+        callback: (number, { affectedRows: number }) => mixed
     ) {
         let val = [json.text, json.creator, json.article];
         super.query(

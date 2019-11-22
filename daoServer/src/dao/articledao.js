@@ -3,7 +3,7 @@
 const Dao = require('./dao.js');
 
 module.exports = class ArticleDao extends Dao {
-    getAll(callback: (number, {length : number}) => mixed) {
+    getAll(callback: (number, { length: number }) => mixed) {
         super.query('select * from Article', [], callback);
     }
 
@@ -15,11 +15,15 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
-    deleteOne(id: number, callback: (number, {affectedRows : number}) => mixed) {
+    deleteOne(
+        id: number,
+        callback: (number, { affectedRows: number }) => mixed
+    ) {
         super.query('CALL delete_article(?)', [id], callback);
     }
 
-    createOne( json: {
+    createOne(
+        json: {
             title: string,
             text: string,
             image: string,
@@ -31,7 +35,7 @@ module.exports = class ArticleDao extends Dao {
         },
 
         // callback: (number, data : {affectedRows : number}) => mixed) {
-        callback: (number, {insertId : number, affectedRows : number}) => mixed
+        callback: (number, { insertId: number, affectedRows: number }) => mixed
     ) {
         let val = [
             json.title,
@@ -62,7 +66,7 @@ module.exports = class ArticleDao extends Dao {
             creator: number,
             id: number
         },
-        callback: (number, {affectedRows : number}) => mixed
+        callback: (number, { affectedRows: number }) => mixed
     ) {
         let val = [
             json.title,

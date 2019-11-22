@@ -7,6 +7,7 @@ export class LoadingSpinner extends Component {
     render() {
         return (
             <div className="text-center">
+                <h1>Loading please wait...</h1>
                 <div className="spinner-grow text-primary" role="status">
                     <span className="sr-only">Loading...</span>
                 </div>
