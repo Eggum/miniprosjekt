@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form test renders correctly 1`] = `
+"<form onSubmit={[Function: mockConstructor]} className=\\"needs-validation\\">
+  <div className=\\"form-group\\">
+    <label htmlFor=\\"title\\">
+      Title
+    </label>
+    <input required={true} type=\\"text\\" className=\\"form-control\\" id=\\"title\\" maxLength=\\"30\\" value=\\"Tittel\\" placeholder=\\"Write your title here\\" onChange={[Function: onChange]} />
+    <div className=\\"invalid-feedback\\">
+      Please provide a valid zip.
+    </div>
+  </div>
+  <div className=\\"form-group\\">
+    <label htmlFor=\\"image\\">
+      Article image
+    </label>
+    <input required={true} type=\\"text\\" className=\\"form-control\\" id=\\"image\\" value=\\"url\\" placeholder=\\"Write image url\\" onChange={[Function: onChange]} />
+  </div>
+  <div className=\\"form-group\\">
+    <label htmlFor=\\"imageText\\">
+      Image text
+    </label>
+    <input required={true} type=\\"text\\" className=\\"form-control\\" maxLength=\\"50\\" id=\\"imageText\\" value=\\"bildetekst\\" placeholder=\\"Write image text\\" onChange={[Function: onChange]} />
+  </div>
+  <div className=\\"form-group\\">
+    <label htmlFor=\\"alt\\">
+      Image alt
+    </label>
+    <input required={true} type=\\"text\\" className=\\"form-control\\" id=\\"alt\\" maxLength=\\"50\\" value=\\"alt string\\" placeholder=\\"image alt\\" onChange={[Function: onChange]} />
+  </div>
+  <div className=\\"form-group form-check\\">
+    <input type=\\"checkbox\\" className=\\"form-check-input\\" id=\\"importance\\" onChange={[Function: onChange]} />
+    <label className=\\"form-check-label\\" htmlFor=\\"importance\\">
+      Check this if article is IMPORTANT
+    </label>
+  </div>
+  <label className=\\"radio-inline\\">
+    Category
+  </label>
+  <div className=\\"from-group\\" />
+  <div className=\\"form-group\\">
+    <label htmlFor=\\"articleText\\">
+      Text
+    </label>
+    <textarea required={true} className=\\"form-control\\" rows=\\"20\\" value=\\"Heisann på deisann\\" placeholder=\\"Article text here\\" id=\\"articleText\\" onChange={[Function: onChange]} />
+  </div>
+  <ButtonModalDanger dataTarget=\\"dataTarget\\">
+    Cancel
+  </ButtonModalDanger>
+  <button className=\\"btn btn-primary\\" type=\\"submit\\">
+    Save
+  </button>
+</form>"
+`;

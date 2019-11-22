@@ -13,7 +13,7 @@ module.exports = class Dao {
     query(
         sql: string,
         params: Array<mixed>,
-        callback: (mixed, mixed) => mixed
+        callback: (any, any) => mixed
     ) {
         this.pool.getConnection((err, connection) => {
             console.log('dao: connected to database');

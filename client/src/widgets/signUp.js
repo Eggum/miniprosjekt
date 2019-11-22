@@ -2,24 +2,29 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import {Button} from "./buttons";
-import {NavLink} from "react-router-dom";
-import {User} from "../services";
+import { Button } from './buttons';
+import { NavLink } from 'react-router-dom';
+import { User } from '../services';
 
 //export class SignUpForm extends Component <{register : (event: SyntheticInputEvent<HTMLFormElement>) => mixed, user : User}> {
-export class SignUpForm extends Component <{register : () => mixed, user : User}> {
-/*
+export class SignUpForm extends Component<{
+    register: () => mixed,
+    user: User
+}> {
+    /*
    save(event: SyntheticInputEvent<HTMLFormElement>) {
         event.preventDefault();
  */
+    password: string = '';
+    passwordRetyped: string = '';
 
-
-    onSubmit(event: SyntheticInputEvent<HTMLFormElement>){
+    onSubmit(event: SyntheticInputEvent<HTMLFormElement>) {
         event.preventDefault();
-
-
-
-        this.props.register();
+        if(this.password === this.passwordRetyped) {
+            this.props.register();
+        } else {
+         //   event.target.setCustomValidity('BLABLA');
+        }
     }
 
     render() {
@@ -36,9 +41,7 @@ export class SignUpForm extends Component <{register : () => mixed, user : User}
                         onChange={(
                             event: SyntheticInputEvent<HTMLInputElement>
                         ) => {
-                            if (this.props.user)
-                                this.props.user.username = event.target.value;
-                        }}
+                            if (this.props.user) this.props.user.username = event.target.value;}}
                     />
                 </div>
                 <div className="form-group">
@@ -51,8 +54,10 @@ export class SignUpForm extends Component <{register : () => mixed, user : User}
                         onChange={(
                             event: SyntheticInputEvent<HTMLInputElement>
                         ) => {
-                            if (this.props.user)
+                            if (this.props.user) {
                                 this.props.user.password = event.target.value;
+                                this.password = event.target.value;
+                            }
                         }}
                     />
                 </div>
@@ -63,6 +68,13 @@ export class SignUpForm extends Component <{register : () => mixed, user : User}
                         className="form-control"
                         id="passwordRepeat"
                         type="password"
+                        onChange={(
+                            event: SyntheticInputEvent<HTMLInputElement>
+                        ) => {
+                            if (this.props.user) {
+                                this.passwordRetyped = event.target.value;
+                            }
+                        }}
                     />
                 </div>
                 <div className="form-group">
