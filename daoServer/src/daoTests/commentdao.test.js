@@ -1,4 +1,4 @@
-// @ flow
+// @flow
 
 const CommentDao = require('../dao/commentdao.js');
 

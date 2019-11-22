@@ -1,4 +1,4 @@
-// @ flow
+// @flow
 
 const regeneratorRuntime = require('regenerator-runtime/runtime');
 const mysql = require('mysql');

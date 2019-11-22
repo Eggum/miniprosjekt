@@ -1,4 +1,4 @@
-// @ flow
+// @flow
 
 const ArticleDao = require('../dao/articledao.js');
 
@@ -23,9 +23,6 @@ let articledao = new ArticleDao(pool);
 
 test('get all articles from db', done => {
     function callback(status, data) {
-        console.log(
-            'Test callback: status=' + status + ', data=' + JSON.stringify(data)
-        );
         expect(data.length).toBeGreaterThanOrEqual(22);
         expect(data[0].title).toBe('Ny butikk i sentrum');
         expect(data[1].title).toBe('Bankran på båten');
@@ -36,9 +33,6 @@ test('get all articles from db', done => {
 
 test('get article from db', done => {
     function callback(status, data) {
-        console.log(
-            'Test callback: status=' + status + ', data=' + JSON.stringify(data)
-        );
         expect(data[0].title).toBe('Ny butikk i sentrum');
         done();
     }
@@ -50,7 +44,6 @@ test('update article in db', done => {
     let article = {};
 
     function callback1(status, data) {
-        console.log('BLABLA');
         expect(data[0].title).toBe('Spennende artikkel');
         article = data[0];
         title_before = data[0].title;
@@ -66,8 +59,6 @@ test('update article in db', done => {
             creator: data[0].creator,
             id: data[0].id
         };
-
-        //        article.title = "Ikke spennende artikkel";
         articledao.updateOne(art, callback2);
     }
 

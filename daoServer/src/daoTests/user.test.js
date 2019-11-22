@@ -1,4 +1,4 @@
-// @ flow
+// @flow
 
 const UserDao = require('../dao/userdao.js');
 

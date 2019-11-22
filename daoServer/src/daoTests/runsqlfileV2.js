@@ -1,4 +1,4 @@
-// @ flow
+// @flow
 
 const mysql = require('mysql');
 const fs = require('fs');
@@ -12,8 +12,9 @@ module.exports = function run(
     let sql = fs.readFileSync(filename, 'utf8');
 
     pool.getConnection((err, connection) => {
-        if (err) {
-            console.log('runsqlfile: error connecting' + err);
+        if (err || !connection) {
+            console.log('runsqlfile: error connecting');
+            console.log(err);
             callback();
         } else {
             connection.query(sql, (err, result) => {

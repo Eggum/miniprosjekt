@@ -1,4 +1,4 @@
-// @ flow
+// @flow
 
 const http = require('http');
 const bodyParser = require('body-parser');
@@ -45,7 +45,7 @@ app.use((req: express$Request, res: express$Response, next) => {
 });
 app.use(bodyParser.json());
 
-const authenticate = (req: express$Request, res: express$Response, next) => {
+const authenticate: express$Middleware<express$Request> = (req: express$Request, res: express$Response, next : express$NextFunction) => {
     let token = req.headers['x-access-token'];
 
     console.log('token motatt ' + token);
@@ -75,7 +75,7 @@ app.get(
     '/article/:articleID',
     (req: express$Request, res: express$Response) => {
         console.log('/article/:articleID: got get request from client');
-        articledao.getOne(req.params.articleID, (status, data) => {
+        articledao.getOne(+req.params.articleID, (status, data) => {
             res.status(status);
             console.log(data[0]);
             res.json(data[0]);
@@ -83,39 +83,57 @@ app.get(
     }
 );
 
-app.delete('/article/:articleID', [
+app.delete('/article/:articleID',
     authenticate,
     (req: express$Request, res: express$Response) => {
         console.log('/article/:articleID: got delete request from client');
-        articledao.deleteOne(req.params.articleID, (status, data) => {
+        articledao.deleteOne(+req.params.articleID, (status, data) => {
             res.status(status);
             res.json(data);
         });
     }
-]);
+);
 
-app.post('/article', [
+app.post('/article',
     authenticate,
-    (req: express$Request, res: express$Response) => {
+    (req: {body : {
+            title: string,
+            text: string,
+            image: string,
+            alt: string,
+            category: string,
+            importance: number,
+            image_text: string,
+            creator: number
+        }}, res: express$Response) => {
         console.log('/article: got post request from client');
         articledao.createOne(req.body, (status, data) => {
             res.status(status);
             res.json(data.insertId);
         });
     }
-]);
+);
 
-app.put('/article/:articleID', [
+app.put('/article/:articleID',
     authenticate,
-    (req: express$Request, res: express$Response) => {
+    (req: {body : {
+            title: string,
+            text: string,
+            image: string,
+            alt: string,
+            category: string,
+            importance: number,
+            image_text: string,
+            creator: number,
+            id: number
+        }}, res: express$Response) => {
         console.log('/article/:articleID got put request from client');
-        console.log(req.body);
         articledao.updateOne(req.body, (status, data) => {
             res.status(status);
             res.json(data);
         });
     }
-]);
+);
 
 app.get('/category', (req: express$Request, res: express$Response) => {
     console.log('/category got get request from client');
@@ -131,7 +149,7 @@ app.get(
         console.log(
             '/article/:articleID/comments got get request from client.'
         );
-        commentdao.getAllFromArticle(req.params.articleID, (status, data) => {
+        commentdao.getAllFromArticle(+req.params.articleID, (status, data) => {
             res.status(status);
             res.json(data);
         });
@@ -140,7 +158,7 @@ app.get(
 
 app.post(
     '/article/:articleID/comment',
-    (req: express$Request, res: express$Response) => {
+    (req: {body : { text: string, creator: number, article: number }}, res: express$Response) => {
         console.log(
             '/article/:articleID/comment got post request from client.'
         );
@@ -151,7 +169,7 @@ app.post(
     }
 );
 
-app.post('/user', (req: express$Request, res: express$Response) => {
+app.post('/user', (req: { body : { username: string, password: string }}, res: express$Response) => {
     console.log('/user: got post request from client');
     userdao.createOne(req.body, (status, data) => {
         userdao.getUserId(req.body.username, (status, data) => {
@@ -164,22 +182,22 @@ app.post('/user', (req: express$Request, res: express$Response) => {
     });
 });
 
-app.delete('/article/:articleID/comment/:commentID', [
+app.delete('/article/:articleID/comment/:commentID',
     authenticate,
     (req: express$Request, res: express$Response) => {
         console.log(
             '/article/:articleID/comment/:commentID got delete request from client.'
         );
-        commentdao.deleteOne(req.params.commentID, (status, data) => {
+        commentdao.deleteOne(+req.params.commentID, (status, data) => {
             res.status(status);
             res.json(data);
         });
     }
-]);
+);
 
 var server = app.listen(4000);
 
-app.post('/token', (req: express$Request, res: express$Response) => {
+app.post('/token', (req: {body:{username : string}, headers : {'x-access-token': string} }, res: express$Response) => {
     let token = req.headers['x-access-token'];
 
     jwt.verify(token, publicKey, (err, decoded) => {
@@ -197,7 +215,7 @@ app.post('/token', (req: express$Request, res: express$Response) => {
     });
 });
 
-app.post('/login', (req: express$Request, res: express$Response) => {
+app.post('/login', (req: {body : {username : string, password: string}}, res: express$Response) => {
     console.log(req.body.username, req.body.password);
 
     userdao.validateOne(req.body, (status, data) => {

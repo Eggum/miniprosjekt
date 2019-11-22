@@ -10,7 +10,7 @@ import { Alert } from './alert';
 import { useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeId, logOut } from '../redux/actions';
+import {changeId, changeName, logOut} from '../redux/actions';
 
 const history: HashHistory = createHashHistory();
 
@@ -25,7 +25,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         logoutUser: () => dispatch(logOut()),
-        changeID: newID => dispatch(changeId(newID))
+        changeID: newID => dispatch(changeId(newID)),
+        changeName: newName => dispatch(changeName(newName)),
     };
 }
 
@@ -33,7 +34,8 @@ type prop = {
     stateName: string,
     isLogged: boolean,
     logoutUser: () => mixed,
-    changeID: number => mixed
+    changeID: number => mixed,
+    changeName: string => mixed
 };
 
 let prevScrollPosition = window.pageYOffset;
@@ -188,6 +190,8 @@ class MenuBar extends Component<prop> {
     logout() {
         this.props.changeID(1);
         this.props.logoutUser();
+        this.props.changeName("Anonym");
+
     }
 
     search() {

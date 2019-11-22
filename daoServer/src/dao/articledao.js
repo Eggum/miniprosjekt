@@ -1,13 +1,13 @@
-// @ flow
+// @flow
 
 const Dao = require('./dao.js');
 
 module.exports = class ArticleDao extends Dao {
-    getAll(callback: () => mixed) {
+    getAll(callback: (number, {length : number}) => mixed) {
         super.query('select * from Article', [], callback);
     }
 
-    getOne(id: number, callback: () => mixed) {
+    getOne(id: number, callback: (number, {}) => mixed) {
         super.query(
             'select Article.*, User.username from Article join User on User.id = Article.creator where Article.id = ?',
             [id],
@@ -15,12 +15,11 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
-    deleteOne(id: number, callback: () => mixed) {
+    deleteOne(id: number, callback: (number, {affectedRows : number}) => mixed) {
         super.query('CALL delete_article(?)', [id], callback);
     }
 
-    createOne(
-        json: {
+    createOne( json: {
             title: string,
             text: string,
             image: string,
@@ -30,7 +29,9 @@ module.exports = class ArticleDao extends Dao {
             image_text: string,
             creator: number
         },
-        callback: () => mixed
+
+        // callback: (number, data : {affectedRows : number}) => mixed) {
+        callback: (number, {insertId : number, affectedRows : number}) => mixed
     ) {
         let val = [
             json.title,
@@ -61,7 +62,7 @@ module.exports = class ArticleDao extends Dao {
             creator: number,
             id: number
         },
-        callback: () => mixed
+        callback: (number, {affectedRows : number}) => mixed
     ) {
         let val = [
             json.title,
