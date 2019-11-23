@@ -169,6 +169,13 @@ class MenuBar extends Component<prop> {
                                 >
                                     <NavLink
                                         className="dropdown-item"
+                                        to="/article/myArticles"
+                                    >
+                                        My articles
+                                    </NavLink>
+                                    <div className="dropdown-divider" />
+                                    <NavLink
+                                        className="dropdown-item"
                                         to="/login"
                                     >
                                         Change user
@@ -213,7 +220,7 @@ class MenuBar extends Component<prop> {
         ) {
             let input = searchInputField.value;
             if (input !== '') {
-                history.push('/search/' + input);
+                history.push('/article/search/' + input);
             }
         }
     }

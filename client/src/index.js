@@ -18,6 +18,7 @@ import { createStore } from 'redux';
 import allReducer from './redux/reducers';
 import { Provider } from 'react-redux';
 import { Spinner } from './pages/justToShowLoadingSpinners.js';
+import { MyArticles } from './pages/myArticles';
 
 const root = document.getElementById('root');
 
@@ -39,8 +40,17 @@ if (root)
                     <Alert />
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
+                    <Route
+                        exact
+                        path="/article/myArticles"
+                        component={MyArticles}
+                    />
                     <Route exact path="/signup" component={SignUp} />
-                    <Route exact path="/search/:search" component={Search} />
+                    <Route
+                        exact
+                        path="/article/search/:search"
+                        component={Search}
+                    />
                     <Route exact path="/article/new" component={NewArticle} />
                     <Route
                         exact
