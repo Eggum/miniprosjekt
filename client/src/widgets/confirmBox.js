@@ -1,5 +1,11 @@
-import {Component} from "react-simplified";
-import * as React from "react";
+// @flow
+
+import { Component } from 'react-simplified';
+import * as React from 'react';
+
+/**
+ * Bootstrap modal confirm box. Used if the user actions needs an extra confirmation step. For instance if the user is deleting an article.
+ */
 
 export class ConfirmBox extends Component<{
     modalId: React.Node,

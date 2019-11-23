@@ -6,24 +6,31 @@ import { Button } from './buttons';
 import { NavLink } from 'react-router-dom';
 import { User } from '../services';
 
-//export class SignUpForm extends Component <{register : (event: SyntheticInputEvent<HTMLFormElement>) => mixed, user : User}> {
+/**
+ * The sign up page. User state are stored and altered with Redux-library.
+ * With successful sign up user is logged in and returned to the previous page.
+ * The password must be repeated and matching to sign up successfully.
+ */
+
 export class SignUpForm extends Component<{
     register: () => mixed,
     user: User
 }> {
-    /*
-   save(event: SyntheticInputEvent<HTMLFormElement>) {
-        event.preventDefault();
- */
     password: string = '';
     passwordRetyped: string = '';
+    passwordRetypedTarget: ?HTMLInputElement = null;
 
     onSubmit(event: SyntheticInputEvent<HTMLFormElement>) {
         event.preventDefault();
-        if(this.password === this.passwordRetyped) {
+
+        if (this.password === this.passwordRetyped) {
             this.props.register();
         } else {
-         //   event.target.setCustomValidity('BLABLA');
+            if (this.passwordRetypedTarget) {
+                this.passwordRetypedTarget.setCustomValidity(
+                    'Passwords must match'
+                );
+            }
         }
     }
 
@@ -41,7 +48,9 @@ export class SignUpForm extends Component<{
                         onChange={(
                             event: SyntheticInputEvent<HTMLInputElement>
                         ) => {
-                            if (this.props.user) this.props.user.username = event.target.value;}}
+                            if (this.props.user)
+                                this.props.user.username = event.target.value;
+                        }}
                     />
                 </div>
                 <div className="form-group">
@@ -73,6 +82,10 @@ export class SignUpForm extends Component<{
                         ) => {
                             if (this.props.user) {
                                 this.passwordRetyped = event.target.value;
+                                this.passwordRetypedTarget = event.target;
+                                this.passwordRetypedTarget.setCustomValidity(
+                                    ''
+                                );
                             }
                         }}
                     />

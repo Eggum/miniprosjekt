@@ -2,17 +2,21 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert} from '../widgets/alert.js';
+import { Alert } from '../widgets/alert.js';
 import { Category, Article, articleService } from '../services.js';
 import { createHashHistory } from 'history';
 import type { HashHistory } from 'history';
 import { ConfirmBox } from '../widgets/confirmBox';
 import { LoginPopUp } from '../widgets/loginAgainBox';
 import type { ErrorResponse } from '../types';
-import {Form} from "../widgets/form";
+import { Form } from '../widgets/form';
 declare var jQuery: any;
 
 const history: HashHistory = createHashHistory();
+
+/**
+ * The page where the user edits an existing article.
+ */
 
 export class EditArticle extends Component<{
     match: { params: { id: number } }
@@ -87,7 +91,6 @@ export class EditArticle extends Component<{
                 Alert.success('Article updated');
             })
             .catch((error: ErrorResponse) => {
-                //Alert.danger(error.message);
                 if (error.response.status === 401) {
                     jQuery('#loginPopUp').modal({
                         backdrop: 'static',
@@ -95,6 +98,8 @@ export class EditArticle extends Component<{
                     });
 
                     jQuery('#loginPopUp').modal('show');
+                } else {
+                    Alert.danger(error.message);
                 }
             });
     }

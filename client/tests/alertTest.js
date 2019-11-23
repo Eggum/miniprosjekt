@@ -1,8 +1,12 @@
 // @flow
 
 import * as React from 'react';
-import { Alert} from '../src/widgets/alert.js';
+import { Alert } from '../src/widgets/alert.js';
 import { shallow, mount, ShallowWrapper } from 'enzyme';
+
+/**
+ * Alert test from lecturer.
+ */
 
 describe('Alert tests', () => {
     const wrapper: ShallowWrapper = shallow(<Alert />);

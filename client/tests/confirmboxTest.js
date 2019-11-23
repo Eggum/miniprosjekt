@@ -4,6 +4,10 @@ import * as React from 'react';
 import { ConfirmBox } from '../src/widgets/confirmBox.js';
 import { shallow, mount, ShallowWrapper } from 'enzyme';
 
+/**
+ * Confirm box tests.
+ */
+
 describe('Confirm box tests', () => {
     const test = jest.fn();
 

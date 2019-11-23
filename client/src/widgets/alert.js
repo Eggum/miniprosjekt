@@ -1,8 +1,9 @@
-import {Component} from "react-simplified";
-import * as React from "react";
+import { Component } from 'react-simplified';
+import * as React from 'react';
 
 /**
  * Renders alert messages using Bootstrap classes.
+ * Code from lecturer.
  */
 export class Alert extends Component {
     alerts: { id: number, text: React.Node, type: string }[] = [];

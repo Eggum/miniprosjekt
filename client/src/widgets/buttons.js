@@ -3,6 +3,10 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 
+/**
+ * Reusable buttons with bootstrap styling.
+ */
+
 class ButtonPrimary extends Component<{
     onClick: () => mixed,
     children?: React.Node

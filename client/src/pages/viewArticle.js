@@ -19,12 +19,18 @@ import { connect } from 'react-redux';
 import { LoginPopUp } from '../widgets/loginAgainBox.js';
 import type { ErrorResponse } from '../types';
 import { ConfirmBox } from '../widgets/confirmBox';
-
 declare var jQuery: any;
-
 const history: HashHistory = createHashHistory();
 
-// maps state to component as prop!
+/**
+ * Page where the user views an article. User state are stored with Redux-library.
+ * If the user is logged in and is viewing their own article, the user can edit and delete the article.
+ * If the user is logged in and has commented on the article, the user can delete their own comments.
+ * If the user is logged in the user comments with their username.
+ * If the user is not logged in the user comments with the username "Anonym".
+ */
+
+// The states that are going to be mapped to the component as properties.
 function mapStateToProps(state) {
     return {
         isLogged: state.isLogged,
@@ -69,7 +75,8 @@ class ViewArticleComp extends Component<{
 
         commentService
             .getComments(this.props.match.params.id)
-            .then(comments => (this.comments = comments));
+            .then(comments => (this.comments = comments))
+            .catch((error: Error) => Alert.danger(error.message));
     }
 
     render() {
@@ -132,7 +139,6 @@ class ViewArticleComp extends Component<{
     }
 
     delete_comment(comment: Comment) {
-        console.log('sletter; ' + comment.text);
         commentService
             .deleteComment(comment)
             .then(res => {
@@ -143,9 +149,9 @@ class ViewArticleComp extends Component<{
                     .catch((error: Error) => {
                         Alert.danger(error.message);
                     });
+                Alert.success('Comment successfully deleted');
             })
             .catch((error: ErrorResponse) => {
-                //Alert.danger(error.message);
                 if (error.response.status === 401) {
                     jQuery('#loginPopUp').modal({
                         backdrop: 'static',
@@ -153,12 +159,13 @@ class ViewArticleComp extends Component<{
                     });
 
                     jQuery('#loginPopUp').modal('show');
+                } else {
+                    Alert.danger(error.message);
                 }
             });
     }
 
     publish_comment() {
-        console.log('publish');
         if (
             this.newComment.text !== '' &&
             this.newComment.text !== undefined &&
@@ -176,8 +183,6 @@ class ViewArticleComp extends Component<{
                         Alert.danger(error.message);
                     });
             });
-        } else {
-            console.log('idk' + this.newComment.text);
         }
     }
 
@@ -189,7 +194,6 @@ class ViewArticleComp extends Component<{
                 history.push('/');
             })
             .catch((error: ErrorResponse) => {
-                Alert.danger(error.message);
                 if (error.response.status === 401) {
                     jQuery('#loginPopUp').modal({
                         backdrop: 'static',
@@ -197,9 +201,15 @@ class ViewArticleComp extends Component<{
                     });
 
                     jQuery('#loginPopUp').modal('show');
+                } else {
+                    Alert.danger(error.message);
                 }
             });
     }
 }
 
+/*
+Connects the state to the component.
+The original component is not changed. Instead, connect function returns a new, connected component class that wraps the component passed in.
+ */
 export const ViewArticle = connect(mapStateToProps)(ViewArticleComp);

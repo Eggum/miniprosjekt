@@ -11,6 +11,13 @@ import type { HashHistory } from 'history';
 declare var jQuery: any;
 const history: HashHistory = createHashHistory();
 
+/**
+ * Bootstrap modal that pops-up if the user needs to log in again.
+ * For instance if the server returns a 401 error because the token has expired when the user tries to delete an article.
+ * The component updates the state to logged in on success or logged out if the user do not want to log in.
+ */
+
+// The property types of the component.
 type props = {
     stateName: string,
     isLogged: boolean,
@@ -21,7 +28,7 @@ type props = {
     ifCancel: () => mixed
 };
 
-// maps state to component as props.
+// The states that are going to be mapped to the component as properties.
 function mapStateToProps(state) {
     return {
         stateName: state.name,
@@ -30,6 +37,7 @@ function mapStateToProps(state) {
     };
 }
 
+// The redux actions that are going to be mapped to the component as properties.
 function mapDispatchToProps(dispatch) {
     return {
         changeName: newName => dispatch(changeName(newName)),
@@ -153,7 +161,7 @@ class LoginAgainBox extends Component<props> {
         this.props.changeID(1);
         this.props.logoutUser();
 
-        // ifCancel if a function sent in in case the program needs extra handling when closing the loginAgainBox.
+        // ifCancel if a function sent in, in case the program needs extra handling when closing the loginAgainBox.
         if (this.props.ifCancel) {
             this.props.ifCancel();
         }
@@ -180,7 +188,7 @@ class LoginAgainBox extends Component<props> {
                 jQuery('#loginPopUp').modal('hide');
             })
             .catch((error: Error) => {
-                this.props.changeName('anonym');
+                this.props.changeName('Anonym');
                 this.props.changeID(1);
                 this.props.logoutUser();
                 Alert.danger('Wrong username or password');
@@ -188,6 +196,10 @@ class LoginAgainBox extends Component<props> {
     }
 }
 
+/*
+Connects the state and actions to the component.
+The original component is not changed. Instead, connect function returns a new, connected component class that wraps the component passed in.
+ */
 export const LoginPopUp = connect(
     mapStateToProps,
     mapDispatchToProps

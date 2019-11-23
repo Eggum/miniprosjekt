@@ -1,7 +1,12 @@
 // @flow
 
-import {Component} from "react-simplified";
-import * as React from "react";
+import { Component } from 'react-simplified';
+import * as React from 'react';
+
+/**
+ * Bootstrap carousel component used on the front page for the newsfeed.
+ * Could be used in the future to display multiple images when viewing an article.
+ */
 
 export class Carousel extends Component<{ children?: React.Node }> {
     render() {

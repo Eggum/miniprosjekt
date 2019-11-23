@@ -2,9 +2,13 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert} from '../widgets/alert';
+import { Alert } from '../widgets/alert';
 import { Article, articleService } from '../services';
-import {Card} from "../widgets/card";
+import { Card } from '../widgets/card';
+
+/**
+ * The page where the user is view articles that belongs to a specific category.
+ */
 
 export class ArticleByCategory extends Component<{
     match: { params: { category: string } }

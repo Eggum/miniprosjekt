@@ -1,8 +1,11 @@
 // @flow
 
 const ArticleDao = require('../dao/articledao.js');
-
 const mysql = require('mysql');
+
+/**
+ * Tests the article dao. Uses continuous integration through gitLab with gitLab CI pool.
+ */
 
 // GitLab CI Pool
 const pool = mysql.createPool({
@@ -15,12 +18,16 @@ const pool = mysql.createPool({
     multipleStatements: true
 });
 
+// releases resources after tests.
 afterAll(() => {
     pool.end();
 });
 
 let articledao = new ArticleDao(pool);
 
+/*
+Gets all articles from the database, checks if we received more that 21 articles and checks if the title of the two first articles are correct.
+ */
 test('get all articles from db', done => {
     function callback(status, data) {
         expect(data.length).toBeGreaterThanOrEqual(22);
@@ -31,14 +38,25 @@ test('get all articles from db', done => {
     articledao.getAll(callback);
 });
 
+/*
+Gets one article from the database and checks if the info is correct.
+ */
 test('get article from db', done => {
     function callback(status, data) {
         expect(data[0].title).toBe('Ny butikk i sentrum');
+        expect(data[0].alt).toBe('alt teskt');
+        expect(data[0].creator).toBe(1);
+        expect(data[0].importance).toBe(1);
+
         done();
     }
     articledao.getAll(callback);
 });
 
+/*
+Updates an article in the database.
+Checks the initial title of the article, alters the title and checks if the new title is changes correctly.
+ */
 test('update article in db', done => {
     let title_before = '';
     let article = {};
@@ -76,6 +94,9 @@ test('update article in db', done => {
     articledao.getOne(6, callback1);
 });
 
+/*
+Posts an article to the database and checks if it was a success.
+ */
 test('post article to db', done => {
     function callback(status, data) {
         expect(data.affectedRows).toBe(1);
@@ -96,7 +117,11 @@ test('post article to db', done => {
     );
 });
 
-test('delte one article from db', done => {
+/*
+Deletes one article from db.
+Checks how many articles there are in the db initially, deletes one and checks if there are one less article in the db.
+ */
+test('removes one article from db', done => {
     let initialTableSize;
 
     function callback1(status, data) {

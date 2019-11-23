@@ -10,11 +10,17 @@ import { Alert } from './alert';
 import { useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {changeId, changeName, logOut} from '../redux/actions';
-
+import { changeId, changeName, logOut } from '../redux/actions';
 const history: HashHistory = createHashHistory();
 
-// maps state to component as prop!
+/**
+ * The menu bar and header of the website. Uses bootstrap navbar.
+ * If the user is not logged in, a log in button is displayed in the top right corner.
+ * If the user is logged in, the log in button is replaced by the users username.
+ * If the user clicks their username (displayed when logged in) a dropdown menu is shown where the user can logout, sign up a new user or sign in as a different user.
+ */
+
+// The states that are going to be mapped to the component as properties.
 function mapStateToProps(state) {
     return {
         stateName: state.name,
@@ -22,14 +28,16 @@ function mapStateToProps(state) {
     };
 }
 
+// The redux actions that are going to be mapped to the component as properties.
 function mapDispatchToProps(dispatch) {
     return {
         logoutUser: () => dispatch(logOut()),
         changeID: newID => dispatch(changeId(newID)),
-        changeName: newName => dispatch(changeName(newName)),
+        changeName: newName => dispatch(changeName(newName))
     };
 }
 
+// The property types of the component.
 type prop = {
     stateName: string,
     isLogged: boolean,
@@ -38,6 +46,10 @@ type prop = {
     changeName: string => mixed
 };
 
+/*
+If the user scrolls down on the website, the menu bar is collapsed.
+If the user scrolls up from anywhere on the site, the menubar is displayed.
+ */
 let prevScrollPosition = window.pageYOffset;
 
 window.onscroll = function() {
@@ -190,8 +202,7 @@ class MenuBar extends Component<prop> {
     logout() {
         this.props.changeID(1);
         this.props.logoutUser();
-        this.props.changeName("Anonym");
-
+        this.props.changeName('Anonym');
     }
 
     search() {
@@ -208,6 +219,10 @@ class MenuBar extends Component<prop> {
     }
 }
 
+/*
+Connects the state and actions to the component.
+The original component is not changed. Instead, connect function returns a new, connected component class that wraps the component passed in.
+ */
 export const Menu = connect(
     mapStateToProps,
     mapDispatchToProps

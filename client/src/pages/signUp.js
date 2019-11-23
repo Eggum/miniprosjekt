@@ -9,9 +9,14 @@ import { Alert } from '../widgets/alert';
 import { SignUpForm } from '../widgets/signUp';
 import { changeId, changeName, logIn } from '../redux/actions';
 import { connect } from 'react-redux';
-
 const history: HashHistory = createHashHistory();
 
+/**
+ * The sign up page. User state are stored and altered with Redux-library.
+ * With sign up success user is returned to the previous page.
+ */
+
+// The property types of sign up component.
 type prop = {
     stateName: string,
     isLogged: boolean,
@@ -20,7 +25,7 @@ type prop = {
     changeID: number => mixed
 };
 
-// maps state to component as props.
+// The states that are going to be mapped to the component as properties.
 function mapStateToProps(state) {
     return {
         stateName: state.name,
@@ -29,6 +34,7 @@ function mapStateToProps(state) {
     };
 }
 
+// The redux actions that are going to be mapped to the component as properties.
 function mapDispatchToProps(dispatch) {
     return {
         changeName: newName => dispatch(changeName(newName)),
@@ -64,6 +70,10 @@ class SignUpComp extends Component<prop> {
     }
 }
 
+/*
+Connects the state and actions to the component.
+The original component is not changed. Instead, connect function returns a new, connected component class that wraps the component passed in.
+ */
 export const SignUp = connect(
     mapStateToProps,
     mapDispatchToProps

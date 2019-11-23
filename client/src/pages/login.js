@@ -4,7 +4,6 @@ import * as React from 'react';
 import { createHashHistory } from 'history';
 import type { HashHistory } from 'history';
 import { Component } from 'react-simplified';
-import { NavLink } from 'react-router-dom';
 import { Alert } from '../widgets/alert';
 import { LoginForm } from '../widgets/login';
 import { User, userService } from '../services.js';
@@ -13,6 +12,12 @@ import { changeName, logIn, changeId } from '../redux/actions';
 
 const history: HashHistory = createHashHistory();
 
+/**
+ * The login page. User state are stored and altered with Redux-library.
+ * With successful login user is returned to the previous page.
+ */
+
+// The property types of login component.
 type prop = {
     stateName: string,
     isLogged: boolean,
@@ -21,7 +26,7 @@ type prop = {
     changeID: number => mixed
 };
 
-// maps state to component as props.
+// The states that are going to be mapped to the component as properties.
 function mapStateToProps(state) {
     return {
         stateName: state.name,
@@ -30,6 +35,7 @@ function mapStateToProps(state) {
     };
 }
 
+// The redux actions that are going to be mapped to the component as properties.
 function mapDispatchToProps(dispatch) {
     return {
         changeName: newName => dispatch(changeName(newName)),
@@ -44,7 +50,7 @@ class LoginComp extends Component<prop> {
     render() {
         return (
             <div className="loginBackground">
-                <LoginForm login={this.login} user={this.user}/>
+                <LoginForm login={this.login} user={this.user} />
             </div>
         );
     }
@@ -69,6 +75,10 @@ class LoginComp extends Component<prop> {
     }
 }
 
+/*
+Connects the state and actions to the component.
+The original component is not changed. Instead, connect function returns a new, connected component class that wraps the component passed in.
+ */
 export const Login = connect(
     mapStateToProps,
     mapDispatchToProps

@@ -3,6 +3,10 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 
+/**
+ * Simple bootstrap spinners in different colors displayed to the user while waiting for the response from the server.
+ */
+
 export class LoadingSpinner extends Component {
     render() {
         return (

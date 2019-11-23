@@ -6,16 +6,16 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
-
 const ArticleDao = require('./dao/articledao.js');
 const CommentDao = require('./dao/commentdao.js');
 const UserDao = require('./dao/userdao.js');
 const CategoryDao = require('./dao/categorydao.js');
 
-// Burde vært ekte sertifikat, lest fra config.
+// Not very secure.
 let publicKey;
 let privateKey = (publicKey = 'shhhhhverysecret');
 
+// Not very secure, database password should not be uploaded to git.
 const pool: mysql.Pool = mysql.createPool({
     connectionLimit: 2,
     host: 'mysql.stud.iie.ntnu.no',
@@ -30,6 +30,29 @@ let commentdao = new CommentDao(pool);
 let userdao = new UserDao(pool);
 let categorydao = new CategoryDao(pool);
 
+/**------------------------------------------INFO------------------------------------------------*/
+
+/**
+ * The server!
+ *
+ *
+ * The code is sectioned off into parts:
+ *
+ * <> app.use under USE SETUP
+ * <> Authenticate
+ * <> Article endpoints.
+ * <> Category endpoints.
+ * <> Comments endpoints.
+ * <> User related endpoints.
+ * <> app.listen(4000);
+ *
+ */
+
+/**------------------------------------------USE SETUP------------------------------------------------*/
+
+/*
+Code that I had to add to avoid Cross-Origin Resource Sharing (CORS) problems and access denied problems.
+ */
 app.use((req: express$Request, res: express$Response, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.setHeader(
@@ -45,6 +68,13 @@ app.use((req: express$Request, res: express$Response, next) => {
 });
 app.use(bodyParser.json());
 
+/**------------------------------------------AUTHENTICATE------------------------------------------------*/
+
+/*
+Middleware function that authenticate the user.
+Gets the token from the request header and checks if its valid.
+If the token is not valid the server gets an error status of 401.
+ */
 const authenticate: express$Middleware<express$Request> = (
     req: express$Request,
     res: express$Response,
@@ -52,11 +82,9 @@ const authenticate: express$Middleware<express$Request> = (
 ) => {
     let token = req.headers['x-access-token'];
 
-    console.log('token motatt ' + token);
-
     jwt.verify(token, publicKey, (err, decoded) => {
         if (err) {
-            console.log('Token IKKE ok');
+            console.log('Token NOT ok');
             res.status(401);
             res.json({ error: 'Not authorized' });
         } else {
@@ -67,6 +95,9 @@ const authenticate: express$Middleware<express$Request> = (
     });
 };
 
+/**------------------------------------------ARTICLE ENDPOINTS------------------------------------------------*/
+
+// Fetches all articles from db and returns result to client.
 app.get('/article', (req: express$Request, res: express$Response) => {
     console.log('/article: request get all articles from client');
     articledao.getAll((status, data) => {
@@ -75,6 +106,7 @@ app.get('/article', (req: express$Request, res: express$Response) => {
     });
 });
 
+// Fetches one article from db based upon ID.
 app.get(
     '/article/:articleID',
     (req: express$Request, res: express$Response) => {
@@ -87,6 +119,7 @@ app.get(
     }
 );
 
+// Deletes one article from db based upon ID. User needs to be validated to succeed.
 app.delete(
     '/article/:articleID',
     authenticate,
@@ -99,6 +132,7 @@ app.delete(
     }
 );
 
+// Posts one article in the db. User needs to be validated to succeed.
 app.post(
     '/article',
     authenticate,
@@ -125,6 +159,7 @@ app.post(
     }
 );
 
+// Updates one article in the db based upon ID. User needs to be validated to succeed.
 app.put(
     '/article/:articleID',
     authenticate,
@@ -152,6 +187,9 @@ app.put(
     }
 );
 
+/**------------------------------------------CATEGORY ENDPOINTS------------------------------------------------*/
+
+// Fetches all categories from the db.
 app.get('/category', (req: express$Request, res: express$Response) => {
     console.log('/category got get request from client');
     categorydao.getAll((status, data) => {
@@ -160,6 +198,9 @@ app.get('/category', (req: express$Request, res: express$Response) => {
     });
 });
 
+/**------------------------------------------COMMENTS ENDPOINTS------------------------------------------------*/
+
+// Fetches all comments belonging to the article based upon article ID.
 app.get(
     '/article/:articleID/comment',
     (req: express$Request, res: express$Response) => {
@@ -173,6 +214,7 @@ app.get(
     }
 );
 
+// Posts comment to article based upon article ID.
 app.post(
     '/article/:articleID/comment',
     (
@@ -189,6 +231,24 @@ app.post(
     }
 );
 
+// Deletes one comment based upon commentID. User needs to be validated to succeed.
+app.delete(
+    '/article/:articleID/comment/:commentID',
+    authenticate,
+    (req: express$Request, res: express$Response) => {
+        console.log(
+            '/article/:articleID/comment/:commentID got delete request from client.'
+        );
+        commentdao.deleteOne(+req.params.commentID, (status, data) => {
+            res.status(status);
+            res.json(data);
+        });
+    }
+);
+
+/**------------------------------------------USER RELATED ENDPOINTS------------------------------------------------*/
+
+// Posts a new user to the db. If success client receives a JWT token used to validate user later and the user ID.
 app.post(
     '/user',
     (
@@ -212,22 +272,40 @@ app.post(
     }
 );
 
-app.delete(
-    '/article/:articleID/comment/:commentID',
-    authenticate,
-    (req: express$Request, res: express$Response) => {
-        console.log(
-            '/article/:articleID/comment/:commentID got delete request from client.'
-        );
-        commentdao.deleteOne(+req.params.commentID, (status, data) => {
-            res.status(status);
-            res.json(data);
+// Login user. If validated, client receives a JWT token used to validate user later and the user ID.
+app.post(
+    '/login',
+    (
+        req: { body: { username: string, password: string } },
+        res: express$Response
+    ) => {
+        console.log(req.body.username, req.body.password);
+
+        userdao.validateOne(req.body, (status, data) => {
+            if (data[0][0].validationResult === 1) {
+                console.log('Username and password ok');
+                let token = jwt.sign(
+                    { username: req.body.username },
+                    privateKey,
+                    {
+                        expiresIn: 600
+                    }
+                );
+                userdao.getUserId(req.body.username, (status, data) => {
+                    console.log(data);
+                    res.status(status);
+                    res.json({ id: data[0].id, jwt: token });
+                });
+            } else {
+                console.log('Username and password not ok');
+                res.status(401);
+                res.json({ error: 'Not authorized' });
+            }
         });
     }
 );
 
-var server = app.listen(4000);
-
+// Refresh token. If validated, client receives a new JWT token used to validate user later.
 app.post(
     '/token',
     (
@@ -259,34 +337,6 @@ app.post(
     }
 );
 
-app.post(
-    '/login',
-    (
-        req: { body: { username: string, password: string } },
-        res: express$Response
-    ) => {
-        console.log(req.body.username, req.body.password);
+/**------------------------------------------APP.LISTEN------------------------------------------------*/
 
-        userdao.validateOne(req.body, (status, data) => {
-            if (data[0][0].validationResult === 1) {
-                console.log('Username & password ok');
-                let token = jwt.sign(
-                    { username: req.body.username },
-                    privateKey,
-                    {
-                        expiresIn: 600
-                    }
-                );
-                userdao.getUserId(req.body.username, (status, data) => {
-                    console.log(data);
-                    res.status(status);
-                    res.json({ id: data[0].id, jwt: token });
-                });
-            } else {
-                console.log('Username & password not ok');
-                res.status(401);
-                res.json({ error: 'Not authorized' });
-            }
-        });
-    }
-);
+let server = app.listen(4000);

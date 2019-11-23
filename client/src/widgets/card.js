@@ -1,8 +1,14 @@
 // @flow
 
-import {Component} from "react-simplified";
-import * as React from "react";
-import {NavLink} from "react-router-dom";
+import { Component } from 'react-simplified';
+import * as React from 'react';
+import { NavLink } from 'react-router-dom';
+
+/**
+ * Simple card component used to display the important article information on front page, view articles by category and search result.
+ * Displays article title and image.
+ * Uses bootstrap classes for styling.
+ */
 
 export class Card extends Component<{
     title: React.Node,

@@ -17,10 +17,14 @@ import { SignUp } from './pages/signUp.js';
 import { createStore } from 'redux';
 import allReducer from './redux/reducers';
 import { Provider } from 'react-redux';
-import { Footer } from './widgets/footer';
 import { Spinner } from './pages/justToShowLoadingSpinners.js';
 
 const root = document.getElementById('root');
+
+/*
+Creates a Redux store that holds the complete state tree.
+Also connects the redux devtools extension for google chrome. One thing the extension can be used for is to watch the current state of the store at all times.
+ */
 const store = createStore(
     allReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -53,8 +57,7 @@ if (root)
                         path="/article/:category(\D+)"
                         component={ArticleByCategory}
                     />
-                    <Route exact path="/login/ost" component={Spinner} />
-                    <Footer />
+                    <Route exact path="/login/spinner" component={Spinner} />
                 </div>
             </HashRouter>
         </Provider>,

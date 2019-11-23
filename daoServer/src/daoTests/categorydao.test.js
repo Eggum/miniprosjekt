@@ -1,11 +1,14 @@
 // @flow
 
 const CategoryDao = require('../dao/categorydao.js');
+const mysql = require('mysql');
 
-var mysql = require('mysql');
+/**
+ * Tests the category dao. Uses continuous integration through gitLab with gitLab CI pool.
+ */
 
 // GitLab CI Pool
-var pool = mysql.createPool({
+const pool = mysql.createPool({
     connectionLimit: 1,
     host: 'mysql',
     user: 'root',
@@ -15,12 +18,16 @@ var pool = mysql.createPool({
     multipleStatements: true
 });
 
+// releases resources after tests.
 afterAll(() => {
     pool.end();
 });
 
 let categorydao = new CategoryDao(pool);
 
+/*
+Gets all categories from db and checks we fetched them all and that the first one has the correct value.
+ */
 test('get all categories from db', done => {
     function callback(status, data) {
         console.log(

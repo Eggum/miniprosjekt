@@ -2,11 +2,18 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import {Button} from "./buttons";
-import {NavLink} from "react-router-dom";
-import {User} from "../services";
+import { Button } from './buttons';
+import { NavLink } from 'react-router-dom';
+import { User } from '../services';
 
-export class LoginForm extends Component <{login : (event: SyntheticInputEvent<HTMLFormElement>) => mixed, user : User}> {
+/**
+ * Login form. Styled with own css.
+ */
+
+export class LoginForm extends Component<{
+    login: (event: SyntheticInputEvent<HTMLFormElement>) => mixed,
+    user: User
+}> {
     render() {
         return (
             <form className="login" onSubmit={this.props.login}>

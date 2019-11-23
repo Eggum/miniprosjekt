@@ -1,23 +1,36 @@
-var mysql = require('mysql');
-var fs = require('fs');
+// @flow
 
-module.exports = function run(filename, pool, done) {
+const mysql = require('mysql');
+const fs = require('fs');
+
+/**
+ * Function that runs sql script in the db.
+ * Takes in a mySql pool, the filename and a callback function.
+ */
+
+module.exports = function run(
+    filename: string,
+    pool: mysql.Pool,
+    callback: () => mixed
+) {
     console.log('runsqlfile: reading file ' + filename);
     let sql = fs.readFileSync(filename, 'utf8');
+
     pool.getConnection((err, connection) => {
-        if (err) {
+        if (err || !connection) {
             console.log('runsqlfile: error connecting');
-            done();
+            console.log(err);
+            callback();
         } else {
-            console.log('runsqlfile: connected');
-            connection.query(sql, (err, rows) => {
+            connection.query(sql, (err, result) => {
                 connection.release();
                 if (err) {
                     console.log('runsqlfile: ' + err);
-                    done();
+                    callback();
                 } else {
                     console.log('runsqlfile: run ok');
-                    done();
+                    console.log(result);
+                    callback();
                 }
             });
         }

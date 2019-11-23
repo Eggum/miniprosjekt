@@ -3,7 +3,14 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import type { UserResponse } from './types';
 
-//                localStorage.setItem("myToken", res.jwt);
+/**
+ * The service that communicates with the server.
+ * Uses axios.
+ */
+
+/*
+intercepts all axios request to add token to the headers from localStorage.
+ */
 
 axios.interceptors.request.use(
     (config: AxiosRequestConfig) => {
@@ -11,27 +18,10 @@ axios.interceptors.request.use(
         if (token) {
             config.headers['x-access-token'] = token;
         }
-        // config.headers['Content-Type'] = 'application/json';
         return config;
     },
     error => {
         Promise.reject(error);
-    }
-);
-
-axios.interceptors.response.use(
-    function(response) {
-        //  const logoutUser: () => dispatch(logOut());
-        //  const changeID: newID => dispatch(changeId(newID));
-
-        // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
-        return response;
-    },
-    function(error) {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with response error
-        return Promise.reject(error);
     }
 );
 

@@ -2,11 +2,17 @@
 
 const Dao = require('./dao.js');
 
+/**
+ * The article dao. Handles all calls to the database concerning articles.
+ */
+
 module.exports = class ArticleDao extends Dao {
+    // gets all articles from db.
     getAll(callback: (number, { length: number }) => mixed) {
         super.query('select * from Article', [], callback);
     }
 
+    // gets one article from db based upon article id.
     getOne(id: number, callback: (number, {}) => mixed) {
         super.query(
             'select Article.*, User.username from Article join User on User.id = Article.creator where Article.id = ?',
@@ -15,6 +21,7 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
+    // deletes one article from db based upon id.
     deleteOne(
         id: number,
         callback: (number, { affectedRows: number }) => mixed
@@ -22,6 +29,7 @@ module.exports = class ArticleDao extends Dao {
         super.query('CALL delete_article(?)', [id], callback);
     }
 
+    // creates one article in db.
     createOne(
         json: {
             title: string,
@@ -34,7 +42,6 @@ module.exports = class ArticleDao extends Dao {
             creator: number
         },
 
-        // callback: (number, data : {affectedRows : number}) => mixed) {
         callback: (number, { insertId: number, affectedRows: number }) => mixed
     ) {
         let val = [
@@ -54,6 +61,7 @@ module.exports = class ArticleDao extends Dao {
         );
     }
 
+    // updates one article in the db based upon id
     updateOne(
         json: {
             title: string,

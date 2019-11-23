@@ -4,11 +4,15 @@ import * as React from 'react';
 import { shallow, mount, ShallowWrapper } from 'enzyme';
 import { Button } from '../src/widgets/buttons.js';
 
+/**
+ * Button tests.
+ */
+
 describe('Button tests', () => {
     const test = jest.fn();
     const wrapper = shallow(<Button.Primary onClick={test} />);
 
-    it('button test', () => {
+    it('button click test', () => {
         expect(typeof wrapper).toEqual('object');
         expect(wrapper).toHaveLength(1);
 

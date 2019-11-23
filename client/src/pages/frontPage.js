@@ -7,13 +7,17 @@ import { Carousel } from '../widgets/carousel';
 import { Article, articleService } from '../services.js';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../widgets/buttons.js';
-import {Card} from "../widgets/card";
+import { Card } from '../widgets/card';
 import { LoadingSpinner } from '../widgets/loadingSpinner.js';
 
+/**
+ * Front page of the website. The articles are ordered by creation date. And only important articles (importance = 1) are displayed in the carousel.
+ */
 
 export class Home extends Component {
     articles: Array<Article> = [];
     articlesSliced: Array<Article> = [];
+    // low number on sliceFactor for example purpose.
     sliceFactor: number = 5;
 
     mounted() {
@@ -34,10 +38,8 @@ export class Home extends Component {
     }
 
     render() {
-        if(this.articles.length === 0){
-            return(
-                <LoadingSpinner/>
-            )
+        if (this.articles.length === 0) {
+            return <LoadingSpinner />;
         } else {
             return (
                 <div>
@@ -55,7 +57,9 @@ export class Home extends Component {
                                         to={'/article/' + a.id}
                                         className="carousel-item active carouselBackground"
                                     >
-                                        <h3 className="carouselText">{a.title}</h3>
+                                        <h3 className="carouselText">
+                                            {a.title}
+                                        </h3>
                                         <h4 className="carouselText">
                                             {new Date(
                                                 a.creation_date
@@ -72,7 +76,9 @@ export class Home extends Component {
                                         to={'/article/' + a.id}
                                         className="carousel-item carouselBackground"
                                     >
-                                        <h3 className="carouselText">{a.title}</h3>
+                                        <h3 className="carouselText">
+                                            {a.title}
+                                        </h3>
                                         <h4 className="carouselText">
                                             {new Date(
                                                 a.creation_date
@@ -107,6 +113,7 @@ export class Home extends Component {
 
     moreArticles() {
         this.articlesSliced = this.articles.slice(0, 5 + this.sliceFactor);
+        // low increase for example purpose.
         this.sliceFactor += 5;
     }
 }

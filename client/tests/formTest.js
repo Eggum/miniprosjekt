@@ -5,6 +5,10 @@ import { shallow, mount, ShallowWrapper } from 'enzyme';
 import { Form } from '../src/widgets/form';
 import { Article } from '../src/services.js';
 
+/**
+ * Form tests.
+ */
+
 describe('Form test', () => {
     const test = jest.fn();
 
@@ -28,7 +32,8 @@ describe('Form test', () => {
         expect(wrapper.debug()).toMatchSnapshot();
     });
 
-    it('submit form', () => {
+    it('submit form test', () => {
+        // when the form is submitted the onSubmit functions are called.
         wrapper.find('form').simulate('submit');
         expect(test.mock.calls.length).toEqual(1);
     });

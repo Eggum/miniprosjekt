@@ -1,10 +1,16 @@
 // @flow
 
-import {Component} from "react-simplified";
-import {Article, articleService, Category} from "../services";
-import {Button} from "./buttons";
-import * as React from "react";
-import {Alert} from "./alert";
+import { Component } from 'react-simplified';
+import { Article, articleService, Category } from '../services';
+import { Button } from './buttons';
+import * as React from 'react';
+import { Alert } from './alert';
+
+/**
+ * Form used when creating an article or edit an article.
+ * If the user is editing an article, the previous article data is filled out as value in the input fields.
+ * If the user is creating a new article the placeholder info is displayed instead.
+ */
 
 export class Form extends Component<{
     article: Article,

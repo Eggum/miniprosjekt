@@ -2,12 +2,17 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { Comment } from '../services.js';
 import { Button } from './buttons';
 import { connect } from 'react-redux';
 
-// maps state to component as prop!
+/**
+ * Displays the comment section. Used in view article.
+ * If the user is logged in, the user can delete own comments.
+ * Uses bootstrap for styling.
+ */
+
+// The states that are going to be mapped to the component as properties.
 function mapStateToProps(state) {
     return {
         stateName: state.name,
@@ -77,4 +82,8 @@ class CommentSectionComp extends Component<{
     }
 }
 
+/*
+Connects the state to the component.
+The original component is not changed. Instead, connect function returns a new, connected component class that wraps the component passed in.
+ */
 export const CommentSection = connect(mapStateToProps)(CommentSectionComp);

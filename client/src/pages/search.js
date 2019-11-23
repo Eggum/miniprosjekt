@@ -2,9 +2,13 @@
 
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert} from '../widgets/alert';
+import { Alert } from '../widgets/alert';
 import { Article, articleService } from '../services';
-import {Card} from "../widgets/card";
+import { Card } from '../widgets/card';
+
+/**
+ * The page displaying the results of a search. Articles with a title containing the search input are displayed.
+ */
 
 export class Search extends Component<{
     match: { params: { search: string } }
