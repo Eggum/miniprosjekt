@@ -1,4 +1,4 @@
-:star:<h1>Miniprosjekt
+:star::star::star::star::star::star::star::star::star::star:<h1>Miniprosjekt
 
 
 <h3>Coverage pages:
