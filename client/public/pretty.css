@@ -21,25 +21,11 @@ article img{
 
 .card-pretty:hover img{
     opacity: 0.8;
+    transition: all 0.3s ease 0s;
 }
 
 #card-column-wrapper{
     margin: 0.5%;
-}
-
-.prettyCarousel{
-    background-color: #0c5460;
-}
-
-.carouselText{
-    text-align: center;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    margin: 0.2%;
-    color: white;
-    background: linear-gradient(
-            rgba(0, 0, 0, 0.5),
-            rgba(0, 0, 0, 0.5)
-    );
 }
 
 .textAlignCenter{
@@ -77,10 +63,33 @@ article img{
     text-align: center;
 }
 
+.prettyCarousel{
+    background-color: #0c5460;
+}
+
+.carouselText{
+    text-align: center;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    margin: 0.2%;
+    color: white;
+
+    transition: all 0.3s ease 0s;
+    background: linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+    );
+}
+
 .carouselBackground{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+}
+
+.carouselBackground:hover > .carouselText{
+    letter-spacing: 2px;
+    transition: all 0.3s ease 0s;
+
 }
 
 .alert-pretty{
