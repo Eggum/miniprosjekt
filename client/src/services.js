@@ -144,3 +144,19 @@ class UserService {
 export let articleService = new ArticleService();
 export let commentService = new CommentService();
 export let userService = new UserService();
+
+/*
+Really simple token refresher.
+Does probably not fit in here, should be placed somewhere else and handled differently.
+In the future should also logout the user from the website if the token is outdated.
+ */
+window.setInterval(function() {
+    axios
+        .post<UserResponse>('http://localhost:4000/token')
+        .then(response => {
+            if (response.data.jwt !== undefined) {
+                localStorage.setItem('myToken', response.data.jwt);
+            }
+        })
+        .catch(err => console.log(err));
+}, 500000);

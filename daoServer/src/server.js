@@ -310,7 +310,6 @@ app.post(
     '/token',
     (
         req: {
-            body: { username: string },
             headers: { 'x-access-token': string }
         },
         res: express$Response
@@ -325,10 +324,10 @@ app.post(
             } else {
                 console.log('Token ok: ' + decoded.username);
                 let token = jwt.sign(
-                    { username: req.body.username },
+                    { username: decoded.username },
                     privateKey,
                     {
-                        expiresIn: 30
+                        expiresIn: 600
                     }
                 );
                 res.json({ jwt: token });
