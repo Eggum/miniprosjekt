@@ -10,7 +10,12 @@ import { Button } from '../src/widgets/buttons.js';
 
 describe('Button tests', () => {
     const test = jest.fn();
-    const wrapper = shallow(<Button.Primary onClick={test} />);
+    const wrapper: ShallowWrapper = shallow(<Button.Primary onClick={test} />);
+
+    it('instance', () => {
+        let instance = Button.Primary.instance();
+        expect(typeof instance).toEqual('object');
+    });
 
     it('button click test', () => {
         expect(typeof wrapper).toEqual('object');

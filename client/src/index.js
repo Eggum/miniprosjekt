@@ -3,7 +3,6 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
-import { createHashHistory } from 'history';
 import { Home } from './pages/frontPage.js';
 import { NewArticle } from './pages/newArticle.js';
 import { ViewArticle } from './pages/viewArticle.js';

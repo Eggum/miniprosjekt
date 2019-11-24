@@ -10,6 +10,12 @@ import { Carousel } from '../src/widgets/carousel';
 
 describe('Carousel tests', () => {
     const wrapper: ShallowWrapper = shallow(<Carousel />);
+
+    it('instance', () => {
+        let instance = Carousel.instance();
+        expect(typeof instance).toEqual('object');
+    });
+
     it('renders correctly', () => {
         expect(wrapper.debug()).toMatchSnapshot();
     });

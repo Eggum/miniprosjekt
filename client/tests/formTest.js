@@ -28,6 +28,13 @@ describe('Form test', () => {
     const wrapper: ShallowWrapper = shallow(
         <Form article={article} dataTarget="dataTarget" onSubmit={test} />
     );
+
+    it('instance', () => {
+        let instance = Form.instance();
+        expect(typeof instance).toEqual('object');
+        if (instance) expect(instance.categories).toEqual([]);
+    });
+
     it('renders correctly', () => {
         expect(wrapper.debug()).toMatchSnapshot();
     });

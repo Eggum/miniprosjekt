@@ -20,8 +20,14 @@ describe('Confirm box tests', () => {
         />
     );
 
+    it('instance', () => {
+        let instance = ConfirmBox.instance();
+        expect(typeof instance).toEqual('object');
+    });
+
     it('initially', () => {
         expect(typeof wrapper).toEqual('object');
+
         expect(wrapper.find('button.btn-secondary')).toHaveLength(1);
         expect(wrapper.find('button.close')).toHaveLength(1);
         expect(wrapper.find('button.btn-primary')).toHaveLength(1);

@@ -18,7 +18,6 @@ export class Search extends Component<{
 
     mounted() {
         this.input = this.props.match.params.search;
-
         articleService
             .getArticles()
             .then(

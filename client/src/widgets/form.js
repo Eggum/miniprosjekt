@@ -30,7 +30,10 @@ export class Form extends Component<{
 
     render() {
         return (
-            <form onSubmit={this.props.onSubmit} className="needs-validation">
+            <form
+                onSubmit={this.props.onSubmit}
+                className="needs-validation padding"
+            >
                 <div className="form-group">
                     <label htmlFor="title">Title</label>
                     <input
@@ -39,7 +42,7 @@ export class Form extends Component<{
                         className="form-control"
                         id="title"
                         maxLength="30"
-                        value={this.props.article.title}
+                        defaultValue={this.props.article.title}
                         placeholder="Write your title here"
                         onChange={(
                             event: SyntheticInputEvent<HTMLInputElement>
@@ -59,7 +62,7 @@ export class Form extends Component<{
                         type="text"
                         className="form-control"
                         id="image"
-                        value={this.props.article.image}
+                        defaultValue={this.props.article.image}
                         placeholder="Write image url"
                         onChange={(
                             event: SyntheticInputEvent<HTMLInputElement>
@@ -77,7 +80,7 @@ export class Form extends Component<{
                         className="form-control"
                         maxLength="50"
                         id="imageText"
-                        value={this.props.article.image_text}
+                        defaultValue={this.props.article.image_text}
                         placeholder="Write image text"
                         onChange={(
                             event: SyntheticInputEvent<HTMLInputElement>
@@ -96,7 +99,7 @@ export class Form extends Component<{
                         className="form-control"
                         id="alt"
                         maxLength="50"
-                        value={this.props.article.alt}
+                        defaultValue={this.props.article.alt}
                         placeholder="image alt"
                         onChange={(
                             event: SyntheticInputEvent<HTMLInputElement>

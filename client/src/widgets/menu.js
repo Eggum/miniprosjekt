@@ -7,8 +7,6 @@ import { Component } from 'react-simplified';
 import { Category, articleService } from '../services';
 import { NavLink } from 'react-router-dom';
 import { Alert } from './alert';
-import { useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { changeId, changeName, logOut } from '../redux/actions';
 const history: HashHistory = createHashHistory();
@@ -108,9 +106,9 @@ class MenuBar extends Component<prop> {
                         </NavLink>
                     </div>
                     <div className="nav-item dropdown navbar-nav">
-                        <a
+                        <span
                             className="nav-link dropdown-toggle"
-                            href="#"
+                            style={{ cursor: 'pointer' }}
                             id="navbarDropdown"
                             role="button"
                             data-toggle="dropdown"
@@ -118,7 +116,7 @@ class MenuBar extends Component<prop> {
                             aria-expanded="false"
                         >
                             Categories
-                        </a>
+                        </span>
                         <div
                             className="dropdown-menu"
                             aria-labelledby="navbarDropdown"
@@ -152,9 +150,9 @@ class MenuBar extends Component<prop> {
                     <div className="navbar-nav ">
                         {this.props.isLogged ? (
                             <div className="nav-item dropdown navbar-nav">
-                                <a
+                                <span
                                     className="nav-link dropdown-toggle"
-                                    href="#"
+                                    style={{ cursor: 'pointer' }}
                                     id="userDropdown"
                                     role="button"
                                     data-toggle="dropdown"
@@ -162,7 +160,7 @@ class MenuBar extends Component<prop> {
                                     aria-expanded="false"
                                 >
                                     {this.props.stateName}
-                                </a>
+                                </span>
                                 <div
                                     className="dropdown-menu dropdown-menu-right"
                                     aria-labelledby="userDropdown"
