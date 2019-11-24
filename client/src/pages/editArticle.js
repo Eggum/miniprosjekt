@@ -67,6 +67,7 @@ export class EditArticle extends Component<{
                     onClick={this.cancel}
                 />
                 <LoginPopUp />
+                <h1 className="textAlignCenter">Edit article</h1>
                 <Form
                     article={this.article}
                     dataTarget="cancelEditConfirmBox"
@@ -85,8 +86,7 @@ export class EditArticle extends Component<{
 
         articleService
             .updateArticle(this.article)
-            .then(data => {
-                console.log(data);
+            .then(() => {
                 history.push('/article/' + this.article.id);
                 Alert.success('Article updated');
             })

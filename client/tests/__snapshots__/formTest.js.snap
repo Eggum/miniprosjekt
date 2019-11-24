@@ -43,7 +43,7 @@ exports[`Form test renders correctly 1`] = `
     <label htmlFor=\\"articleText\\">
       Text
     </label>
-    <textarea required={true} className=\\"form-control\\" rows=\\"20\\" value=\\"Heisann på deisann\\" placeholder=\\"Article text here\\" id=\\"articleText\\" onChange={[Function: onChange]} />
+    <textarea required={true} className=\\"form-control\\" rows=\\"20\\" defaultValue=\\"Heisann på deisann\\" placeholder=\\"Article text here\\" id=\\"articleText\\" onChange={[Function: onChange]} />
   </div>
   <ButtonModalDanger dataTarget=\\"dataTarget\\">
     Cancel

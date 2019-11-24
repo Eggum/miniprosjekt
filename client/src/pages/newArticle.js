@@ -52,7 +52,7 @@ class NewArticleComp extends Component<{ stateID: number, isLogged: boolean }> {
                     onClick={this.cancel}
                 />
                 <LoginPopUp ifCancel={this.cancel} />
-                <h1>New article</h1>
+                <h1 className="textAlignCenter">New article</h1>
                 <Form
                     article={this.article}
                     dataTarget="cancelNewArticleConfirmBox"

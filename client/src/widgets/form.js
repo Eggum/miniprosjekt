@@ -145,7 +145,7 @@ export class Form extends Component<{
                                     type="radio"
                                     name="inlineRadioOptions"
                                     id={'radioButtonCategory' + index}
-                                    value={c.category}
+                                    defaultValue={c.category}
                                     onChange={(
                                         event: SyntheticInputEvent<HTMLInputElement>
                                     ) => {
@@ -171,7 +171,7 @@ export class Form extends Component<{
                                     type="radio"
                                     name="inlineRadioOptions"
                                     id={'radioButtonCategory' + index}
-                                    value={c.category}
+                                    defaultValue={c.category}
                                     onChange={(
                                         event: SyntheticInputEvent<HTMLInputElement>
                                     ) => {
@@ -196,7 +196,7 @@ export class Form extends Component<{
                         required
                         className="form-control"
                         rows="20"
-                        value={this.props.article.text}
+                        defaultValue={this.props.article.text}
                         placeholder="Article text here"
                         id="articleText"
                         onChange={(
