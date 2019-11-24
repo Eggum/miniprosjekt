@@ -50,7 +50,7 @@ export class myArticlesComp extends Component<prop> {
             );
         } else {
             return (
-                <div>
+                <div className="card-column-wrapper">
                     <div className="card-columns">
                         {this.articles.map(s => (
                             <Card

@@ -141,8 +141,7 @@ class ViewArticleComp extends Component<{
     delete_comment(comment: Comment) {
         commentService
             .deleteComment(comment)
-            .then(res => {
-                console.log(res);
+            .then(() => {
                 commentService
                     .getComments(this.props.match.params.id)
                     .then(comments => (this.comments = comments))
@@ -174,8 +173,7 @@ class ViewArticleComp extends Component<{
             this.newComment.creator = this.props.stateID;
             this.newComment.article = this.props.match.params.id;
 
-            commentService.postComment(this.newComment).then(e => {
-                console.log(e);
+            commentService.postComment(this.newComment).then(() => {
                 commentService
                     .getComments(this.props.match.params.id)
                     .then(comments => (this.comments = comments))

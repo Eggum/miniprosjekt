@@ -41,7 +41,7 @@ export class Search extends Component<{
             );
         } else {
             return (
-                <div>
+                <div className="card-column-wrapper">
                     <div className="card-columns">
                         {this.articles.map(s => (
                             <Card

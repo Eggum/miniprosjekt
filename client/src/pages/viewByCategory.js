@@ -34,7 +34,7 @@ export class ArticleByCategory extends Component<{
 
     render() {
         return (
-            <div>
+            <div className="card-column-wrapper">
                 <div className="card-columns">
                     {this.articles.map(s => (
                         <Card

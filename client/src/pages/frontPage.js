@@ -88,7 +88,7 @@ export class Home extends Component {
                                 )
                             )}
                     </Carousel>
-                    <div id="card-column-wrapper">
+                    <div className="card-column-wrapper">
                         <div className="card-columns">
                             {this.articlesSliced.map(s => (
                                 <Card

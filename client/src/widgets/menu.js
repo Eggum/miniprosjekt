@@ -16,6 +16,7 @@ const history: HashHistory = createHashHistory();
  * If the user is not logged in, a log in button is displayed in the top right corner.
  * If the user is logged in, the log in button is replaced by the users username.
  * If the user clicks their username (displayed when logged in) a dropdown menu is shown where the user can logout, sign up a new user or sign in as a different user.
+ * If the user logs out state is updated and token is removed from storage.
  */
 
 // The states that are going to be mapped to the component as properties.
@@ -83,7 +84,7 @@ class MenuBar extends Component<prop> {
                 className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"
             >
                 <NavLink className="navbar-brand" to="/">
-                    Home
+                    Puseavisa
                 </NavLink>
                 <button
                     className="navbar-toggler"
@@ -208,6 +209,7 @@ class MenuBar extends Component<prop> {
         this.props.changeID(1);
         this.props.logoutUser();
         this.props.changeName('Anonym');
+        localStorage.removeItem('myToken');
     }
 
     search() {
