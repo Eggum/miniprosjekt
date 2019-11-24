@@ -5,6 +5,7 @@ import { Component } from 'react-simplified';
 import { Alert } from '../widgets/alert';
 import { Article, articleService } from '../services';
 import { Card } from '../widgets/card';
+import { LoadingSpinner } from '../widgets/loadingSpinner';
 
 /**
  * The page displaying the results of a search. Articles with a title containing the search input are displayed.
@@ -15,24 +16,31 @@ export class Search extends Component<{
 }> {
     input: string = this.props.match.params.search;
     articles: Article[] = [];
+    waitingForServerResponse: boolean = false;
 
     mounted() {
         this.input = this.props.match.params.search;
+        this.waitingForServerResponse = true;
         articleService
             .getArticles()
-            .then(
-                articles =>
-                    (this.articles = articles.filter(a =>
-                        a.title.toUpperCase().includes(this.input.toUpperCase())
-                    ))
-            )
-            .catch((error: Error) => Alert.danger(error.message));
+            .then(articles => {
+                this.waitingForServerResponse = false;
+                this.articles = articles.filter(a =>
+                    a.title.toUpperCase().includes(this.input.toUpperCase())
+                );
+            })
+            .catch((error: Error) => {
+                Alert.danger(error.message);
+                this.waitingForServerResponse = false;
+            });
     }
 
     render() {
-        if (this.articles.length === 0) {
+        if (this.waitingForServerResponse === true) {
+            return <LoadingSpinner />;
+        } else if (this.articles.length === 0) {
             return (
-                <div>
+                <div className="padding">
                     <h1>Search result: </h1>
                     <strong>
                         Your search input "{this.input}" yielded no results.

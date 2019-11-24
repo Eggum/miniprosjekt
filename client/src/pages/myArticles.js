@@ -7,6 +7,7 @@ import { Article, articleService } from '../services';
 import { Card } from '../widgets/card';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { LoadingSpinner } from '../widgets/loadingSpinner';
 
 /**
  * This page displays the articles the user has created.
@@ -25,21 +26,28 @@ function mapStateToProps(state) {
 
 export class myArticlesComp extends Component<prop> {
     articles: Article[] = [];
+    waitingForServerResponse: boolean = false;
 
     mounted() {
+        this.waitingForServerResponse = true;
         articleService
             .getArticles()
-            .then(
-                articles =>
-                    (this.articles = articles.filter(
-                        a => a.creator === this.props.stateID && a.creator !== 1
-                    ))
-            )
-            .catch((error: Error) => Alert.danger(error.message));
+            .then(articles => {
+                this.waitingForServerResponse = false;
+                this.articles = articles.filter(
+                    a => a.creator === this.props.stateID && a.creator !== 1
+                );
+            })
+            .catch((error: Error) => {
+                this.waitingForServerResponse = false;
+                Alert.danger(error.message);
+            });
     }
 
     render() {
-        if (this.articles.length === 0) {
+        if (this.waitingForServerResponse === true) {
+            return <LoadingSpinner />;
+        } else if (this.articles.length === 0) {
             return (
                 <div className="textAlignCenter">
                     <h2>You have created no articles.</h2>
